@@ -7,8 +7,13 @@ const customConfig = defineConfig({
         primary: {
           value: '#334195',
         },
-        white: {
-          value: '#ffffff',
+        main: {
+          white_1: {
+            value: '#ffffff',
+          },
+          black_1: {
+            value: '#000000',
+          },
         },
       },
     },
