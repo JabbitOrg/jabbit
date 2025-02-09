@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
@@ -8,7 +8,6 @@ import LogoSVG from '@/public/assets/logo.svg';
 import { OAUTH } from '@/src/app/constants/auth';
 import Footer from '../components/Footer/Footer';
 import { LoginErrorToast } from '../components/Toast/LoginErrorToast';
-import { useRouter } from 'next/navigation';
 
 const handleKakaoLogin = () => {
   window.location.href = OAUTH.KAKAO.AUTH_URL;
@@ -21,16 +20,8 @@ const handleNaverLogin = () => {
 };
 
 const Login = () => {
-  const router = useRouter();
   return (
     <Flex width="100%" height="100vh" flexDirection="column">
-      <Button
-        onClick={() =>
-          router.replace('/login?error=Failed_to_get_access_token')
-        }
-      >
-        에러 발생
-      </Button>
       <LoginErrorToast />
       <Box width="1920px" padding="38px 320px" borderTop="2px solid #f2f3f5">
         <Flex>
