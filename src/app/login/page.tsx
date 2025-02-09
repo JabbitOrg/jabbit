@@ -1,12 +1,12 @@
 'use client';
 
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
 import LogoSVG from '@/public/assets/logo.svg';
-import { Text } from '@chakra-ui/react';
 import { OAUTH } from '@/src/app/constants/auth';
+import Footer from '../components/Footer/Footer';
 
 const handleKakaoLogin = () => {
   window.location.href = OAUTH.KAKAO.AUTH_URL;
@@ -20,12 +20,13 @@ const handleNaverLogin = () => {
 
 const Login = () => {
   return (
-    <Flex width="100%" height="100vh">
-      <Flex mx="auto" maxWidth="1280px" width="100%" flexDirection="column">
-        <Flex mt="35px">
+    <Flex width="100%" height="100vh" flexDirection="column">
+      <Box width="1920px" padding="38px 320px" borderTop="2px solid #f2f3f5">
+        <Flex>
           <LogoSVG />
         </Flex>
-
+      </Box>
+      <Flex mx="auto" width="100%" height="100%" flexDirection="column">
         <Flex
           height="100%"
           width="100%"
@@ -54,6 +55,7 @@ const Login = () => {
           </Text>
         </Flex>
       </Flex>
+      <Footer />
     </Flex>
   );
 };
