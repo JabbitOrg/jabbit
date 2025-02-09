@@ -14,6 +14,9 @@ const customConfig = defineConfig({
           black_1: {
             value: '#000000',
           },
+          gray_1: {
+            value: '#666666',
+          },
         },
       },
     },
