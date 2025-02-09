@@ -15,7 +15,7 @@ interface AccordionProps {
 const Accordion = ({ title, content }: AccordionProps) => {
   if (title) {
     return (
-      <Flex flexDirection="column" width="1280px">
+      <Flex flexDirection="column" width="1280px" marginTop="60px">
         <Text fontSize="45px" fontWeight="600">
           {title}
         </Text>
