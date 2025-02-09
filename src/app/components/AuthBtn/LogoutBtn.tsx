@@ -20,6 +20,12 @@ const LogoutBtn = () => {
       color="main.gray_1"
       cursor="pointer"
       onClick={handleLogout}
+      transition="all 0.2s ease-in-out"
+      _hover={{
+        color: 'main.black_1',
+        transform: 'scale(1.05)',
+        textDecoration: 'underline',
+      }}
     >
       로그아웃
     </Text>
