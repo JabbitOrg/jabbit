@@ -1,7 +1,9 @@
 'use client';
 
-import { Button, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
+import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
+import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
 
 const naverState = uuidv4();
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
@@ -25,8 +27,8 @@ const Login = () => {
       justifyContent="center"
       height="100vh"
     >
-      <Button onClick={handleKakaoLogin}>KakaoLogin</Button>
-      <Button onClick={handleNaverLogin}>NaverLogin</Button>
+      <KakaoLoginBtnSVG onClick={handleKakaoLogin} cursor="pointer" />
+      <NaverLoginBtnSVG onClick={handleNaverLogin} cursor="pointer" />
     </Flex>
   );
 };
