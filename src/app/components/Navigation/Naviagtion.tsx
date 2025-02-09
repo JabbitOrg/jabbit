@@ -1,5 +1,8 @@
+'use client';
+
 import { Button, Flex, Group } from '@chakra-ui/react';
-import LogoSVG from '@/public/assets/logo.svg';
+import AuthBtn from '../AuthBtn/AuthBtn';
+import Logo from '../Logo/Logo';
 
 const Navigation = () => {
   return (
@@ -10,7 +13,7 @@ const Navigation = () => {
       maxWidth="1280px"
       width="100%"
     >
-      <LogoSVG />
+      <Logo />
       <Group>
         <Button color="main.black_1" variant="plain" fontSize="18px">
           전문가 찾기
@@ -28,16 +31,7 @@ const Navigation = () => {
           커뮤니티
         </Button>
       </Group>
-      <Button
-        bg="primary"
-        w="184px"
-        h="61px"
-        borderRadius="12px"
-        fontSize="18px"
-        color="main.white_1"
-      >
-        로그인/회원가입
-      </Button>
+      <AuthBtn />
     </Flex>
   );
 };

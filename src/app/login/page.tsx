@@ -4,10 +4,10 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
-import LogoSVG from '@/public/assets/logo.svg';
 import { OAUTH } from '@/src/app/constants/auth';
 import Footer from '../components/Footer/Footer';
 import { useToast } from '../hooks/useToast';
+import Logo from '../components/Logo/Logo';
 
 const handleKakaoLogin = () => {
   window.location.href = OAUTH.KAKAO.AUTH_URL;
@@ -30,9 +30,7 @@ const Login = () => {
   return (
     <Flex width="100%" height="100vh" flexDirection="column">
       <Box width="1920px" padding="38px 320px" borderTop="2px solid #f2f3f5">
-        <Flex>
-          <LogoSVG />
-        </Flex>
+        <Logo />
       </Box>
       <Flex mx="auto" width="100%" height="100%" flexDirection="column">
         <Flex
