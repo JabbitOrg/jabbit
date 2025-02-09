@@ -48,12 +48,12 @@ const CategoryStack = () => {
   const [selectedTag, setSelectedTag] = useState('');
 
   return (
-    <Flex flexDirection="column" gap="114px" position="relative">
+    <Flex flexDirection="column" gap="114px" width="1280px" position="relative">
       <Text fontSize="45px" fontWeight={600} color="main.black_1">
         어떤 재무고민이 있으신가요?
       </Text>
 
-      <HStack gap="80px">
+      <HStack justifyContent="space-between">
         {CATEGORY_ITEMS.map((item, index) => (
           <Flex
             flexDirection="column"
@@ -70,8 +70,8 @@ const CategoryStack = () => {
             }}
           >
             <Flex
-              width="130px"
-              height="130px"
+              width="100px"
+              height="100px"
               justifyContent="center"
               alignItems="center"
               borderRadius="15px"
