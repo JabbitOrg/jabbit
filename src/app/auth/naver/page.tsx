@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 import { useAuthStore, User } from '../../store/authStore';
 
-const AuthLoginPage = () => {
+const NaverAuthPage = () => {
   const router = useRouter();
   const code = useSearchParams().get('code');
   const { setUser } = useAuthStore();
@@ -48,4 +48,4 @@ const AuthLoginPage = () => {
   );
 };
 
-export default AuthLoginPage;
+export default NaverAuthPage;
