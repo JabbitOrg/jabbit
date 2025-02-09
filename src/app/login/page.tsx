@@ -7,7 +7,7 @@ import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
 import LogoSVG from '@/public/assets/logo.svg';
 import { OAUTH } from '@/src/app/constants/auth';
 import Footer from '../components/Footer/Footer';
-import { LoginErrorToast } from '../components/Toast/LoginErrorToast';
+import { useToast } from '../hooks/useToast';
 
 const handleKakaoLogin = () => {
   window.location.href = OAUTH.KAKAO.AUTH_URL;
@@ -20,9 +20,15 @@ const handleNaverLogin = () => {
 };
 
 const Login = () => {
+  useToast({
+    title: '로그인 실패',
+    description: '로그인에 실패했습니다.',
+    type: 'error',
+    searchParam: 'error',
+  });
+
   return (
     <Flex width="100%" height="100vh" flexDirection="column">
-      <LoginErrorToast />
       <Box width="1920px" padding="38px 320px" borderTop="2px solid #f2f3f5">
         <Flex>
           <LogoSVG />
