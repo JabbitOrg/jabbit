@@ -26,8 +26,7 @@ const NaverAuthPage = () => {
             router.replace('/login?error=Failed_to_get_access_token');
           }
         })
-        .catch((error) => {
-          console.error('Error fetching Kakao callback:', error);
+        .catch(() => {
           router.replace('/login?error=Failed_to_get_access_token');
         });
     }
