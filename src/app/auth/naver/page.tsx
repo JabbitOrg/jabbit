@@ -43,7 +43,7 @@ const NaverAuthPage = () => {
       gap={4}
     >
       <Spinner size="xl" />
-      <Text fontSize="lg">로그인 처리 중...</Text>
+      <Text fontSize="lg">로그인 시도 중이에요.</Text>
     </Flex>
   );
 };
