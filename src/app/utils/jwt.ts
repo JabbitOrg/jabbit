@@ -1,5 +1,5 @@
 import jwt, { Secret } from 'jsonwebtoken';
-import { JWT } from '@/src/app/constants/jwt';
+import { JWT } from '@/src/app/config/jwt';
 import { User } from '@/src/app/store/authStore';
 
 export const createJwtToken = (user: User) => {

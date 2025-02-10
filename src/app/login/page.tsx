@@ -4,7 +4,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
-import { OAUTH } from '@/src/app/constants/auth';
+import { OAUTH } from '@/src/app/config/auth';
 import Footer from '../components/Footer/Footer';
 import { useToast } from '../hooks/useToast';
 import Logo from '../components/Logo/Logo';
