@@ -2,7 +2,7 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
-import { useAuthStore, User } from '../../store/authStore';
+import { useAuthStore, User } from '../../../store/authStore';
 
 const NaverAuthPage = () => {
   const router = useRouter();

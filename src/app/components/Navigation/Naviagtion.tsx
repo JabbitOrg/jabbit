@@ -2,7 +2,7 @@
 
 import { Button, Flex, Group } from '@chakra-ui/react';
 import AuthBtn from '../AuthBtn/AuthBtn';
-import Logo from '../Logo/Logo';
+import Logo from '../../../common/Logo/Logo';
 
 const Navigation = () => {
   return (

@@ -1,5 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react';
-import AccordionItemType from '../../types/accordionItem';
+import AccordionItemType from '../../../types/accordionItem';
 import {
   AccordionItem,
   AccordionItemContent,

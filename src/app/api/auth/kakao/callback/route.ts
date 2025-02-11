@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createJwtToken } from '@/src/app/utils/jwt';
-import { getAccessToken, getUserInfo } from '@/src/app/utils/auth';
+import { createJwtToken } from '@/src/utils/jwt';
+import { getAccessToken, getUserInfo } from '@/src/utils/auth';
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get('code');
