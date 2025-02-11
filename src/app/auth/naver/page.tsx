@@ -3,12 +3,13 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 import { useAuthStore, User } from '../../../store/authStore';
+import { useErrorStore } from '@/src/store/errorStore';
 
 const NaverAuthPage = () => {
   const router = useRouter();
   const code = useSearchParams().get('code');
   const { setUser } = useAuthStore();
-
+  const { setError } = useErrorStore();
   useEffect(() => {
     if (code) {
       const state = localStorage.getItem('naverState');
@@ -23,11 +24,13 @@ const NaverAuthPage = () => {
             setUser(user, data.token);
             router.replace('/');
           } else {
-            router.replace('/login?error=Failed_to_get_access_token');
+            setError(data.error);
+            router.replace('/login');
           }
         })
         .catch(() => {
-          router.replace('/login?error=Failed_to_get_access_token');
+          setError('NETWORK_ERROR');
+          router.replace('/login');
         });
     }
   }, [code, router, setUser]);

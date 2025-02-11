@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server';
 import { createJwtToken } from '@/src/utils/jwt';
 import { getAccessToken, getUserInfo } from '@/src/utils/auth';
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get('code');
 
   if (!code) {
-    return NextResponse.redirect(
-      new URL('/login?error=No_authorization_code_provided', req.url),
+    return NextResponse.json(
+      { success: false, error: 'auth/no-code' },
+      { status: 400 },
     );
   }
 
@@ -15,8 +17,9 @@ export async function GET(req: Request) {
     // 인증 코드로 access_token 요청
     const tokenData = await getAccessToken(code, 'KAKAO');
     if (!tokenData.access_token) {
-      return NextResponse.redirect(
-        new URL('/login?error=Failed_to_get_access_token', req.url),
+      return NextResponse.json(
+        { success: false, error: 'auth/failed-to-get-access-token' },
+        { status: 400 },
       );
     }
 
@@ -35,10 +38,7 @@ export async function GET(req: Request) {
       provider: 'KAKAO',
       token: jwtToken,
     });
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Server error', details: error },
-      { status: 500 },
-    );
+  } catch {
+    return NextResponse.json({ success: false, error: '500' }, { status: 500 });
   }
 }

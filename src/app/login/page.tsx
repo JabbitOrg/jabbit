@@ -6,7 +6,6 @@ import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
 import { OAUTH } from '@/src/config/auth';
 import Footer from '../components/Footer/Footer';
-import { useToast } from '../../hooks/useToast';
 import Logo from '../../common/Logo/Logo';
 
 const handleKakaoLogin = () => {
@@ -20,13 +19,6 @@ const handleNaverLogin = () => {
 };
 
 const Login = () => {
-  useToast({
-    title: '로그인 실패',
-    description: '로그인에 실패했습니다.',
-    type: 'error',
-    searchParam: 'error',
-  });
-
   return (
     <Flex width="100%" height="100vh" flexDirection="column">
       <Box width="1920px" padding="38px 320px" borderTop="2px solid #f2f3f5">
