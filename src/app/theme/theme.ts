@@ -1,7 +1,46 @@
-import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react';
+import {
+  createSystem,
+  defaultConfig,
+  defineConfig,
+  defineTextStyles,
+} from '@chakra-ui/react';
+
+export const textStyles = defineTextStyles({
+  sm: {
+    value: {
+      fontSize: '14px',
+      fontWeight: '500',
+    },
+  },
+  md: {
+    value: {
+      fontSize: '18px',
+      fontWeight: '500',
+    },
+  },
+  lg: {
+    value: {
+      fontSize: '23px',
+      fontWeight: '500',
+    },
+  },
+  xl: {
+    value: {
+      fontSize: '28px',
+      fontWeight: '500',
+    },
+  },
+  xxl: {
+    value: {
+      fontSize: '45px',
+      fontWeight: '600',
+    },
+  },
+});
 
 const customConfig = defineConfig({
   theme: {
+    textStyles,
     tokens: {
       colors: {
         primary: {
