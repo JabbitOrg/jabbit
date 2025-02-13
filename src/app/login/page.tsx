@@ -6,7 +6,7 @@ import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
 import { OAUTH } from '@/src/config/auth';
 import Footer from '../components/Footer/Footer';
-import Logo from '../../common/Logo/Logo';
+import Logo from '../common/Logo/Logo';
 
 const handleKakaoLogin = () => {
   window.location.href = OAUTH.KAKAO.AUTH_URL;
