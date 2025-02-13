@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createJwtToken } from '@/src/utils/jwt';
 import { getAccessToken, getUserInfo } from '@/src/utils/auth';
+import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -8,8 +9,8 @@ export async function GET(req: Request) {
 
   if (!code) {
     return NextResponse.json(
-      { success: false, error: 'auth/no-code' },
-      { status: 400 },
+      { success: false, errorInfoKey: 'auth.noCode' },
+      { status: ERROR_INFOS['auth.noCode'].statusCode },
     );
   }
 
@@ -18,8 +19,8 @@ export async function GET(req: Request) {
     const tokenData = await getAccessToken(code, 'KAKAO');
     if (!tokenData.access_token) {
       return NextResponse.json(
-        { success: false, error: 'auth/failed-to-get-access-token' },
-        { status: 400 },
+        { success: false, errorInfoKey: 'auth.accessTokenFailed' },
+        { status: ERROR_INFOS['auth.accessTokenFailed'].statusCode },
       );
     }
 
@@ -39,6 +40,9 @@ export async function GET(req: Request) {
       token: jwtToken,
     });
   } catch {
-    return NextResponse.json({ success: false, error: '500' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, errorInfoKey: 'auth.fetchUserInfoFailed' },
+      { status: ERROR_INFOS['auth.fetchUserInfoFailed'].statusCode },
+    );
   }
 }
