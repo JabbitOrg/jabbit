@@ -16,18 +16,16 @@ const Accordion = ({ title, content }: AccordionProps) => {
   if (title) {
     return (
       <Flex flexDirection="column" width="1280px" marginTop="60px">
-        <Text fontSize="45px" fontWeight="600">
-          {title}
-        </Text>
+        <Text textStyle="xxl">{title}</Text>
         <AccordionRoot multiple>
           {content.map((item, index) => (
             <AccordionItem key={index} value={item.value}>
-              <AccordionItemTrigger fontSize="28px" padding="44px 0">
+              <AccordionItemTrigger textStyle="xl" padding="44px 0">
                 {item.title}
               </AccordionItemTrigger>
               <AccordionItemContent
-                fontSize="23px"
-                color="#666"
+                textStyle="lg"
+                color="main.black_2"
                 paddingLeft="32px"
               >
                 {item.text}

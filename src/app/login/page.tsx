@@ -50,7 +50,7 @@ const Login = () => {
           <Text
             fontSize="16px"
             fontWeight="400"
-            color="main.gray_1"
+            color="main.black_2"
             mt="36px"
             textAlign="center"
             maxWidth="333px"
