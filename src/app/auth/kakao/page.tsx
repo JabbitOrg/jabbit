@@ -2,31 +2,48 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
-import { useAuthStore, User } from '../../store/authStore';
-
+import { useAuthStore, User } from '../../../store/authStore';
+import { useErrorToast } from '@/src/errors/useErrorToast';
+import { AppError } from '@/src/errors/AppError';
+import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 const KakaoAuthPage = () => {
   const router = useRouter();
   const code = useSearchParams().get('code');
   const { setUser } = useAuthStore();
+  const { showErrorToast } = useErrorToast();
 
   useEffect(() => {
     if (code) {
       fetch(`/api/auth/kakao/callback?code=${code}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            const user: User = {
-              id: data.id,
-              provider: data.provider,
-            };
-            setUser(user, data.token);
-            router.replace('/');
-          } else {
-            router.replace('/login?error=Failed_to_get_access_token');
+        .then(async (res) => {
+          const data = await res.json();
+
+          if (!data.success) {
+            throw new AppError({
+              statusCode: res.status,
+              errorInfoKey: data.errorInfoKey || 'unknownError',
+            });
           }
+
+          const user: User = {
+            id: data.id,
+            provider: data.provider,
+          };
+          setUser(user, data.token);
+          router.replace('/');
         })
-        .catch(() => {
-          router.replace('/login?error=Failed_to_get_access_token');
+        .catch((error) => {
+          const isAppError = error instanceof AppError;
+
+          if (!isAppError) {
+            error = new AppError({
+              statusCode: ERROR_INFOS['fetchFailed'].statusCode,
+              errorInfoKey: 'fetchFailed',
+            });
+          }
+
+          showErrorToast(error);
+          router.replace('/login');
         });
     }
   }, [code, router, setUser]);
