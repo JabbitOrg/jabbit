@@ -20,6 +20,19 @@ export const readSheetData = async (sheetName: string, range: string) => {
   return response.data.values;
 };
 
+export const findSheetDataById = async (
+  sheetName: string,
+  range: string,
+  id: number,
+) => {
+  const response = await sheetsClient.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${sheetName}!${range}`,
+  });
+
+  return response.data.values?.find((value) => value[0] === id);
+};
+
 export const appendSheetData = async (
   sheetName: string,
   range: string,
