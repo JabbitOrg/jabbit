@@ -2,7 +2,9 @@ import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
 import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 import {
   EXPERT_SHEET_NAME,
+  EXPERT_SHEET_RANGE,
   PRODUCT_SHEET_NAME,
+  PRODUCT_SHEET_RANGE,
 } from '@/src/constants/SHEET_INFOS';
 import { ProductDto } from '@/src/dtos/product.dto';
 import { findSheetDataById } from '@/src/googleSheet/googleSheetService';
@@ -22,7 +24,7 @@ export async function GET(
 
   const productRawData = await findSheetDataById(
     PRODUCT_SHEET_NAME,
-    'A2:G',
+    PRODUCT_SHEET_RANGE,
     productId,
   );
   if (!productRawData) {
@@ -35,7 +37,7 @@ export async function GET(
 
   const expertRawData = await findSheetDataById(
     EXPERT_SHEET_NAME,
-    'A2:G',
+    EXPERT_SHEET_RANGE,
     productRawData[1],
   );
 

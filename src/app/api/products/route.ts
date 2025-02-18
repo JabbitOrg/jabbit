@@ -1,4 +1,8 @@
-import { EXPERT_SHEET_NAME } from '@/src/constants/SHEET_INFOS';
+import {
+  EXPERT_SHEET_NAME,
+  EXPERT_SHEET_RANGE,
+  PRODUCT_SHEET_RANGE,
+} from '@/src/constants/SHEET_INFOS';
 import { readSheetData } from '@/src/googleSheet/googleSheetService';
 import { PRODUCT_SHEET_NAME } from '@/src/constants/SHEET_INFOS';
 import {
@@ -12,7 +16,10 @@ import { ExpertMapper } from '@/src/mappers/expert.mapper';
 import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
 
 export async function GET() {
-  const productsRawData = await readSheetData(PRODUCT_SHEET_NAME, 'A2:G');
+  const productsRawData = await readSheetData(
+    PRODUCT_SHEET_NAME,
+    PRODUCT_SHEET_RANGE,
+  );
   if (!productsRawData) {
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,
@@ -20,7 +27,10 @@ export async function GET() {
     );
   }
 
-  const expertRawData = await readSheetData(EXPERT_SHEET_NAME, 'A2:G');
+  const expertRawData = await readSheetData(
+    EXPERT_SHEET_NAME,
+    EXPERT_SHEET_RANGE,
+  );
   if (!expertRawData) {
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,

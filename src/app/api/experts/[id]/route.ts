@@ -1,6 +1,9 @@
 import { findSheetDataById } from '@/src/googleSheet/googleSheetService';
 import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
-import { EXPERT_SHEET_NAME } from '@/src/constants/SHEET_INFOS';
+import {
+  EXPERT_SHEET_NAME,
+  EXPERT_SHEET_RANGE,
+} from '@/src/constants/SHEET_INFOS';
 import { ExpertMapper } from '@/src/mappers/expert.mapper';
 import { ExpertDto } from '@/src/dtos/expert.dto';
 import {
@@ -18,7 +21,7 @@ export async function GET(
 
   const expertRawData = await findSheetDataById(
     EXPERT_SHEET_NAME,
-    'A2:H',
+    EXPERT_SHEET_RANGE,
     expertId,
   );
 
