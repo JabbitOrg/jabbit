@@ -14,7 +14,7 @@ import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
 
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   const expertId = id;
