@@ -5,12 +5,12 @@ export interface Experience {
 
 export interface Activity {
   type: string;
-  year: number;
+  year: string;
   description: string;
 }
 
 export interface Expert {
-  id: number;
+  id: string;
   name: string;
   certificates: string[];
   specialties: string[];

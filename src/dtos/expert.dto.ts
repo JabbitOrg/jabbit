@@ -3,7 +3,7 @@ import { Expert } from '../types/expert';
 import { Activity, Experience } from '../types/expert';
 
 export class ExpertDto {
-  id: number;
+  id: string;
   name: string;
   certificates: string[];
   specialties: string[];

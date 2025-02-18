@@ -23,7 +23,7 @@ export const readSheetData = async (sheetName: string, range: string) => {
 export const findSheetDataById = async (
   sheetName: string,
   range: string,
-  id: number,
+  id: string,
 ) => {
   const response = await sheetsClient.spreadsheets.values.get({
     spreadsheetId,

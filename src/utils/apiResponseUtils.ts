@@ -1,6 +1,6 @@
-import { ApiResponse } from '@/src/types/ApiResponse';
+import { ApiResponse } from '@/src/types/apiResponse';
 import { NextResponse } from 'next/server';
-import { ErrorInfoKey } from '../constants/ERROR_INFOS';
+import { ErrorInfoKey } from '@/src/constants/ERROR_INFOS';
 
 export const createSuccessApiResponse = <T>(
   status: number,

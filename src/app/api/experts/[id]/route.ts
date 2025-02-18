@@ -14,13 +14,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   const { id } = await params;
-  const expertId = Number(id);
-  if (isNaN(expertId)) {
-    return createErrorApiResponse(
-      ERROR_INFOS['invalidRequest'].statusCode,
-      'invalidRequest',
-    );
-  }
+  const expertId = id;
 
   const expertRawData = await findSheetDataById(
     EXPERT_SHEET_NAME,
