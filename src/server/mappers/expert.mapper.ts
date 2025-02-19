@@ -1,4 +1,4 @@
-import { Expert, Activity, Experience } from '@/src/types/expert';
+import { Expert, Activity, Experience } from '@/src/server/domains/expert';
 
 export class ExpertMapper {
   static fromSheetRow(row: string[]): Expert {

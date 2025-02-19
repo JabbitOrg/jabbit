@@ -1,5 +1,5 @@
-import { Product, ProductPriceInfo } from '@/src/types/product';
-import { Expert } from '@/src/types/expert';
+import { Product, ProductPriceInfo } from '@/src/server/domains/product';
+import { Expert } from '@/src/server/domains/expert';
 
 export class ProductMapper {
   static fromSheetRow(row: string[], expert: Expert): Product {

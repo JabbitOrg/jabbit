@@ -1,16 +1,16 @@
-import { readSheetData } from '@/src/googleSheet/googleSheetService';
+import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
 import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 import {
   EXPERT_SHEET_NAME,
   EXPERT_SHEET_RANGE,
-} from '@/src/constants/SHEET_INFOS';
-import { ExpertMapper } from '@/src/mappers/expert.mapper';
-import { ExpertSimpleDto } from '@/src/dtos/expert.simple.dto';
+} from '@/src/server/constants/SHEET_INFOS';
+import { ExpertMapper } from '@/src/server/mappers/expert.mapper';
+import { ExpertSimpleDto } from '@/src/server/dtos/expert.simple.dto';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
-} from '@/src/utils/apiResponseUtils';
-import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
+} from '@/src/server/utils/apiResponseUtils';
+import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET() {
   const expertsRawData = await readSheetData(

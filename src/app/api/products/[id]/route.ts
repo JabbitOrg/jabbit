@@ -1,19 +1,19 @@
-import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
+import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 import {
   EXPERT_SHEET_NAME,
   EXPERT_SHEET_RANGE,
   PRODUCT_SHEET_NAME,
   PRODUCT_SHEET_RANGE,
-} from '@/src/constants/SHEET_INFOS';
-import { ProductDto } from '@/src/dtos/product.dto';
-import { findSheetDataById } from '@/src/googleSheet/googleSheetService';
-import { ExpertMapper } from '@/src/mappers/expert.mapper';
-import { ProductMapper } from '@/src/mappers/product.mapper';
+} from '@/src/server/constants/SHEET_INFOS';
+import { ProductDto } from '@/src/server/dtos/product.dto';
+import { findSheetDataById } from '@/src/server/service/googleSheet/googleSheetService';
+import { ExpertMapper } from '@/src/server/mappers/expert.mapper';
+import { ProductMapper } from '@/src/server/mappers/product.mapper';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
-} from '@/src/utils/apiResponseUtils';
+} from '@/src/server/utils/apiResponseUtils';
 
 export async function GET(
   request: Request,

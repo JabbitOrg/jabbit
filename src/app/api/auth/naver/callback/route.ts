@@ -4,8 +4,8 @@ import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
-} from '@/src/utils/apiResponseUtils';
-import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
+} from '@/src/server/utils/apiResponseUtils';
+import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get('code');

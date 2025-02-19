@@ -2,18 +2,18 @@ import {
   EXPERT_SHEET_NAME,
   EXPERT_SHEET_RANGE,
   PRODUCT_SHEET_RANGE,
-} from '@/src/constants/SHEET_INFOS';
-import { readSheetData } from '@/src/googleSheet/googleSheetService';
-import { PRODUCT_SHEET_NAME } from '@/src/constants/SHEET_INFOS';
+} from '@/src/server/constants/SHEET_INFOS';
+import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
+import { PRODUCT_SHEET_NAME } from '@/src/server/constants/SHEET_INFOS';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
-} from '@/src/utils/apiResponseUtils';
+} from '@/src/server/utils/apiResponseUtils';
 import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
-import { ProductMapper } from '@/src/mappers/product.mapper';
-import { ProductSimpleDto } from '@/src/dtos/product.simple.dto';
-import { ExpertMapper } from '@/src/mappers/expert.mapper';
-import { API_MESSAGES } from '@/src/constants/API_MESSAGES';
+import { ProductMapper } from '@/src/server/mappers/product.mapper';
+import { ProductSimpleDto } from '@/src/server/dtos/product.simple.dto';
+import { ExpertMapper } from '@/src/server/mappers/expert.mapper';
+import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET() {
   const productsRawData = await readSheetData(

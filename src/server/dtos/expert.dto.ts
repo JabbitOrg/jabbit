@@ -1,6 +1,6 @@
-import { Expert } from '../types/expert';
+import { Expert } from '../domains/expert';
 
-import { Activity, Experience } from '../types/expert';
+import { Activity, Experience } from '../domains/expert';
 
 export class ExpertDto {
   id: string;

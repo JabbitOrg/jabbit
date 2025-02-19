@@ -1,4 +1,4 @@
-import { Product, ProductPriceInfo } from '@/src/types/product';
+import { Product, ProductPriceInfo } from '@/src/server/domains/product';
 import { ExpertDto } from './expert.dto';
 
 export class ProductDto {
