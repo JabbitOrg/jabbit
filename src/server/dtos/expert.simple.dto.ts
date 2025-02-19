@@ -1,8 +1,5 @@
 import { Expert } from '@/src/server/domains/expert';
 
-/**
- * Google Sheet 응답 (Row 데이터) → Expert 객체로 변환하는 DTO 역할
- */
 export class ExpertSimpleDto {
   id: string;
   name: string;
