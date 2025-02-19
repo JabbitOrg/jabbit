@@ -22,29 +22,29 @@ export async function GET(
   const { id } = await params;
   const productId = id;
 
-  const productRawData = await findSheetDataById(
-    PRODUCT_SHEET_NAME,
-    PRODUCT_SHEET_RANGE,
-    productId,
-  );
-  if (!productRawData) {
-    console.error(`Product not found for id ${productId}:`, productRawData);
+  const { headerRow: productHeaderRow, dataRows: productDataRows } =
+    await findSheetDataById(PRODUCT_SHEET_NAME, PRODUCT_SHEET_RANGE, productId);
+  if (!productHeaderRow || !productDataRows) {
+    console.error(`Product not found for id ${productId}:`, productHeaderRow);
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,
       'googleSheet.noData',
     );
   }
 
-  const expertRawData = await findSheetDataById(
-    EXPERT_SHEET_NAME,
-    EXPERT_SHEET_RANGE,
-    productRawData[1],
-  );
+  const productColumnIndexes = ProductMapper.getColumnIndexes(productHeaderRow);
 
-  if (!expertRawData) {
+  const { headerRow: expertHeaderRow, dataRows: expertDataRows } =
+    await findSheetDataById(
+      EXPERT_SHEET_NAME,
+      EXPERT_SHEET_RANGE,
+      productDataRows[productColumnIndexes.expertId],
+    );
+
+  if (!expertHeaderRow || !expertDataRows) {
     console.error(
       `Expert not found for product with id ${productId}:`,
-      productRawData,
+      expertHeaderRow,
     );
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.expertNotFound'].statusCode,
@@ -53,9 +53,13 @@ export async function GET(
   }
 
   try {
-    const parsedExpert = ExpertMapper.fromSheetRow(expertRawData);
+    const parsedExpert = ExpertMapper.fromSheetRow(
+      expertHeaderRow,
+      expertDataRows,
+    );
     const parsedProduct = ProductMapper.fromSheetRow(
-      productRawData,
+      productHeaderRow,
+      productDataRows,
       parsedExpert,
     );
     const productDto = new ProductDto(parsedProduct);

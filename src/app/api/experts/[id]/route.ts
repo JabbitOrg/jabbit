@@ -19,13 +19,10 @@ export async function GET(
   const { id } = await params;
   const expertId = id;
 
-  const expertRawData = await findSheetDataById(
-    EXPERT_SHEET_NAME,
-    EXPERT_SHEET_RANGE,
-    expertId,
-  );
+  const { headerRow: expertHeaderRow, dataRows: expertDataRows } =
+    await findSheetDataById(EXPERT_SHEET_NAME, EXPERT_SHEET_RANGE, expertId);
 
-  if (!expertRawData) {
+  if (!expertHeaderRow || !expertDataRows) {
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,
       'googleSheet.noData',
@@ -33,7 +30,10 @@ export async function GET(
   }
 
   try {
-    const parsedExpert = ExpertMapper.fromSheetRow(expertRawData);
+    const parsedExpert = ExpertMapper.fromSheetRow(
+      expertHeaderRow,
+      expertDataRows,
+    );
     const expertDto = new ExpertDto(parsedExpert);
 
     return createSuccessApiResponse(

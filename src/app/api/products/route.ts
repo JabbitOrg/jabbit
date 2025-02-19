@@ -16,22 +16,18 @@ import { ExpertMapper } from '@/src/server/mappers/expert.mapper';
 import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET() {
-  const productsRawData = await readSheetData(
-    PRODUCT_SHEET_NAME,
-    PRODUCT_SHEET_RANGE,
-  );
-  if (!productsRawData) {
+  const { headerRow: productHeaderRow, dataRows: productDataRows } =
+    await readSheetData(PRODUCT_SHEET_NAME, PRODUCT_SHEET_RANGE);
+  if (!productHeaderRow || !productDataRows) {
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,
       'googleSheet.noData',
     );
   }
 
-  const expertRawData = await readSheetData(
-    EXPERT_SHEET_NAME,
-    EXPERT_SHEET_RANGE,
-  );
-  if (!expertRawData) {
+  const { headerRow: expertHeaderRow, dataRows: expertDataRows } =
+    await readSheetData(EXPERT_SHEET_NAME, EXPERT_SHEET_RANGE);
+  if (!expertHeaderRow || !expertDataRows) {
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,
       'googleSheet.noData',
@@ -39,10 +35,15 @@ export async function GET() {
   }
 
   const productSimpleDtos: ProductSimpleDto[] = [];
-
-  for (const product of productsRawData) {
+  const productColumnIndexes = ProductMapper.getColumnIndexes(productHeaderRow);
+  const expertColumnIndexes = ExpertMapper.getColumnIndexes(expertHeaderRow);
+  for (const product of productDataRows) {
     try {
-      const expert = expertRawData.find((expert) => expert[0] === product[1]);
+      const expert = expertDataRows.find(
+        (expert) =>
+          expert[expertColumnIndexes.id] ===
+          product[productColumnIndexes.expertId],
+      );
       if (!expert) {
         console.error(
           `Expert not found for product id ${product[0]}:`,
@@ -51,8 +52,9 @@ export async function GET() {
         continue;
       }
       const parsedProduct = ProductMapper.fromSheetRow(
+        productHeaderRow,
         product,
-        ExpertMapper.fromSheetRow(expert),
+        ExpertMapper.fromSheetRow(expertHeaderRow, expert),
       );
       productSimpleDtos.push(new ProductSimpleDto(parsedProduct));
     } catch (error) {

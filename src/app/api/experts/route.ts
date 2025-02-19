@@ -13,11 +13,11 @@ import {
 import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET() {
-  const expertsRawData = await readSheetData(
+  const { headerRow, dataRows } = await readSheetData(
     EXPERT_SHEET_NAME,
     EXPERT_SHEET_RANGE,
   );
-  if (!expertsRawData) {
+  if (!headerRow || !dataRows) {
     return createErrorApiResponse(
       ERROR_INFOS['googleSheet.noData'].statusCode,
       'googleSheet.noData',
@@ -26,9 +26,9 @@ export async function GET() {
 
   const expertSimpleDtos: ExpertSimpleDto[] = [];
 
-  for (const expert of expertsRawData) {
+  for (const expert of dataRows) {
     try {
-      const parsedExpert = ExpertMapper.fromSheetRow(expert);
+      const parsedExpert = ExpertMapper.fromSheetRow(headerRow, expert);
       expertSimpleDtos.push(new ExpertSimpleDto(parsedExpert));
     } catch (error) {
       console.error(`Parsing error on expert id ${expert[0]}:`, error);

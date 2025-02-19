@@ -1,16 +1,39 @@
 import { Product, ProductPriceInfo } from '@/src/server/domains/product';
 import { Expert } from '@/src/server/domains/expert';
+import { PRODUCT_SHEET_HEADERS } from '../constants/SHEET_INFOS';
 
 export class ProductMapper {
-  static fromSheetRow(row: string[], expert: Expert): Product {
+  static getColumnIndexes(headerRow: any[]) {
+    return PRODUCT_SHEET_HEADERS.reduce(
+      (acc, header) => {
+        const index = headerRow.indexOf(header);
+        if (index === -1) {
+          throw new Error(`Sheet에 필요한 컬럼 "${header}"이(가) 없습니다.`);
+        }
+        acc[header] = index;
+        return acc;
+      },
+      {} as Record<(typeof PRODUCT_SHEET_HEADERS)[number], number>,
+    );
+  }
+
+  static fromSheetRow(
+    headerRow: string[],
+    dataRow: string[],
+    expert: Expert,
+  ): Product {
+    const columnIndexes = ProductMapper.getColumnIndexes(headerRow);
+
     return {
-      id: row[0],
+      id: dataRow[columnIndexes.id],
       expert: expert,
-      name: row[2],
-      priceInfos: JSON.parse(row[3]) as ProductPriceInfo[],
-      detailFields: JSON.parse(row[4]) as string[],
-      targetDescription: row[5],
-      productDescription: row[6],
+      name: dataRow[columnIndexes.name],
+      priceInfos: JSON.parse(
+        dataRow[columnIndexes.priceInfos],
+      ) as ProductPriceInfo[],
+      detailFields: JSON.parse(dataRow[columnIndexes.detailFields]) as string[],
+      targetDescription: dataRow[columnIndexes.targetDescription],
+      productDescription: dataRow[columnIndexes.productDescription],
     };
   }
 }

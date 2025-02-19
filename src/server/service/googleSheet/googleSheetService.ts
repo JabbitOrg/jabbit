@@ -17,7 +17,10 @@ export const readSheetData = async (sheetName: string, range: string) => {
     range: `${sheetName}!${range}`,
   });
 
-  return response.data.values;
+  const headerRow = response.data.values?.[0];
+  const dataRows = response.data.values?.slice(1);
+
+  return { headerRow, dataRows };
 };
 
 export const findSheetDataById = async (
@@ -30,7 +33,13 @@ export const findSheetDataById = async (
     range: `${sheetName}!${range}`,
   });
 
-  return response.data.values?.find((value) => value[0] === id);
+  const headerRow = response.data.values?.[0];
+  const dataRows = response.data.values?.slice(1);
+
+  return {
+    headerRow,
+    dataRows: dataRows?.find((value) => value[0] === id),
+  };
 };
 
 export const appendSheetData = async (
