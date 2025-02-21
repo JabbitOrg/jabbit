@@ -3,17 +3,22 @@ import { Box, Flex } from '@chakra-ui/react';
 import Navigation from '../components/Navigation/Naviagtion';
 import Footer from '../components/Footer/Footer';
 import LeftSideBar from './components/LeftSideBar';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { ProductSimpleDto } from '@/src/server/dtos/product.simple.dto';
 import ProductInfoList from './components/ProductInfoList';
 import PageTitle from './components/PageTitle';
 import { AppError } from '@/src/errors/AppError';
 import { ERROR_INFOS } from '@/src/constants/ERROR_INFOS';
 import { useErrorToast } from '@/src/errors/useErrorToast';
+import { useSearchParams } from 'next/navigation';
 
 const ExpertsPage = () => {
-  const [selectedSpecialty, setSelectedSpecialty] =
-    useState<string>('종합재무상담');
+  const searchParams = useSearchParams();
+  const specialty = searchParams.get('specialty');
+
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>(
+    specialty || '종합재무상담',
+  );
   const [products, setProducts] = useState<ProductSimpleDto[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductSimpleDto[]>(
     [],
@@ -68,29 +73,37 @@ const ExpertsPage = () => {
     }
   }, [products, selectedSpecialty]);
 
+  useEffect(() => {
+    if (specialty) {
+      setSelectedSpecialty(specialty);
+    }
+  }, [specialty]);
+
   return (
-    <Flex
-      flexDirection="column"
-      width="100%"
-      minHeight="100vh"
-      paddingTop="35px"
-      alignItems="center"
-    >
-      <Navigation />
-      <PageTitle />
-      <Box h="122px" />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Flex
+        flexDirection="column"
+        width="100%"
+        minHeight="100vh"
+        paddingTop="35px"
+        alignItems="center"
+      >
+        <Navigation />
+        <PageTitle />
+        <Box h="122px" />
 
-      <Flex width="100%" maxWidth="1280px" flex="1" position="relative">
-        <LeftSideBar
-          selectedSpecialty={selectedSpecialty}
-          setSelectedSpecialty={setSelectedSpecialty}
-        />
+        <Flex width="100%" maxWidth="1280px" flex="1" position="relative">
+          <LeftSideBar
+            selectedSpecialty={selectedSpecialty}
+            setSelectedSpecialty={setSelectedSpecialty}
+          />
 
-        <ProductInfoList products={filteredProducts} isLoading={isLoading} />
+          <ProductInfoList products={filteredProducts} isLoading={isLoading} />
+        </Flex>
+        <Box h="122px" />
+        <Footer />
       </Flex>
-      <Box h="122px" />
-      <Footer />
-    </Flex>
+    </Suspense>
   );
 };
 
