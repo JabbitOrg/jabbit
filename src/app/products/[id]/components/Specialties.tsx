@@ -39,7 +39,7 @@ const CATEGORY_ITEMS = [
   },
 ];
 
-const Specialties = (specialty: string) => {
+const Specialties = ({ specialty }: { specialty: string }) => {
   const item = CATEGORY_ITEMS.find((item) => item.title === specialty);
 
   return (
