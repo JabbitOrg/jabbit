@@ -24,7 +24,7 @@ const LeftSideBar = ({
               cursor="pointer"
               p="20px"
               borderRadius="10px"
-              bgColor="#F3F5FF"
+              bgColor={selectedSpecialty === item ? '#F3F5FF' : 'main.white_1'}
               onClick={() => setSelectedSpecialty(item)}
             >
               <Text
