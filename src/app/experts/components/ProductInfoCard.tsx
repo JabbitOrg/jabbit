@@ -102,7 +102,13 @@ const ProductInfoCard = ({ product }: { product: ProductSimpleDto }) => {
       href={`/products/${product.id}`}
       style={{ textDecoration: 'none', outline: 'none' }}
     >
-      <Flex w="640px" h="200px" flexDirection="row" cursor="pointer">
+      <Flex
+        w="640px"
+        h="200px"
+        flexDirection="row"
+        cursor="pointer"
+        justifyContent="space-between"
+      >
         <Flex w="400px" h="100%" flexDirection="column">
           <ProductTitle name={product.name} />
           <Box h="16px" />
