@@ -10,7 +10,7 @@ const Certification = ({
   if (isVerified) {
     return (
       <Box padding="8px 10px" bg="#d1ecc5" borderRadius="7px">
-        <Text fontSize="16px" color="#798c71">
+        <Text fontSize="16px" color="#798c71" fontWeight={500}>
           {certification}
         </Text>
       </Box>
@@ -19,7 +19,7 @@ const Certification = ({
 
   return (
     <Box padding="8px 10px" bg="#e3e3e3" borderRadius="7px">
-      <Text fontSize="16px" color="#7d7d7d">
+      <Text fontSize="16px" color="#7d7d7d" fontWeight={500}>
         {certification}
       </Text>
     </Box>
