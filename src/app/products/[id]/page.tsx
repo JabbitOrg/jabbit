@@ -1,16 +1,18 @@
 import { BASE_URL } from '@/src/constants/API';
-import ProductDetailView from './components/ProductDetailView';
+import ProductView from './components/ProductView';
 
 const Products = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const productId = (await params).id;
+  // const productId = (await params).id;
 
-  const response = await fetch(`${BASE_URL}/products/${productId}`, {
-    method: 'GET',
-    cache: 'no-store',
-  });
+  // const response = await fetch(`${BASE_URL}/products/${productId}`, {
+  //   method: 'GET',
+  //   cache: 'no-store',
+  // });
 
-  const productData = await response.json();
-  return <ProductDetailView productData={productData} />;
+  // const productData = await response.json();
+  const productData = 1;
+
+  return <ProductView productData={productData} />;
 };
 
 export default Products;
