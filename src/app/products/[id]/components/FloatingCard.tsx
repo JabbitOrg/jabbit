@@ -15,18 +15,9 @@ interface FloatingCardProps {
 }
 
 const FloatingCard = ({
-  expertName = '한승호',
-  expertImage = '/assets/test.png',
-  priceTags = [
-    {
-      name: '화상미팅 30분',
-      price: 30000,
-    },
-    {
-      name: '화상미팅 60분',
-      price: 60000,
-    },
-  ],
+  expertName,
+  expertImage,
+  priceTags,
   handlePriceTagClick,
   selectedPriceTagIndex,
 }: FloatingCardProps) => {

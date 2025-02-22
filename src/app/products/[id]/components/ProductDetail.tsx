@@ -28,61 +28,17 @@ interface ProductDetailProps {
 }
 
 const ProductDetail = ({
-  productTitle = '내 보험 보장 내용과 비용, 적절한지 판단해 드립니다',
-  expertName = '한승호',
-  isVerified = true,
-  certifications = ['재무설계(국가공인)', '증권투자', '펀드투자'],
-  specialties = ['종합재무상담', '보험진단'],
-  specialtyDetail = ['보험 리모델링', '기존 보험 검토', '신규 보험 가입'],
-  targetDescription = '- 과도한 보험료가 부담스러운 분\n- 가입 보험에 대해 전문가 점검이 필요한 분\n- 부족한 보장이 없는지 확인하고 싶은 분 ',
-  productDescription = '[상세 소개]는 전문가가 직접 해당 상품을 설명하는 part입니다.\n[상세 소개]는 전문가가 직접 해당 상품을 설명하는 part입니다.\n[상세 소개]는 전문가가 직접 해당 상품을 설명하는 part입니다.\n[상세 소개]는 전문가가 직접 해당 상품을 설명하는 part입니다.\n[상세 소개]는 전문가가 직접 해당 상품을 설명하는 part입니다.',
-  experiences = [
-    {
-      status: '현',
-      description: '보험 리모델링 보도 방송',
-    },
-    {
-      status: '전',
-      description: '보험 리모델링 보도 방송',
-    },
-    {
-      status: '현',
-      description: '보험 리모델링 보도 방송',
-    },
-  ],
-  yearsOfExperience = 18,
-  activities = [
-    {
-      type: '교육/강연',
-      year: 2024,
-      description: '보험 리모델링 교육 강연',
-    },
-    {
-      type: '교육/강연',
-      year: 2023,
-      description: '보험 리모델링 교육 강연',
-    },
-    {
-      type: '교육/강연',
-      year: 2022,
-      description: '보험 리모델링 교육 강연',
-    },
-    {
-      type: '보도/방송',
-      year: 2024,
-      description: '보험 리모델링 보도 방송',
-    },
-    {
-      type: '보도/방송',
-      year: 2023,
-      description: '보험 리모델링 보도 방송',
-    },
-    {
-      type: '보도/방송',
-      year: 2022,
-      description: '보험 리모델링 보도 방송',
-    },
-  ],
+  productTitle,
+  expertName,
+  isVerified,
+  certifications,
+  specialties,
+  specialtyDetail,
+  targetDescription,
+  productDescription,
+  experiences,
+  yearsOfExperience,
+  activities,
 }: ProductDetailProps) => {
   return (
     <>
