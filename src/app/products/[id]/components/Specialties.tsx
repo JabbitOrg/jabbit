@@ -43,7 +43,12 @@ const Specialties = ({ specialty }: { specialty: string }) => {
   const item = CATEGORY_ITEMS.find((item) => item.title === specialty);
 
   return (
-    <Flex gap="14px" flexDirection="column">
+    <Flex
+      gap="14px"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Flex
         width="80px"
         height="80px"
