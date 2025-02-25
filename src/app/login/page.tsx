@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import KakaoLoginBtnSVG from '@/public/assets/KakaoLoginBtn.svg';
 import NaverLoginBtnSVG from '@/public/assets/NaverLoginBtn.svg';
