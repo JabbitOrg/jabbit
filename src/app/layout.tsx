@@ -26,8 +26,12 @@ export default function RootLayout({
           <Theme appearance="light">{children}</Theme>
           <Toaster />
         </Provider>
-        <GoogleAnalytics gaId="G-Q797S4KDG1" />
-        <GoogleTagManager gtmId="GTM-TGKKWCHC" />
+        <GoogleAnalytics
+          gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? ''}
+        />
+        <GoogleTagManager
+          gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID ?? ''}
+        />
       </body>
     </html>
   );
