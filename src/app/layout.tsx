@@ -3,6 +3,7 @@ import { Provider } from '@/src/components/ui/provider';
 import { Theme } from '@chakra-ui/react';
 import localFont from 'next/font/local';
 import { Toaster } from '@/src/components/ui/toaster';
+import { GoogleAnalytics } from '@next/third-parties/google';
 export const metadata: Metadata = {
   title: 'JABBIT (재빗)',
   description: '재무관리의 모든 것',
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Theme appearance="light">{children}</Theme>
           <Toaster />
         </Provider>
+        <GoogleAnalytics gaId="G-Q797S4KDG1" />
       </body>
     </html>
   );
