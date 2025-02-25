@@ -1,5 +1,5 @@
 export const EXPERT_SHEET_NAME = 'expert';
-export const EXPERT_SHEET_RANGE = 'A1:H';
+export const EXPERT_SHEET_RANGE = 'A1:I';
 export const EXPERT_SHEET_HEADERS = [
   'id',
   'name',
@@ -9,6 +9,7 @@ export const EXPERT_SHEET_HEADERS = [
   'activities',
   'isVerified',
   'profileImageUrl',
+  'yearsOfExperience',
 ];
 
 export const PRODUCT_SHEET_NAME = 'product';
