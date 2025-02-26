@@ -76,12 +76,8 @@ const ProductDetail = ({
           )}
         </Flex>
         <Flex gap="10px">
-          {certifications.map((certification, index) => (
-            <Certification
-              key={index}
-              certification={certification}
-              isVerified={certification === '재무설계(국가공인)'}
-            />
+          {certifications.map((certificationName, index) => (
+            <Certification key={index} certificationName={certificationName} />
           ))}
         </Flex>
       </Flex>
