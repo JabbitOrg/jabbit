@@ -133,11 +133,15 @@ const ProductDetail = ({
             상세 소개
           </Text>
           <Box>
-            {parseDescription(productDescription).map((line, index) => (
-              <Text key={index} textStyle="md" color="main.black_2">
-                {line}
-              </Text>
-            ))}
+            {parseDescription(productDescription).map((line, index) =>
+              line === '' ? (
+                <br key={index} />
+              ) : (
+                <Text key={index} textStyle="md" color="main.black_2">
+                  {line}
+                </Text>
+              ),
+            )}
           </Box>
         </Flex>
       </Flex>
