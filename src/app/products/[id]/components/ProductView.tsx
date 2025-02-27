@@ -7,8 +7,8 @@ import { useState } from 'react';
 import ProductDetail from './ProductDetail';
 import Footer from '@/src/app/components/Footer/Footer';
 import {
-  parseFloatingCardData,
-  parseProductDetailData,
+  extractFloatingCardData,
+  extractProductDetailData,
 } from '@/src/client/utils/product';
 
 interface ProductDetailViewProps {
@@ -22,8 +22,8 @@ const ProductView = ({ productData }: ProductDetailViewProps) => {
     setSelectedPriceTagIndex(index);
   };
 
-  const productDetailData = parseProductDetailData(productData);
-  const floatingCardData = parseFloatingCardData(
+  const productDetailData = extractProductDetailData(productData);
+  const floatingCardData = extractFloatingCardData(
     productData,
     handlePriceTagClick,
     selectedPriceTagIndex,

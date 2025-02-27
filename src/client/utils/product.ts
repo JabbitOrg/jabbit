@@ -1,4 +1,4 @@
-export const parseProductDetailData = (productData: any) => {
+export const extractProductDetailData = (productData: any) => {
   const productDetailData = {
     productTitle: productData.data.name,
     expertName: productData.data.expert.name,
@@ -16,7 +16,7 @@ export const parseProductDetailData = (productData: any) => {
   return productDetailData;
 };
 
-export const parseFloatingCardData = (
+export const extractFloatingCardData = (
   productData: any,
   handlePriceTagClick: (index: number) => void,
   selectedPriceTagIndex: number,
