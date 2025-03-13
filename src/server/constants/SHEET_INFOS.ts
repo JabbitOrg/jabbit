@@ -25,3 +25,7 @@ export const PRODUCT_SHEET_HEADERS = [
   'googleFormUrl',
   'category',
 ];
+
+export const USER_SHEET_NAME = 'user';
+export const USER_SHEET_RANGE = 'A1:C';
+export const USER_SHEET_HEADERS = ['id', 'provider', 'createdAt'];
