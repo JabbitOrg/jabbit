@@ -20,7 +20,8 @@ export async function GET(req: Request) {
 
   try {
     // 인증 코드로 access_token 요청
-    const tokenData = await getAccessToken(code, 'NAVER');
+    await fetch('https://nid.naver.com', { method: 'HEAD' }).catch(() => {});
+    const tokenData = await getAccessToken(code, 'NAVER', state);
     if (!tokenData.access_token) {
       return createErrorApiResponse(
         ERROR_INFOS['auth.accessTokenFailed'].statusCode,
