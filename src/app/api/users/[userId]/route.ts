@@ -12,19 +12,19 @@ import {
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   const preflightResponse = handlePreflight(req);
   if (preflightResponse) {
     return preflightResponse;
   }
 
-  const { id } = await params;
+  const { userId } = await params;
 
   const { headerRow, dataRows } = await findSheetDataById(
     USER_SHEET_NAME,
     USER_SHEET_RANGE,
-    id,
+    userId,
   );
   if (!headerRow || !dataRows) {
     return createErrorApiResponse(
