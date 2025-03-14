@@ -29,3 +29,18 @@ export const PRODUCT_SHEET_HEADERS = [
 export const USER_SHEET_NAME = 'user';
 export const USER_SHEET_RANGE = 'A1:C';
 export const USER_SHEET_HEADERS = ['id', 'provider', 'createdAt'];
+
+export const CONSULTATION_SHEET_NAME = 'consultation';
+export const CONSULTATION_SHEET_RANGE = 'A1:J';
+export const CONSULTATION_SHEET_HEADERS = [
+  'id',
+  'userId',
+  'expertId',
+  'expertName',
+  'title',
+  'field',
+  'mainProposals',
+  'additionalProposals',
+  'status',
+  'createdAt',
+];
