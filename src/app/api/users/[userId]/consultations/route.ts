@@ -5,7 +5,6 @@ import { readSheetData } from '@/src/server/service/googleSheet/googleSheetServi
 import { handlePreflight } from '@/src/server/utils/apiResponseUtils';
 import { ConsultationMapper } from '@/src/server/mappers/consultation.mapper';
 import { createSuccessApiResponse } from '@/src/server/utils/apiResponseUtils';
-import { ConsultationDto } from '@/src/server/dtos/consultation.dto';
 import { ConsultationSimpleDto } from '@/src/server/dtos/consultation.simple.dto';
 
 export async function GET(

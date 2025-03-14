@@ -19,7 +19,6 @@ export async function GET(req: Request) {
   }
 
   try {
-    console.log('code', code);
     // 인증 코드로 access_token 요청
     const tokenData = await getAccessToken(code, 'KAKAO');
     if (!tokenData.access_token) {

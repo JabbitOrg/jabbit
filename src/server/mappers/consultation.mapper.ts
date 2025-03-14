@@ -18,17 +18,6 @@ export class ConsultationMapper {
 
   static fromSheetRow(headerRow: string[], dataRow: string[]): Consultation {
     const columnIndexes = ConsultationMapper.getColumnIndexes(headerRow);
-
-    console.log(
-      'Raw additionalProposals',
-      dataRow[columnIndexes.additionalProposals],
-    );
-
-    console.log(
-      'type of additionalProposals',
-      typeof dataRow[columnIndexes.additionalProposals],
-    );
-
     return {
       id: dataRow[columnIndexes.id],
       userId: dataRow[columnIndexes.userId],
