@@ -23,6 +23,10 @@ const LogoutBtn = () => {
       h="61px"
       onClick={handleLogout}
       transition="all 0.2s ease-in-out"
+      textAlign="center"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       _hover={{
         color: 'main.black_1',
         transform: 'scale(1.05)',
