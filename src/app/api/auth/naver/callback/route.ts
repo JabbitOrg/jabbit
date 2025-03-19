@@ -50,6 +50,7 @@ export async function GET(req: Request) {
         body: JSON.stringify({
           id: userData.response.id,
           provider: 'NAVER',
+          email: userData.response.email,
           createdAt: new Date(new Date().getTime() + 9 * 60 * 60 * 1000),
         }),
       });
