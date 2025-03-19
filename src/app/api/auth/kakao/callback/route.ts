@@ -46,7 +46,7 @@ export async function GET(req: Request) {
         body: JSON.stringify({
           id: userData.id,
           provider: 'KAKAO',
-          createdAt: new Date(),
+          createdAt: new Date(new Date().getTime() + 9 * 60 * 60 * 1000),
         }),
       });
     } else if (userReadResponse.status !== 200) {
