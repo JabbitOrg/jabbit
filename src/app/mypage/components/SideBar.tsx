@@ -1,10 +1,13 @@
 'use client';
 import { MYPAGE_SIDEBAR_DATA } from '@/src/client/constants/MYPAGE';
+import { useAuthStore } from '@/src/client/store/authStore';
 import { Box, Flex, Link, Text, VStack } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation';
 
 const SideBar = () => {
   const pathname = usePathname();
+  const { user } = useAuthStore();
+
   return (
     <Flex maxWidth="1280px" position="sticky" top="35px" h="fit-content">
       <Box w="320px">
@@ -13,7 +16,7 @@ const SideBar = () => {
             <Link
               textDecoration="none"
               key={item.slug}
-              href={`/mypage/${item.slug}`}
+              href={`/mypage/${item.slug}?userId=${user?.id}`}
               cursor="pointer"
               p="20px"
               borderRadius="10px"
