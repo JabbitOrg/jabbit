@@ -2,10 +2,11 @@ import { Flex } from '@chakra-ui/react';
 import Navigation from '../components/Navigation/Naviagtion';
 import SideBar from './components/SideBar';
 import Footer from '../components/Footer/Footer';
+import MypageAuthWrapper from './components/MypageAuthWrapper';
 
 const MypageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <MypageAuthWrapper>
       <Flex
         flexDirection="column"
         width="100%"
@@ -23,7 +24,7 @@ const MypageLayout = ({ children }: { children: React.ReactNode }) => {
         </Flex>
       </Flex>
       <Footer />
-    </>
+    </MypageAuthWrapper>
   );
 };
 
