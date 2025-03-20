@@ -1,4 +1,10 @@
-import { Consultation } from '@/src/server/domains/consultation';
+import {
+  Consultation,
+  Mission,
+  ProfitInfo,
+  Profits,
+  Proposal,
+} from '@/src/server/domains/consultation';
 import { CONSULTATION_SHEET_HEADERS } from '../constants/SHEET_INFOS';
 
 export class ConsultationMapper {
@@ -27,12 +33,17 @@ export class ConsultationMapper {
       field: dataRow[columnIndexes.field],
       mainProposals: JSON.parse(
         dataRow[columnIndexes.mainProposals],
-      ) as string[],
+      ) as Proposal[],
       additionalProposals: JSON.parse(
         dataRow[columnIndexes.additionalProposals],
-      ) as string[],
+      ) as Proposal[],
       status: dataRow[columnIndexes.status],
       createdAt: dataRow[columnIndexes.createdAt],
+      profits: JSON.parse(dataRow[columnIndexes.profits]) as Profits,
+      profitInfo: JSON.parse(dataRow[columnIndexes.profitInfo]) as ProfitInfo,
+      weeklyMissions: JSON.parse(
+        dataRow[columnIndexes.weeklyMissions],
+      ) as Mission[],
     };
   }
 }
