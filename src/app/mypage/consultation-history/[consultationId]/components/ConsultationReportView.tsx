@@ -123,7 +123,7 @@ const ConsultationReportView = ({
               color="#5971b2"
               whiteSpace="nowrap"
             >
-              +{formatKoreanCurrency(profits.today)}원 아껴보세요!
+              오늘 시작하면 {formatKoreanCurrency(profits.today)}원 이득!
             </Text>
           </Flex>
           <Button w="300px" borderRadius="10px" bg="primary" cursor="pointer">

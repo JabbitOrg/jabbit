@@ -60,7 +60,7 @@ const MissionAccordion = ({
             <Box
               overflow="hidden"
               maxHeight={isOpen ? '1400px' : '0'}
-              marginTop={isOpen ? '39px' : '0'}
+              marginTop={isOpen ? '16px' : '0'}
               transition={
                 isOpen
                   ? 'max-height 0.5s ease-in-out, opacity 0.4s ease-in-out'

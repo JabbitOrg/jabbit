@@ -60,7 +60,7 @@ const ReportAccordion = ({
             <Box
               overflow="hidden"
               maxHeight={isOpen ? '1000px' : '0'}
-              paddingTop={isOpen ? '28px' : '0'}
+              paddingTop={isOpen ? '14px' : '0'}
               transition={
                 isOpen
                   ? 'max-height 0.5s ease-in-out, opacity 0.4s ease-in-out'
@@ -69,7 +69,7 @@ const ReportAccordion = ({
               opacity={isOpen ? 1 : 0}
               transitionProperty="padding-top,max-height, opacity"
             >
-              <Text textStyle="sm" color="main.black_2">
+              <Text textStyle="sm" color="main.black_2" whiteSpace="pre-wrap">
                 {description}
               </Text>
             </Box>

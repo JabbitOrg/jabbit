@@ -37,7 +37,7 @@ const ProfitCards = ({ profits, profitInfo }: ProfitCardsProps) => {
               오늘 당장 실행하면
             </Text>
             <Text fontSize="18px" fontWeight="600" color="primary">
-              [+{formatKoreanCurrency(profits.today)}]원 만큼
+              +{formatKoreanCurrency(profits.today)}원 만큼
             </Text>
             <Text fontSize="18px" fontWeight="600" color="#8d8daf">
               가치있어요
@@ -113,7 +113,8 @@ const ProfitCards = ({ profits, profitInfo }: ProfitCardsProps) => {
                 이번 주
               </Text>
               <Text fontSize="16px" color="main.black_2">
-                [+{formatKoreanCurrency(profits.weekly)}]원 이득
+                <Text as="span">+{formatKoreanCurrency(profits.weekly)}</Text>{' '}
+                원 이득
               </Text>
             </Flex>
             <Flex justifyContent="space-between">
@@ -121,15 +122,19 @@ const ProfitCards = ({ profits, profitInfo }: ProfitCardsProps) => {
                 이번 달
               </Text>
               <Text fontSize="16px" color="main.black_2">
-                [+{formatKoreanCurrency(profits.monthly)}]원 이득
+                <Text as="span">+{formatKoreanCurrency(profits.monthly)}</Text>{' '}
+                원 이득
               </Text>
             </Flex>
-            <Flex justifyContent="space-between">
+            <Flex justifyContent="space-between" fontWeight="600">
               <Text fontSize="16px" color="#868181">
-                올해
+                올 해
               </Text>
               <Text fontSize="16px" color="main.black_2">
-                [+{formatKoreanCurrency(profits.yearly)}]원 이득
+                <Text as="span" color="main.black_1" fontWeight="600">
+                  +{formatKoreanCurrency(profits.yearly)}
+                </Text>{' '}
+                원 이득
               </Text>
             </Flex>
           </Flex>
