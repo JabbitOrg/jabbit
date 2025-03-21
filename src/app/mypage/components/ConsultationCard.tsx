@@ -15,8 +15,8 @@ interface ConsultationCardProps {
 }
 
 const ConsultationCard = ({
-  userId,
   id,
+  userId,
   createdAt,
   title,
   field,
@@ -29,6 +29,8 @@ const ConsultationCard = ({
       router.push(`/mypage/consultation-history/${id}?userId=${userId}`);
     }
   };
+
+  console.log(id, userId);
 
   return (
     <Flex
