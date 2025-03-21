@@ -6,8 +6,10 @@ import ConsultationAuthWrapper from '../../../components/ConsultationAuthWrapper
 import ReportAccordion from './ReportAccordion';
 import ProfitCards from './ProfitCards';
 import MissionAccordion from './MissionAccordion';
+import { formatKoreanCurrency } from '@/src/client/utils/currency';
 
 interface ConsultationReportViewProps {
+  userId: string;
   createdAt: string;
   field: string;
   expertName: string;
@@ -19,6 +21,7 @@ interface ConsultationReportViewProps {
 }
 
 const ConsultationReportView = ({
+  userId,
   createdAt,
   field,
   expertName,
@@ -29,7 +32,7 @@ const ConsultationReportView = ({
   weeklyMissions,
 }: ConsultationReportViewProps) => {
   return (
-    <ConsultationAuthWrapper authenticatedUserId="3911654195">
+    <ConsultationAuthWrapper authenticatedUserId={userId}>
       <Flex flexDirection="column" gap="54px">
         <Flex flexDirection="column" gap="32px">
           <Text fontSize="24px" fontWeight="600">
@@ -120,7 +123,7 @@ const ConsultationReportView = ({
               color="#5971b2"
               whiteSpace="nowrap"
             >
-              [+NNN,NNN]원 아껴보세요!
+              +{formatKoreanCurrency(profits.today)}원 아껴보세요!
             </Text>
           </Flex>
           <Button w="300px" borderRadius="10px" bg="primary" cursor="pointer">
