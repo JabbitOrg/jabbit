@@ -30,8 +30,6 @@ const ConsultationCard = ({
     }
   };
 
-  console.log(id, userId);
-
   return (
     <Flex
       w="800px"
