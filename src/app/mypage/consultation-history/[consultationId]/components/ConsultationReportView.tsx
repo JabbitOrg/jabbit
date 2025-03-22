@@ -32,7 +32,7 @@ const ConsultationReportView = ({
   weeklyMissions,
 }: ConsultationReportViewProps) => {
   return (
-    <ConsultationAuthWrapper authenticatedUserId={userId}>
+    <ConsultationAuthWrapper targetUserId={userId}>
       <Flex flexDirection="column" gap="54px">
         <Flex flexDirection="column" gap="32px">
           <Text fontSize="24px" fontWeight="600">

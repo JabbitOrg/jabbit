@@ -5,15 +5,15 @@ import { redirect } from 'next/navigation';
 
 interface ConsultationAuthWrapperProps {
   children: React.ReactNode;
-  authenticatedUserId: string;
+  targetUserId: string;
 }
 
 const ConsultationAuthWrapper = ({
   children,
-  authenticatedUserId,
+  targetUserId,
 }: ConsultationAuthWrapperProps) => {
   const { user } = useAuthStore();
-  if (!user || user.id !== authenticatedUserId) {
+  if (!user || user.id !== targetUserId) {
     redirect('/');
   }
   return children;
