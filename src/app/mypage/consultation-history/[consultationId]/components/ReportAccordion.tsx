@@ -3,20 +3,20 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 interface ReportAccordionProps {
-  index: number;
+  rank: number;
   title: string;
   description: string;
   isMainProposal: boolean;
 }
 
 const ReportAccordion = ({
-  index,
+  rank,
   title,
   description,
   isMainProposal,
 }: ReportAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const badgeTitle = isMainProposal ? index + 1 + '순위' : '기타';
+  const badgeTitle = isMainProposal ? rank + '순위' : '기타';
 
   return (
     <Flex

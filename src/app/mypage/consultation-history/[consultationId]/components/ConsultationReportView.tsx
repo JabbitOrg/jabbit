@@ -52,29 +52,35 @@ const ConsultationReportView = ({
             <Text fontSize="20px" fontWeight="600">
               핵심제안 {mainProposals.length}가지 알려드려요
             </Text>
-            {mainProposals.map((proposal, index) => (
-              <ReportAccordion
-                key={index}
-                index={index}
-                title={proposal.title}
-                description={proposal.description}
-                isMainProposal={true}
-              />
-            ))}
+            {mainProposals.map((proposal, index) => {
+              const rank = index + 1;
+              return (
+                <ReportAccordion
+                  key={index}
+                  rank={rank}
+                  title={proposal.title}
+                  description={proposal.description}
+                  isMainProposal={true}
+                />
+              );
+            })}
           </Flex>
           <Flex flexDirection="column" gap="28px" w="100%">
             <Text fontSize="20px" fontWeight="600">
               추가적인 제안들도 알려드려요
             </Text>
-            {additionalProposals.map((proposal, index) => (
-              <ReportAccordion
-                key={index}
-                index={index}
-                title={proposal.title}
-                description={proposal.description}
-                isMainProposal={false}
-              />
-            ))}
+            {additionalProposals.map((proposal, index) => {
+              const rank = index + 1;
+              return (
+                <ReportAccordion
+                  key={index}
+                  rank={rank}
+                  title={proposal.title}
+                  description={proposal.description}
+                  isMainProposal={false}
+                />
+              );
+            })}
           </Flex>
           <Flex flexDirection="column" gap="34px">
             <Text fontSize="20px" fontWeight="600">

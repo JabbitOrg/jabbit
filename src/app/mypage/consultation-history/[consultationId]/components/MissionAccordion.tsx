@@ -3,14 +3,14 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 interface MissionAccordionProps {
-  index: number;
+  rank: number;
   title: string;
   contents: string[];
   methods: string[];
 }
 
 const MissionAccordion = ({
-  index,
+  rank,
   title,
   contents,
   methods,
@@ -41,7 +41,7 @@ const MissionAccordion = ({
               color="
             #B0AB9A"
             >
-              미션# {index + 1}
+              미션# {rank}
             </Text>
           </Flex>
 
