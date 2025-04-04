@@ -74,3 +74,35 @@ export const LIFE_CYCLE_DESCRIPTION = [
     financialGoals: ['노후 자금 유지', '상속/증여계획 준비'],
   },
 ];
+
+export const FINANCIAL_RATIO = [
+  {
+    title: '지출',
+    recommendedRatio: 70,
+  },
+  {
+    title: '보험료',
+    recommendedRatio: 8,
+    maxRecommendedRatio: 10,
+  },
+  {
+    title: '저축',
+    recommendedRatio: 30,
+  },
+  {
+    title: '투자',
+    recommendedRatio: 40,
+  },
+  {
+    title: '부채 상환',
+    recommendedRatio: 25,
+  },
+  {
+    title: '노후 대비',
+    recommendedRatio: 50,
+  },
+  {
+    title: '비상자금 보유',
+    recommendedRatio: 3,
+  },
+];
