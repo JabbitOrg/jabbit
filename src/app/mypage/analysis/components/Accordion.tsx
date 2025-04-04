@@ -3,11 +3,12 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 interface AccordionProps {
-  title: string;
-  description: string;
+  goal: string;
+  recommendedGoals: string[];
+  advices: string[];
 }
 
-const Accordion = ({ title, description }: AccordionProps) => {
+const Accordion = ({ goal, recommendedGoals, advices }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -46,7 +47,7 @@ const Accordion = ({ title, description }: AccordionProps) => {
                 wordBreak="keep-all"
                 fontWeight="600"
               >
-                {title}
+                {goal}
               </Text>
             </Flex>
             <Box
@@ -61,9 +62,52 @@ const Accordion = ({ title, description }: AccordionProps) => {
               opacity={isOpen ? 1 : 0}
               transitionProperty="padding-top,max-height, opacity"
             >
-              <Text textStyle="sm" color="main.black_2" whiteSpace="pre-wrap">
-                {description}
-              </Text>
+              <Flex flexDirection="column" gap="20px">
+                <Flex flexDirection="column" gap="12px">
+                  <Text fontSize="14px" fontWeight="600" color="main.black_2">
+                    ✅ 추천 재무목표
+                  </Text>
+                  <Flex flexDirection="column">
+                    {recommendedGoals.map((goal, index) => (
+                      <Text
+                        key={index}
+                        fontSize="14px"
+                        fontWeight="500"
+                        color="main.black_3"
+                      >
+                        {index + 1}. {goal}
+                      </Text>
+                    ))}
+                  </Flex>
+                </Flex>
+                <Flex flexDirection="column" gap="12px">
+                  <Text fontSize="14px" fontWeight="600" color="main.black_2">
+                    💡조언
+                  </Text>
+                  <Flex flexDirection="column">
+                    <ul>
+                      {advices.map((advice, index) => (
+                        <li
+                          style={{
+                            listStyle: 'disc',
+                            marginLeft: '22px',
+                            color: '#868686',
+                          }}
+                          key={index}
+                        >
+                          <Text
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="main.black_3"
+                          >
+                            {advice}
+                          </Text>
+                        </li>
+                      ))}
+                    </ul>
+                  </Flex>
+                </Flex>
+              </Flex>
             </Box>
           </Flex>
         </Flex>
