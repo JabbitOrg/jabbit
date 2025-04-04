@@ -63,6 +63,7 @@ const AnalysisTab = ({ defaultTab, currentTab }: AnalysisTabProps) => {
       gap="40px"
       borderBottom="2px solid var(--chakra-colors-main-line)"
       position="relative"
+      mb="64px"
     >
       {ANALYSIS_TAB_DATA.map((tab) => (
         <TabItem
