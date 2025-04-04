@@ -25,3 +25,5 @@ export const MYPAGE_SIDEBAR_DATA = [
     slug: 'consultation-history',
   },
 ];
+
+export const ANALYSIS_TAB_DATA = ['요약', '진단평가', '미래예측'];
