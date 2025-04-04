@@ -39,13 +39,13 @@ const LifeCycleChart = ({ age }: LifeCycleChartProps) => {
   return (
     <Flex flexDirection="column" gap="20px">
       <Flex gap="14px">
-        <Flex gap="8px">
+        <Flex gap="8px" alignItems="center">
           <ColorBox color="primary" />
           <Text fontSize="14px" fontWeight="500" color="main.black_1">
             수입곡선
           </Text>
         </Flex>
-        <Flex gap="8px">
+        <Flex gap="8px" alignItems="center">
           <ColorBox color="#ffc800" />
           <Text fontSize="14px" fontWeight="500" color="main.black_1">
             지출곡선
