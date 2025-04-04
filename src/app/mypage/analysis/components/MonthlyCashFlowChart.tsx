@@ -26,6 +26,7 @@ const MonthlyCashFlowChart = ({
   return (
     <Flex
       w="100%"
+      minW="430px"
       h="100%"
       borderRadius="10px"
       border="2px solid var(--chakra-colors-main-line)"
