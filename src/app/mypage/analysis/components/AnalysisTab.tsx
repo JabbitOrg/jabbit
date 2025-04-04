@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 interface AnalysisTabProps {
   defaultTab?: string;
+  currentTab?: string;
 }
 
 const TabItem = ({
@@ -44,10 +45,10 @@ const TabItem = ({
   );
 };
 
-const AnalysisTab = ({ defaultTab }: AnalysisTabProps) => {
+const AnalysisTab = ({ defaultTab, currentTab }: AnalysisTabProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentTab = searchParams.get('tab') || defaultTab;
+  const activeTab = currentTab || searchParams.get('tab') || defaultTab;
 
   const handleTab = (tab: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -66,7 +67,7 @@ const AnalysisTab = ({ defaultTab }: AnalysisTabProps) => {
         <TabItem
           key={tab}
           tab={tab}
-          isSelected={tab === currentTab}
+          isSelected={tab === activeTab}
           onClick={handleTab}
         />
       ))}
