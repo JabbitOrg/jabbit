@@ -4,6 +4,7 @@ import AnalysisTab from './components/AnalysisTab';
 import { ANALYSIS_TAB_DATA } from '@/src/client/constants/MYPAGE';
 import { useSearchParams } from 'next/navigation';
 import Summary from './components/Tab/Summary';
+import DignosticEvaluation from './components/Tab/DignosticEvaluation';
 
 const Analysis = () => {
   const searchParams = useSearchParams();
@@ -13,6 +14,8 @@ const Analysis = () => {
     switch (currentTab) {
       case '요약':
         return <Summary />;
+      case '진단평가':
+        return <DignosticEvaluation />;
       default:
         return null;
     }

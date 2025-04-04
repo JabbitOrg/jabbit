@@ -19,6 +19,7 @@ const TabItem = ({
 }) => {
   return (
     <Flex
+      w="70px"
       justifyContent="center"
       alignItems="center"
       cursor="pointer"
