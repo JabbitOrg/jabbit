@@ -1,9 +1,9 @@
 export type EvaluatedResult = {
-    name: string;
-    label: string;
-    evaluation: boolean;
-    myRatio: number;
-}
+  name: string;
+  label: string;
+  evaluation: boolean;
+  myRatio: number;
+};
 
 export type RatioConditionType = 'min' | 'max' | 'range';
 
@@ -26,3 +26,11 @@ type RangeConfig = BaseRatioConfig & {
 export type FinancialRatioItem = MinOrMaxConfig | RangeConfig;
 
 export type FinancialRatioConfig = Record<string, FinancialRatioItem>;
+
+export type GroupComparisonItem = {
+  category: string;
+  user: number;
+  average: number;
+};
+
+export type GroupComparison = GroupComparisonItem[];
