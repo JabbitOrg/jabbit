@@ -31,14 +31,14 @@ const AnalysisClient = ({ data }: AnalysisClientProps) => {
       case '진단평가':
         return (
           <DignosticEvaluation
-            birthYear={data.financialAnalysis.birthYear}
+            birthYear={data.financialDiagnosis.birthYear}
             mainInvestmentStrategies={
-              data.financialAnalysis.mainInvestmentStrategies
+              data.financialDiagnosis.mainInvestmentStrategies
             }
-            mainFinancialIssues={data.financialAnalysis.mainFinancialIssues}
-            financialGoal={data.financialAnalysis.financialGoal}
-            financialRatios={data.financialAnalysis.financialRatios}
-            groupComparison={data.financialAnalysis.groupComparison}
+            mainFinancialIssues={data.financialDiagnosis.mainFinancialIssues}
+            financialGoal={data.financialDiagnosis.financialGoal}
+            financialRatios={data.financialDiagnosis.financialRatios}
+            groupComparison={data.financialDiagnosis.groupComparison}
           />
         );
       default:

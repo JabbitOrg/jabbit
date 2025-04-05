@@ -82,7 +82,7 @@ export async function GET(
     200,
     {
       financialSummary: userFinancialSummaryDto,
-      financialAnalysis: userFinancialDiagnosisDto,
+      financialDiagnosis: userFinancialDiagnosisDto,
     },
     API_MESSAGES['READ_SUCCESS'],
   );
