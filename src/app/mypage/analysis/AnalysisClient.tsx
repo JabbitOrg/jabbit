@@ -49,7 +49,7 @@ const AnalysisClient = ({ data }: AnalysisClientProps) => {
   return (
     <Flex flexDirection="column" w="100%">
       <AnalysisTab defaultTab={ANALYSIS_TAB_DATA[0]} />
-      <Flex width="100%" mt="24px">
+      <Flex width="100%" mt="24px" mb="100px">
         {renderTabContent()}
       </Flex>
     </Flex>
