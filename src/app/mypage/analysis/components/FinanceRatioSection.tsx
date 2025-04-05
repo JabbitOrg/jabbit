@@ -6,7 +6,13 @@ import { getFinancialRatioByBirthYear } from '@/src/client/services/analysis/get
 import { EvaluatedResult } from '@/src/client/types/financial';
 
 // 타입 정의
-type FinancialRatioKey = 'expense' | 'insurance' | 'saving' | 'investment' | 'debtRepayment' | 'retirement';
+type FinancialRatioKey =
+  | 'expense'
+  | 'insurance'
+  | 'saving'
+  | 'investment'
+  | 'debtRepayment'
+  | 'retirement';
 
 type FinancialRatios = Record<FinancialRatioKey, number>;
 
@@ -15,14 +21,21 @@ interface FinanceRatioSectionProps {
   financialRatios: FinancialRatios;
 }
 
-
-
-const FinanceRatioSection = ({ birthYear, financialRatios }: FinanceRatioSectionProps) => {
+const FinanceRatioSection = ({
+  birthYear,
+  financialRatios,
+}: FinanceRatioSectionProps) => {
   const ratioConstant = getFinancialRatioByBirthYear(birthYear);
-  
-  const evaluatedResult: EvaluatedResult[] = Object.entries(financialRatios).map(([key, value]) => {
+
+  const evaluatedResult: EvaluatedResult[] = Object.entries(
+    financialRatios,
+  ).map(([key, value]) => {
     const ratio = ratioConstant[key as keyof typeof ratioConstant];
-    const evaluation = evaluateFinancialRatio(ratio.condition, value, ratio.value);
+    const evaluation = evaluateFinancialRatio(
+      ratio.condition,
+      value,
+      ratio.value,
+    );
     return {
       name: key,
       label: ratio.label,
@@ -41,7 +54,10 @@ const FinanceRatioSection = ({ birthYear, financialRatios }: FinanceRatioSection
           매월 소득을 잘 쓰고 있는지 알려드릴게요
         </Text>
       </Flex>
-      <FinanceTable ratioConstant={ratioConstant} evaluatedResult={evaluatedResult} />
+      <FinanceTable
+        ratioConstant={ratioConstant}
+        evaluatedResult={evaluatedResult}
+      />
       <ul>
         <li
           style={{
@@ -54,11 +70,15 @@ const FinanceRatioSection = ({ birthYear, financialRatios }: FinanceRatioSection
           <Flex gap="10px">
             <Text>잘하고 있어요</Text>
             <Flex gap="4px">
-              {evaluatedResult.map((item) => (
+              {evaluatedResult.map((item) =>
                 item.evaluation ? (
-                  <TableBadge title={item.label} evaluation={item.evaluation} key={item.name} />
-                ) : null
-              ))}
+                  <TableBadge
+                    title={item.label}
+                    evaluation={item.evaluation}
+                    key={item.name}
+                  />
+                ) : null,
+              )}
             </Flex>
           </Flex>
         </li>
@@ -66,11 +86,15 @@ const FinanceRatioSection = ({ birthYear, financialRatios }: FinanceRatioSection
           <Flex gap="10px">
             <Text>보완해야 돼요</Text>
             <Flex gap="4px">
-              {evaluatedResult.map((item) => (
+              {evaluatedResult.map((item) =>
                 !item.evaluation ? (
-                  <TableBadge title={item.label} evaluation={item.evaluation} key={item.name} />
-                ) : null
-              ))}
+                  <TableBadge
+                    title={item.label}
+                    evaluation={item.evaluation}
+                    key={item.name}
+                  />
+                ) : null,
+              )}
             </Flex>
           </Flex>
         </li>
