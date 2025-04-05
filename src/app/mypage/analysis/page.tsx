@@ -2,6 +2,7 @@ import AnalysisClient from './AnalysisClient';
 import { Suspense } from 'react';
 import { BASE_URL } from '@/src/client/constants/API';
 import LoadingPage from '@/src/app/common/LoadingPage/LoadingPage';
+import NoData from '../components/NoData';
 export default async function AnalysisPage({
   searchParams,
 }: {
@@ -32,6 +33,10 @@ const AnalysisContent = async ({
 
   const financialAnalysisData = await response.json();
   const data = financialAnalysisData.data;
+
+  if (!data) {
+    return <NoData page="analysis" />;
+  }
 
   return <AnalysisClient data={data} />;
 };
