@@ -1,7 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import LifeCycleSection from '../LifeCycleSection';
 import FinanceRatioSection from '../FinanceRatioSection';
-
+import GroupComparisonSection from '../GroupComparisonRaderSection/GroupComparisonSection';
+import { GroupComparison } from '@/src/client/types/financial';
 interface DignosticEvaluationProps {
   birthYear: number;
   mainInvestmentStrategies: string[];
@@ -19,39 +20,24 @@ interface DignosticEvaluationProps {
     debtRepayment: number;
     retirement: number;
   };
-  groupComparison: {
-    income: {
-      user: number;
-      average: number;
-    };
-    debtRepayment: {
-      user: number;
-      average: number;
-    };
-    asset: {
-      user: number;
-      average: number;
-    };
-    expense: {
-      user: number;
-      average: number;
-    };
-    savingAndInvestment: {
-      user: number;
-      average: number;
-    };
-  };
+  groupComparison: GroupComparison;
 }
 
 const DignosticEvaluation = ({
   birthYear,
   financialGoal,
   financialRatios,
+  groupComparison,
 }: DignosticEvaluationProps) => {
+  console.log('groupComparison', groupComparison);
   return (
     <Flex flexDirection="column" gap="64px">
       <LifeCycleSection birthYear={birthYear} financialGoal={financialGoal} />
-      <FinanceRatioSection financialRatios={financialRatios} birthYear={birthYear} />
+      <FinanceRatioSection
+        financialRatios={financialRatios}
+        birthYear={birthYear}
+      />
+      <GroupComparisonSection groupComparison={groupComparison} />
     </Flex>
   );
 };
