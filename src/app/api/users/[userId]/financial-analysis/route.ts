@@ -1,7 +1,15 @@
 import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
-import { FINANCIAL_DIAGNOSIS_SHEET_RANGE, FINANCIAL_DIAGNOSIS_SHEET_NAME, FINANCIAL_SUMMARY_SHEET_NAME, FINANCIAL_SUMMARY_SHEET_RANGE } from '@/src/server/constants/SHEET_INFOS';
+import {
+  FINANCIAL_DIAGNOSIS_SHEET_RANGE,
+  FINANCIAL_DIAGNOSIS_SHEET_NAME,
+  FINANCIAL_SUMMARY_SHEET_NAME,
+  FINANCIAL_SUMMARY_SHEET_RANGE,
+} from '@/src/server/constants/SHEET_INFOS';
 import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
-import { createErrorApiResponse, handlePreflight } from '@/src/server/utils/apiResponseUtils';
+import {
+  createErrorApiResponse,
+  handlePreflight,
+} from '@/src/server/utils/apiResponseUtils';
 import { createSuccessApiResponse } from '@/src/server/utils/apiResponseUtils';
 import { FinancialSummaryMapper } from '@/src/server/mappers/financialSummary.mapper';
 import { FinancialSummaryDto } from '@/src/server/dtos/financialSummary.dto';
@@ -19,23 +27,37 @@ export async function GET(
 
   const { userId } = await params;
 
-  const { headerRow: financialSummaryHeaderRow, dataRows: financialSummaryDataRows } = await readSheetData(
+  const {
+    headerRow: financialSummaryHeaderRow,
+    dataRows: financialSummaryDataRows,
+  } = await readSheetData(
     FINANCIAL_SUMMARY_SHEET_NAME,
     FINANCIAL_SUMMARY_SHEET_RANGE,
   );
 
-  const { headerRow: financialDiagnosisHeaderRow, dataRows: financialDiagnosisDataRows } = await readSheetData(
+  const {
+    headerRow: financialDiagnosisHeaderRow,
+    dataRows: financialDiagnosisDataRows,
+  } = await readSheetData(
     FINANCIAL_DIAGNOSIS_SHEET_NAME,
     FINANCIAL_DIAGNOSIS_SHEET_RANGE,
   );
 
-  if (!financialSummaryHeaderRow || !financialSummaryDataRows || !financialDiagnosisHeaderRow || !financialDiagnosisDataRows) {
+  if (
+    !financialSummaryHeaderRow ||
+    !financialSummaryDataRows ||
+    !financialDiagnosisHeaderRow ||
+    !financialDiagnosisDataRows
+  ) {
     return createSuccessApiResponse(200, [], API_MESSAGES['READ_SUCCESS']);
   }
 
   let userFinancialSummaryDto: FinancialSummaryDto | null = null;
   financialSummaryDataRows.map((dataRow) => {
-    const financialSummary = FinancialSummaryMapper.fromSheetRow(financialSummaryHeaderRow, dataRow);
+    const financialSummary = FinancialSummaryMapper.fromSheetRow(
+      financialSummaryHeaderRow,
+      dataRow,
+    );
     if (financialSummary.userId === userId) {
       userFinancialSummaryDto = new FinancialSummaryDto(financialSummary);
     }
@@ -43,10 +65,13 @@ export async function GET(
 
   let userFinancialDiagnosisDto: FinancialDiagnosisDto | null = null;
   financialDiagnosisDataRows.map((dataRow) => {
-    const financialDiagnosis = FinancialDiagnosisMapper.fromSheetRow(financialDiagnosisHeaderRow, dataRow);
+    const financialDiagnosis = FinancialDiagnosisMapper.fromSheetRow(
+      financialDiagnosisHeaderRow,
+      dataRow,
+    );
     if (financialDiagnosis.userId === userId) {
       userFinancialDiagnosisDto = new FinancialDiagnosisDto(financialDiagnosis);
-    }   
+    }
   });
 
   if (!userFinancialSummaryDto || !userFinancialDiagnosisDto) {

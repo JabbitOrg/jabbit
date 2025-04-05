@@ -1,13 +1,19 @@
 import { Flex, Text } from '@chakra-ui/react';
 import './financeTable.css';
-import { EvaluatedResult, FinancialRatioConfig } from '@/src/client/types/financial';
+import {
+  EvaluatedResult,
+  FinancialRatioConfig,
+} from '@/src/client/types/financial';
 
 interface FinanceTableProps {
   ratioConstant: FinancialRatioConfig;
   evaluatedResult: EvaluatedResult[];
 }
 
-const FinanceTable = ({ ratioConstant, evaluatedResult }: FinanceTableProps) => {
+const FinanceTable = ({
+  ratioConstant,
+  evaluatedResult,
+}: FinanceTableProps) => {
   return (
     <Flex
       flexDirection="column"
@@ -30,13 +36,15 @@ const FinanceTable = ({ ratioConstant, evaluatedResult }: FinanceTableProps) => 
         </thead>
         <tbody>
           {evaluatedResult.map((item: EvaluatedResult) => (
-            <tr key={item.name}>  
+            <tr key={item.name}>
               <td>{ratioConstant[item.name].label}</td>
               <td className={item.evaluation ? 'fulfilled' : 'not-fulfilled'}>
                 {item.evaluation ? '적정' : '부족'}
               </td>
               <td>{item.myRatio}%</td>
-              <td className="recommended-ratio">{ratioConstant[item.name].displayText}</td>
+              <td className="recommended-ratio">
+                {ratioConstant[item.name].displayText}
+              </td>
             </tr>
           ))}
         </tbody>

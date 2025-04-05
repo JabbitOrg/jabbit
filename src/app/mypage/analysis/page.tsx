@@ -1,4 +1,3 @@
-
 import AnalysisClient from './AnalysisClient';
 import { Suspense } from 'react';
 import { BASE_URL } from '@/src/client/constants/API';
@@ -23,12 +22,15 @@ const AnalysisContent = async ({
   const params = await searchParams;
   const userId = params.userId;
 
-  const response = await fetch(`${BASE_URL}/users/${userId}/financial-analysis`, {
-    method: 'GET',
-    cache: 'no-store',
-  });
+  const response = await fetch(
+    `${BASE_URL}/users/${userId}/financial-analysis`,
+    {
+      method: 'GET',
+      cache: 'no-store',
+    },
+  );
 
-  const financialAnalysisData = await response.json();  
+  const financialAnalysisData = await response.json();
   const data = financialAnalysisData.data;
 
   return <AnalysisClient data={data} />;

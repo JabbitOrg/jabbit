@@ -111,8 +111,8 @@ export const FINANCIAL_RATIO_AVG = {
     condition: 'min',
     displayText: '50% 이상',
     value: 50,
-  }
-}
+  },
+};
 
 export const FINANCIAL_RATIO_20S = {
   expense: {
@@ -150,8 +150,8 @@ export const FINANCIAL_RATIO_20S = {
     condition: 'min',
     displayText: '50% 이상',
     value: 50,
-  }
-}
+  },
+};
 
 export const FINANCIAL_RATIO_30S = {
   expense: {
@@ -189,5 +189,5 @@ export const FINANCIAL_RATIO_30S = {
     condition: 'min',
     displayText: '50% 이상',
     value: 50,
-  }
-}
+  },
+};
