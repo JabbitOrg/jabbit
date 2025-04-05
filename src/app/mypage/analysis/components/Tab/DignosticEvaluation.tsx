@@ -29,7 +29,6 @@ const DignosticEvaluation = ({
   financialRatios,
   groupComparison,
 }: DignosticEvaluationProps) => {
-  console.log('groupComparison', groupComparison);
   return (
     <Flex flexDirection="column" gap="64px">
       <LifeCycleSection birthYear={birthYear} financialGoal={financialGoal} />
