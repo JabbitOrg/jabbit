@@ -30,7 +30,9 @@ export class FinancialPredictionMapper {
       goalAchievementPredictions: JSON.parse(
         dataRow[columnIndexes.goalAchievementPredictions],
       ),
-      consultingPoints: JSON.parse(dataRow[columnIndexes.consultingPoints]),
+      consultingSuggestion: JSON.parse(
+        dataRow[columnIndexes.consultingSuggestion],
+      ),
     };
   }
 }

@@ -2,6 +2,7 @@ import {
   FinancialPrediction,
   FutureFinancialPrediction,
   GoalAchievementPrediction,
+  ConsultingSuggestion,
 } from '../domains/financialPrediction';
 
 export class FinancialPredictionDto {
@@ -9,7 +10,7 @@ export class FinancialPredictionDto {
   userId: string;
   futureFinancialPrediction: FutureFinancialPrediction;
   goalAchievementPredictions: GoalAchievementPrediction[];
-  consultingPoints: string[];
+  consultingSuggestion: ConsultingSuggestion;
 
   constructor(financialDiagnosis: FinancialPrediction) {
     this.id = financialDiagnosis.id;
@@ -18,6 +19,6 @@ export class FinancialPredictionDto {
       financialDiagnosis.futureFinancialPrediction;
     this.goalAchievementPredictions =
       financialDiagnosis.goalAchievementPredictions;
-    this.consultingPoints = financialDiagnosis.consultingPoints;
+    this.consultingSuggestion = financialDiagnosis.consultingSuggestion;
   }
 }

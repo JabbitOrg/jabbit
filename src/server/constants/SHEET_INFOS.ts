@@ -84,5 +84,5 @@ export const FINANCIAL_PREDICTION_SHEET_HEADERS = [
   'userId',
   'futureFinancialPrediction',
   'goalAchievementPredictions',
-  'consultingPoints',
+  'consultingSuggestion',
 ];

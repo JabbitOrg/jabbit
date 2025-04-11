@@ -20,10 +20,16 @@ export interface GoalAchievementPrediction {
   estimatedAchievementDate: string; // "YYYY-MM-DD"
 }
 
+export interface ConsultingSuggestion {
+  originalDuration: number;
+  estimatedReducedDuration: number;
+  consultingPoints: string[];
+}
+
 export interface FinancialPrediction {
   id: string;
   userId: string;
   futureFinancialPrediction: FutureFinancialPrediction;
   goalAchievementPredictions: GoalAchievementPrediction[];
-  consultingPoints: string[];
+  consultingSuggestion: ConsultingSuggestion;
 }
