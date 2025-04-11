@@ -43,7 +43,17 @@ const AnalysisClient = ({ data }: AnalysisClientProps) => {
           />
         );
       case '미래예측':
-        return <FinancialPrediction />;
+        return (
+          <FinancialPrediction
+            futureFinancialPrediction={
+              data.financialPrediction.futureFinancialPrediction
+            }
+            goalAchievementPrediction={
+              data.financialPrediction.goalAchievementPredictions
+            }
+            consultingSuggestion={data.financialPrediction.consultingSuggestion}
+          />
+        );
       default:
         return null;
     }

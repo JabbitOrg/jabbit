@@ -2,27 +2,32 @@ import { Flex, Box } from '@chakra-ui/react';
 import LegendBox from './LegendBox';
 import PredictionChartItem from './PredictionChartItem';
 
-const data = [
-  {
-    name: '소득',
-    current: 4016667,
-    future: 6874785,
-  },
-  {
-    name: '자산',
-    current: 14480000,
-    future: 16768616,
-  },
-  {
-    name: '부채',
-    current: 12300000,
-    future: 7408800,
-  },
-];
+interface FutureFinancialPredictionChartProps {
+  income: {
+    current: number;
+    future: number;
+  };
+  asset: {
+    current: number;
+    future: number;
+  };
+  debt: {
+    current: number;
+    future: number;
+  };
+}
 
-const FutureFinancialPredictionChart = () => {
+const FutureFinancialPredictionChart = ({
+  income,
+  asset,
+  debt,
+}: FutureFinancialPredictionChartProps) => {
   const maxValue = Math.max(
-    ...data.map((item) => Math.max(item.current, item.future)),
+    income.current,
+    income.future,
+    asset.current,
+    asset.future,
+    debt.current,
   );
 
   return (
@@ -37,15 +42,24 @@ const FutureFinancialPredictionChart = () => {
       <LegendBox />
       <Box height="52px" />
       <Flex flexDir="column" gap="30px" w="100%" ml="30px">
-        {data.map((item) => (
-          <PredictionChartItem
-            key={item.name}
-            maxValue={maxValue}
-            current={item.current}
-            future={item.future}
-            name={item.name}
-          />
-        ))}
+        <PredictionChartItem
+          maxValue={maxValue}
+          current={income.current}
+          future={income.future}
+          name="소득"
+        />
+        <PredictionChartItem
+          maxValue={maxValue}
+          current={asset.current}
+          future={asset.future}
+          name="자산"
+        />
+        <PredictionChartItem
+          maxValue={maxValue}
+          current={debt.current}
+          future={debt.future}
+          name="부채"
+        />
       </Flex>
     </Flex>
   );

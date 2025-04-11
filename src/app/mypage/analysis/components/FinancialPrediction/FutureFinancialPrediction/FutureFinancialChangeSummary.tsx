@@ -1,23 +1,20 @@
 import { formatKoreanCurrency } from '@/src/client/utils/currency';
 import { Flex, Span, Text } from '@chakra-ui/react';
 
-const data = [
-  {
-    name: '소득',
-    current: 4016667,
-    future: 6874785,
-  },
-  {
-    name: '자산',
-    current: 14480000,
-    future: 16768616,
-  },
-  {
-    name: '부채',
-    current: 12300000,
-    future: 7408800,
-  },
-];
+interface FutureFinancialChangeSummaryProps {
+  income: {
+    current: number;
+    future: number;
+  };
+  asset: {
+    current: number;
+    future: number;
+  };
+  debt: {
+    current: number;
+    future: number;
+  };
+}
 
 const calculateFinancialChange = (current: number, future: number): string => {
   const change = future - current;
@@ -27,27 +24,31 @@ const calculateFinancialChange = (current: number, future: number): string => {
     : `[${formatKoreanCurrency(change)}]`;
 };
 
-const FutureFinancialChangeSummary = () => {
+const FutureFinancialChangeSummary = ({
+  income,
+  asset,
+  debt,
+}: FutureFinancialChangeSummaryProps) => {
   return (
     <Flex flexDir="column" gap="10px">
       <Text fontSize="16px" fontWeight="medium" color="main.black_1">
-        • {data[0].name}은{' '}
+        • 소득은{' '}
         <Span textDecor={'underline'}>
-          {calculateFinancialChange(data[0].current, data[0].future)}만큼
+          {calculateFinancialChange(income.current, income.future)}만큼
         </Span>
         <Span color="main.black_3"> 변했어요</Span>
       </Text>
       <Text fontSize="16px" fontWeight="medium" color="main.black_1">
-        • {data[1].name}은{' '}
+        • 자산은{' '}
         <Span textDecor={'underline'}>
-          {calculateFinancialChange(data[1].current, data[1].future)}만큼
+          {calculateFinancialChange(asset.current, asset.future)}만큼
         </Span>
         <Span color="main.black_3"> 변했어요</Span>
       </Text>
       <Text fontSize="16px" fontWeight="medium" color="main.black_1">
-        • {data[2].name}은{' '}
+        • 부채는{' '}
         <Span textDecor={'underline'}>
-          {calculateFinancialChange(data[2].current, data[2].future)}만큼
+          {calculateFinancialChange(debt.current, debt.future)}만큼
         </Span>
         <Span color="main.black_3"> 변했어요</Span>
       </Text>
