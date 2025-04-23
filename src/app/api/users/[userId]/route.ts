@@ -1,7 +1,5 @@
-import { USER_SHEET_NAME } from '@/src/server/constants/SHEET_INFOS';
-import { USER_SHEET_RANGE } from '@/src/server/constants/SHEET_INFOS';
-import { UserMapper } from '@/src/server/mappers/user.mapper';
-import { findSheetDataById } from '@/src/server/services/googleSheet/googleSheetService';
+import UserService from '@/src/server/services/userService';
+import { createSupabasePublicDBClient } from '@/src/server/supabase/clients';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
@@ -17,17 +15,15 @@ export async function GET(
     return preflightResponse;
   }
 
-  const { userId } = await params;
+  const supabase = createSupabasePublicDBClient();
+  const userService = new UserService(supabase);
 
-  const { headerRow, dataRows } = await findSheetDataById(
-    USER_SHEET_NAME,
-    USER_SHEET_RANGE,
-    userId,
-  );
-  if (!headerRow || !dataRows) {
-    return createErrorApiResponse('UNKNOWN_ERROR');
+  try {
+    const { userId } = await params;
+    const user = await userService.getUserById(userId);
+    return createSuccessApiResponse('READ_SUCCESS', user);
+  } catch (error) {
+    console.error(error);
+    return createErrorApiResponse('FETCH_FAILED');
   }
-
-  const userDto = UserMapper.fromSheetRow(headerRow, dataRows);
-  return createSuccessApiResponse('READ_SUCCESS', userDto);
 }

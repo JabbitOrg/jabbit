@@ -35,11 +35,14 @@ export async function POST(req: Request) {
 
   try {
     const { provider_id, provider, email } = await req.json();
-    await userService.createUser({ provider_id, provider, email });
+    const user = await userService.createUser({
+      provider_id,
+      provider,
+      email,
+    });
+    return createSuccessApiResponse('CREATE_SUCCESS', user);
   } catch (error) {
     console.error(error);
     return createErrorApiResponse('UNKNOWN_ERROR');
   }
-
-  return createSuccessApiResponse('CREATE_SUCCESS', []);
 }
