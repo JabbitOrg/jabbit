@@ -5,7 +5,8 @@ import {
   createSuccessApiResponse,
 } from '@/src/server/utils/apiResponseUtils';
 import createUser from '@/src/client/lib/api/createUser';
-import readAllUsers from '@/src/client/lib/api/readAllUsers';
+import getAllUsers from '@/src/client/lib/api/getAllUsers';
+import { User } from '@/src/server/types/domains';
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get('code');
@@ -28,14 +29,13 @@ export async function GET(req: Request) {
     }
 
     // 사용자 정보 조회
-    const userReadResponse = await readAllUsers();
-    const isUserExist = userReadResponse.find(
-      (user: any) => user.provider_id == userData.id,
+    const userReadResponse = await getAllUsers();
+    let user = userReadResponse.data.find(
+      (user: User) => user.provider_id == userData.id,
     );
 
-    if (!isUserExist) {
-      // 사용자 정보가 없으면 생성
-      await createUser({
+    if (!user) {
+      user = await createUser({
         provider_id: userData.id,
         provider: 'KAKAO',
         email: userData.kakao_account.email,
@@ -44,12 +44,12 @@ export async function GET(req: Request) {
 
     // JWT 토큰 생성
     const jwtToken = createJwtToken({
-      id: userData.id,
+      id: user.id,
       provider: 'KAKAO',
     });
 
     return createSuccessApiResponse('READ_SUCCESS', {
-      id: userData.id,
+      id: user.id,
       provider: 'KAKAO',
       token: jwtToken,
     });

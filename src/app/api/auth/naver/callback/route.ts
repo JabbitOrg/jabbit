@@ -4,8 +4,9 @@ import {
   createErrorApiResponse,
   createSuccessApiResponse,
 } from '@/src/server/utils/apiResponseUtils';
-import readAllUsers from '@/src/client/lib/api/readAllUsers';
+import getAllUsers from '@/src/client/lib/api/getAllUsers';
 import createUser from '@/src/client/lib/api/createUser';
+import { User } from '@/src/server/types/domains';
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get('code');
@@ -30,14 +31,13 @@ export async function GET(req: Request) {
     }
 
     // 사용자 정보 조회
-    const userReadResponse = await readAllUsers();
-    const isUserExist = userReadResponse.find(
-      (user: any) => user.provider_id === userData.response.id,
+    const userReadResponse = await getAllUsers();
+    let user = userReadResponse.data.find(
+      (user: User) => user.provider_id === userData.response.id,
     );
 
-    if (!isUserExist) {
-      // 사용자 정보가 없으면 생성
-      await createUser({
+    if (!user) {
+      user = await createUser({
         provider_id: userData.response.id,
         provider: 'NAVER',
         email: userData.response.email,
@@ -46,12 +46,12 @@ export async function GET(req: Request) {
 
     // JWT 토큰 생성
     const jwtToken = createJwtToken({
-      id: userData.response.id,
+      id: user.id,
       provider: 'NAVER',
     });
 
     return createSuccessApiResponse('READ_SUCCESS', {
-      id: userData.response.id,
+      id: user.id,
       provider: 'NAVER',
       token: jwtToken,
     });
