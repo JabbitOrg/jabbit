@@ -3,18 +3,16 @@ import {
   EXPERT_SHEET_RANGE,
   PRODUCT_SHEET_RANGE,
 } from '@/src/server/constants/SHEET_INFOS';
-import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
+import { readSheetData } from '@/src/server/services/googleSheet/googleSheetService';
 import { PRODUCT_SHEET_NAME } from '@/src/server/constants/SHEET_INFOS';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
   handlePreflight,
 } from '@/src/server/utils/apiResponseUtils';
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
 import { ProductMapper } from '@/src/server/mappers/product.mapper';
 import { ProductSimpleDto } from '@/src/server/dtos/product.simple.dto';
 import { ExpertMapper } from '@/src/server/mappers/expert.mapper';
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET(req: Request) {
   const preflightResponse = handlePreflight(req);
@@ -25,19 +23,13 @@ export async function GET(req: Request) {
   const { headerRow: productHeaderRow, dataRows: productDataRows } =
     await readSheetData(PRODUCT_SHEET_NAME, PRODUCT_SHEET_RANGE);
   if (!productHeaderRow || !productDataRows) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const { headerRow: expertHeaderRow, dataRows: expertDataRows } =
     await readSheetData(EXPERT_SHEET_NAME, EXPERT_SHEET_RANGE);
   if (!expertHeaderRow || !expertDataRows) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const productSimpleDtos: ProductSimpleDto[] = [];
@@ -68,9 +60,5 @@ export async function GET(req: Request) {
     }
   }
 
-  return createSuccessApiResponse(
-    200,
-    productSimpleDtos,
-    API_MESSAGES['READ_SUCCESS'],
-  );
+  return createSuccessApiResponse('READ_SUCCESS', productSimpleDtos);
 }

@@ -1,4 +1,3 @@
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 import {
   FINANCIAL_DIAGNOSIS_SHEET_RANGE,
   FINANCIAL_DIAGNOSIS_SHEET_NAME,
@@ -7,7 +6,7 @@ import {
   FINANCIAL_PREDICTION_SHEET_RANGE,
   FINANCIAL_PREDICTION_SHEET_NAME,
 } from '@/src/server/constants/SHEET_INFOS';
-import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
+import { readSheetData } from '@/src/server/services/googleSheet/googleSheetService';
 import {
   createErrorApiResponse,
   handlePreflight,
@@ -63,7 +62,7 @@ export async function GET(
     !financialPredictionHeaderRow ||
     !financialPredictionDataRows
   ) {
-    return createSuccessApiResponse(200, [], API_MESSAGES['READ_SUCCESS']);
+    return createSuccessApiResponse('READ_SUCCESS', []);
   }
 
   let userFinancialSummaryDto: FinancialSummaryDto | null = null;
@@ -106,16 +105,12 @@ export async function GET(
     !userFinancialDiagnosisDto ||
     !userFinancialPredictionDto
   ) {
-    return createErrorApiResponse(404, 'notFound');
+    return createErrorApiResponse('NOT_FOUND_ERROR');
   }
 
-  return createSuccessApiResponse(
-    200,
-    {
-      financialSummary: userFinancialSummaryDto,
-      financialDiagnosis: userFinancialDiagnosisDto,
-      financialPrediction: userFinancialPredictionDto,
-    },
-    API_MESSAGES['READ_SUCCESS'],
-  );
+  return createSuccessApiResponse('READ_SUCCESS', {
+    financialSummary: userFinancialSummaryDto,
+    financialDiagnosis: userFinancialDiagnosisDto,
+    financialPrediction: userFinancialPredictionDto,
+  });
 }

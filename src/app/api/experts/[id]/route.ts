@@ -1,5 +1,4 @@
-import { findSheetDataById } from '@/src/server/service/googleSheet/googleSheetService';
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
+import { findSheetDataById } from '@/src/server/services/googleSheet/googleSheetService';
 import {
   EXPERT_SHEET_NAME,
   EXPERT_SHEET_RANGE,
@@ -10,7 +9,6 @@ import {
   createErrorApiResponse,
   createSuccessApiResponse,
 } from '@/src/server/utils/apiResponseUtils';
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 import { handlePreflight } from '@/src/server/utils/apiResponseUtils';
 export async function GET(
   _request: Request,
@@ -28,10 +26,7 @@ export async function GET(
     await findSheetDataById(EXPERT_SHEET_NAME, EXPERT_SHEET_RANGE, expertId);
 
   if (!expertHeaderRow || !expertDataRows) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   try {
@@ -41,16 +36,9 @@ export async function GET(
     );
     const expertDto = new ExpertDto(parsedExpert);
 
-    return createSuccessApiResponse(
-      200,
-      expertDto,
-      API_MESSAGES['READ_SUCCESS'],
-    );
+    return createSuccessApiResponse('READ_SUCCESS', expertDto);
   } catch (error) {
     console.error(`Parsing error for expert with id ${expertId}:`, error);
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.parseError'].statusCode,
-      'googleSheet.parseError',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 }

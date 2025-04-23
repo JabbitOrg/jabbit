@@ -2,16 +2,14 @@ import {
   CONSULTATION_SHEET_NAME,
   CONSULTATION_SHEET_RANGE,
 } from '@/src/server/constants/SHEET_INFOS';
-import { findSheetDataById } from '@/src/server/service/googleSheet/googleSheetService';
+import { findSheetDataById } from '@/src/server/services/googleSheet/googleSheetService';
 import {
   handlePreflight,
   createErrorApiResponse,
   createSuccessApiResponse,
 } from '@/src/server/utils/apiResponseUtils';
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
 import { ConsultationMapper } from '@/src/server/mappers/consultation.mapper';
 import { ConsultationDto } from '@/src/server/dtos/consultation.dto';
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET(
   req: Request,
@@ -31,25 +29,15 @@ export async function GET(
   );
 
   if (!headerRow || !dataRows) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const consultation = ConsultationMapper.fromSheetRow(headerRow, dataRows);
 
   if (consultation.userId !== userId) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.expertNotFound'].statusCode,
-      'googleSheet.expertNotFound',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const consultationDto = new ConsultationDto(consultation);
-  return createSuccessApiResponse(
-    200,
-    consultationDto,
-    API_MESSAGES['READ_SUCCESS'],
-  );
+  return createSuccessApiResponse('READ_SUCCESS', consultationDto);
 }

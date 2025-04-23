@@ -1,7 +1,6 @@
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 import { CONSULTATION_SHEET_RANGE } from '@/src/server/constants/SHEET_INFOS';
 import { CONSULTATION_SHEET_NAME } from '@/src/server/constants/SHEET_INFOS';
-import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
+import { readSheetData } from '@/src/server/services/googleSheet/googleSheetService';
 import { handlePreflight } from '@/src/server/utils/apiResponseUtils';
 import { ConsultationMapper } from '@/src/server/mappers/consultation.mapper';
 import { createSuccessApiResponse } from '@/src/server/utils/apiResponseUtils';
@@ -24,7 +23,7 @@ export async function GET(
   );
 
   if (!headerRow || !dataRows) {
-    return createSuccessApiResponse(200, [], API_MESSAGES['READ_SUCCESS']);
+    return createSuccessApiResponse('READ_SUCCESS', []);
   }
 
   const userConsultationSimpleDtos: ConsultationSimpleDto[] = [];
@@ -35,9 +34,5 @@ export async function GET(
     }
   });
 
-  return createSuccessApiResponse(
-    200,
-    userConsultationSimpleDtos,
-    API_MESSAGES['READ_SUCCESS'],
-  );
+  return createSuccessApiResponse('READ_SUCCESS', userConsultationSimpleDtos);
 }

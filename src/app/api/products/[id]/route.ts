@@ -1,5 +1,3 @@
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
 import {
   EXPERT_SHEET_NAME,
   EXPERT_SHEET_RANGE,
@@ -7,7 +5,7 @@ import {
   PRODUCT_SHEET_RANGE,
 } from '@/src/server/constants/SHEET_INFOS';
 import { ProductDto } from '@/src/server/dtos/product.dto';
-import { findSheetDataById } from '@/src/server/service/googleSheet/googleSheetService';
+import { findSheetDataById } from '@/src/server/services/googleSheet/googleSheetService';
 import { ExpertMapper } from '@/src/server/mappers/expert.mapper';
 import { ProductMapper } from '@/src/server/mappers/product.mapper';
 import {
@@ -32,10 +30,7 @@ export async function GET(
     await findSheetDataById(PRODUCT_SHEET_NAME, PRODUCT_SHEET_RANGE, productId);
   if (!productHeaderRow || !productDataRows) {
     console.error(`Product not found for id ${productId}:`, productHeaderRow);
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const productColumnIndexes = ProductMapper.getColumnIndexes(productHeaderRow);
@@ -52,10 +47,7 @@ export async function GET(
       `Expert not found for product with id ${productId}:`,
       expertHeaderRow,
     );
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.expertNotFound'].statusCode,
-      'googleSheet.expertNotFound',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   try {
@@ -70,16 +62,9 @@ export async function GET(
     );
     const productDto = new ProductDto(parsedProduct);
 
-    return createSuccessApiResponse(
-      200,
-      productDto,
-      API_MESSAGES['READ_SUCCESS'],
-    );
+    return createSuccessApiResponse('READ_SUCCESS', productDto);
   } catch (error) {
     console.error(`Parsing error for product with id ${productId}:`, error);
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.parseError'].statusCode,
-      'googleSheet.parseError',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 }

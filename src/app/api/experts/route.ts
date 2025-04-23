@@ -1,5 +1,4 @@
-import { readSheetData } from '@/src/server/service/googleSheet/googleSheetService';
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
+import { readSheetData } from '@/src/server/services/googleSheet/googleSheetService';
 import {
   EXPERT_SHEET_NAME,
   EXPERT_SHEET_RANGE,
@@ -11,7 +10,6 @@ import {
   createSuccessApiResponse,
   handlePreflight,
 } from '@/src/server/utils/apiResponseUtils';
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 
 export async function GET(req: Request) {
   const preflightResponse = handlePreflight(req);
@@ -24,10 +22,7 @@ export async function GET(req: Request) {
     EXPERT_SHEET_RANGE,
   );
   if (!headerRow || !dataRows) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const expertSimpleDtos: ExpertSimpleDto[] = [];
@@ -41,9 +36,5 @@ export async function GET(req: Request) {
     }
   }
 
-  return createSuccessApiResponse(
-    200,
-    expertSimpleDtos,
-    API_MESSAGES['READ_SUCCESS'],
-  );
+  return createSuccessApiResponse('READ_SUCCESS', expertSimpleDtos);
 }

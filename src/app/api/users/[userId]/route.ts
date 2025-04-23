@@ -1,9 +1,7 @@
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
-import { API_MESSAGES } from '@/src/server/constants/API_MESSAGES';
 import { USER_SHEET_NAME } from '@/src/server/constants/SHEET_INFOS';
 import { USER_SHEET_RANGE } from '@/src/server/constants/SHEET_INFOS';
 import { UserMapper } from '@/src/server/mappers/user.mapper';
-import { findSheetDataById } from '@/src/server/service/googleSheet/googleSheetService';
+import { findSheetDataById } from '@/src/server/services/googleSheet/googleSheetService';
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
@@ -27,12 +25,9 @@ export async function GET(
     userId,
   );
   if (!headerRow || !dataRows) {
-    return createErrorApiResponse(
-      ERROR_INFOS['googleSheet.noData'].statusCode,
-      'googleSheet.noData',
-    );
+    return createErrorApiResponse('UNKNOWN_ERROR');
   }
 
   const userDto = UserMapper.fromSheetRow(headerRow, dataRows);
-  return createSuccessApiResponse(200, userDto, API_MESSAGES['READ_SUCCESS']);
+  return createSuccessApiResponse('READ_SUCCESS', userDto);
 }
