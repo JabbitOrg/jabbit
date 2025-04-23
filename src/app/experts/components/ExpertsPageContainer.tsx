@@ -1,7 +1,6 @@
 import { BASE_URL } from '@/src/client/constants/API';
 import ExpertsView from './ExpertsView';
 import { useEffect, useState } from 'react';
-import { ERROR_INFOS } from '@/src/client/constants/ERROR_INFOS';
 import { AppError } from '@/src/client/errors/AppError';
 import { useErrorToast } from '@/src/client/errors/useErrorToast';
 import { SimpleProduct } from '@/src/client/types/product';
@@ -22,22 +21,13 @@ const ExpertsPageContainer = () => {
 
       if (!responseJson.success)
         throw new AppError({
-          statusCode: ERROR_INFOS['fetchFailed'].statusCode,
-          errorInfoKey: 'fetchFailed',
+          name: responseJson.name,
+          message: responseJson.message,
         });
 
       setData(responseJson.data);
     } catch (error) {
-      const isAppError = error instanceof AppError;
-
-      if (!isAppError) {
-        error = new AppError({
-          statusCode: ERROR_INFOS['fetchFailed'].statusCode,
-          errorInfoKey: 'fetchFailed',
-        });
-      }
-
-      showErrorToast(error as AppError);
+      showErrorToast(error as Error);
     } finally {
       setIsLoading(false);
     }
