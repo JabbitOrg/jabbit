@@ -1,29 +1,31 @@
 import {
   createErrorApiResponse,
   createSuccessApiResponse,
+  handlePreflight,
 } from '@/src/server/utils/apiResponseUtils';
-import { handlePreflight } from '@/src/server/utils/apiResponseUtils';
+import ConsultingProductService from '@/src/server/services/consultingProductService';
 import { createSupabasePublicDBClient } from '@/src/server/supabase/clients';
-import ExpertService from '@/src/server/services/expertService';
+
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const preflightResponse = handlePreflight(_request);
+  console.log('request', request);
+  const preflightResponse = handlePreflight(request);
   if (preflightResponse) {
     return preflightResponse;
   }
 
   const supabase = createSupabasePublicDBClient();
-  const expertService = new ExpertService(supabase);
+  const consultingProductService = new ConsultingProductService(supabase);
 
   try {
     const { id } = await params;
-    const expert = await expertService.getExpertById(id);
-
-    return createSuccessApiResponse('READ_SUCCESS', expert);
+    const consultingProduct =
+      await consultingProductService.getConsultingProductWithExpertById(id);
+    return createSuccessApiResponse('READ_SUCCESS', consultingProduct);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return createErrorApiResponse('FETCH_FAILED');
   }
 }
