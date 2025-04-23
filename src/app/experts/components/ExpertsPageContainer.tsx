@@ -1,31 +1,27 @@
-import { BASE_URL } from '@/src/client/constants/API';
 import ExpertsView from './ExpertsView';
 import { useEffect, useState } from 'react';
 import { AppError } from '@/src/client/errors/AppError';
 import { useErrorToast } from '@/src/client/errors/useErrorToast';
-import { SimpleProduct } from '@/src/client/types/product';
+import getAllConsultingProductsWithExpert from '@/src/client/lib/api/getAllConsultingProductsWithExpert';
+import { ConsultingProductWithExpert } from '@/src/server/types/domains';
+
 const ExpertsPageContainer = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { showErrorToast } = useErrorToast();
-  const [data, setData] = useState<SimpleProduct[]>([]);
+  const [data, setData] = useState<ConsultingProductWithExpert[]>([]);
 
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${BASE_URL}/products/`, {
-        method: 'GET',
-        cache: 'no-store',
-      });
+      const response = await getAllConsultingProductsWithExpert();
 
-      const responseJson = await response.json();
-
-      if (!responseJson.success)
+      if (!response.success)
         throw new AppError({
-          name: responseJson.name,
-          message: responseJson.message,
+          name: response.name,
+          message: response.message,
         });
 
-      setData(responseJson.data);
+      setData(response.data);
     } catch (error) {
       showErrorToast(error as Error);
     } finally {
