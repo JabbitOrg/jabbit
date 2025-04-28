@@ -11,13 +11,13 @@ const getFinancialRatio = (financialInfo: UserFinancialInfo) => {
 
   return {
     expense: Number(((monthly_expenses / monthly_income) * 100).toFixed(1)),
-    insurance: 0.5,
+    // insurance: 0.5,
     saving: Number(((monthly_savings / monthly_income) * 100).toFixed(1)),
     investment: Number(
       ((monthly_investment / monthly_income) * 100).toFixed(1),
     ),
     debtRepayment: Number(((total_debt / monthly_income) * 100).toFixed(1)),
-    retirement: 37.5,
+    // retirement: 37.5,
   };
 };
 
