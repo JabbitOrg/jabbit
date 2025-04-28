@@ -63,7 +63,7 @@ const AnalysisClient = ({ userFinancialAnalysis }: AnalysisClientProps) => {
               userFinancialAnalysis.user_financial_diagnosis!
                 .main_financial_issues
             }
-            birthYear={userFinancialAnalysis.birth_year}
+            birthYear={userFinancialAnalysis.birth_year || 1998} // TODO : 나중에 birth_year 값 추가 후 삭제
             groupComparison={getGroupComparison(
               userFinancialAnalysis.user_financial_info!,
             )}

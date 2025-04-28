@@ -265,32 +265,32 @@ export type Database = {
       }
       users: {
         Row: {
-          birth_year: number
+          birth_year: number | null
           created_at: string
-          email: string
-          has_children: boolean
+          email: string | null
+          has_children: boolean | null
           id: string
-          is_married: boolean
+          is_married: boolean | null
           provider: string
           provider_id: string
         }
         Insert: {
-          birth_year: number
+          birth_year?: number | null
           created_at?: string
-          email: string
-          has_children?: boolean
+          email?: string | null
+          has_children?: boolean | null
           id?: string
-          is_married?: boolean
+          is_married?: boolean | null
           provider: string
           provider_id: string
         }
         Update: {
-          birth_year?: number
+          birth_year?: number | null
           created_at?: string
-          email?: string
-          has_children?: boolean
+          email?: string | null
+          has_children?: boolean | null
           id?: string
-          is_married?: boolean
+          is_married?: boolean | null
           provider?: string
           provider_id?: string
         }
