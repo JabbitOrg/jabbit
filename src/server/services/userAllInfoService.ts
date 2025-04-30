@@ -10,7 +10,7 @@ interface UserAllInfoCreateForm {
   personal_info: Omit<UserPersonalInfo, 'id'>;
   financial_goals: Omit<UserFinancialGoal, 'user_id'>[];
   financial_concern: Omit<UserFinancialConcern, 'id'>;
-  cashflow: Omit<UserCashflows, 'id'>;
+  cashflows: Omit<UserCashflows, 'id'>;
   expenses: Omit<UserExpense, 'user_id'>[];
   debts: Omit<UserDebt, 'user_id'>[];
   assets: Omit<UserAsset, 'user_id'>[];
@@ -78,13 +78,13 @@ class UserAllInfoService {
         key: userId,
       });
 
-      // user_cashflow
+      // user_cashflows
       const { data: userCashflow, error: userCashflowError } =
         await this.supabase
           .from('user_cashflows')
           .insert({
             id: userId,
-            ...allInfo.cashflow,
+            ...allInfo.cashflows,
           })
           .select();
       if (userCashflowError) {
