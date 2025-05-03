@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "theme": "npx @chakra-ui/cli typegen ./src/client/theme/theme.ts",
     "supabase:gen": "supabase gen types typescript --project-id mqqdyqutxdatzhxwqzuy --schema public > src/server/types/supabase.ts"
   },
   "dependencies": {
