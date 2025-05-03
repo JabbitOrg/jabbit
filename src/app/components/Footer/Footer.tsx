@@ -6,7 +6,7 @@ import { TERMS_OF_SERVICE_URL } from '@/src/client/constants/URL';
 
 const Footer = () => {
   return (
-    <Box width="100%" borderTop="2px solid #f2f3f5">
+    <Box width="100%" borderTop="2px solid #f2f3f5" marginTop="120px">
       <Flex
         flexDirection="column"
         gap="20px"
