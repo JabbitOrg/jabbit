@@ -14,10 +14,10 @@ const Footer = () => {
         margin="52px auto"
       >
         <FooterLogoSVG />
-        <Text textStyle="sm" color="main.black_4">
+        <Text textStyle="xs" color="main.black_4">
           대표자명: 한승호 | Contact: jabbitmy@gmail.com
         </Text>
-        <Text textStyle="sm" color="main.black_4">
+        <Text textStyle="xs" color="main.black_4">
           <BaseLink href={TERMS_OF_SERVICE_URL}>서비스 이용 약관</BaseLink> |{' '}
           <BaseLink href={PRIVACY_POLICY_URL}>개인정보 수집 동의</BaseLink>
         </Text>
