@@ -1,22 +1,32 @@
 'use client';
 
+import Step1 from './_components/Step1';
+import Step2 from './_components/Step2';
+import Step3 from './_components/Step3';
+import Step4 from './_components/Step4';
+import Step5 from './_components/Step5';
 import { Button, ButtonGroup, Steps } from '@chakra-ui/react';
 
 const steps = [
   {
     title: 'Step 1',
+    description: <Step1 />,
   },
   {
     title: 'Step 2',
+    description: <Step2 />,
   },
   {
     title: 'Step 3',
+    description: <Step3 />,
   },
   {
     title: 'Step 4',
+    description: <Step4 />,
   },
   {
     title: 'Step 5',
+    description: <Step5 />,
   },
 ];
 
@@ -62,7 +72,7 @@ function InfoPage() {
       {/* TODO: add contents */}
       {steps.map((step, index) => (
         <Steps.Content key={index} index={index}>
-          content
+          {step.description}
         </Steps.Content>
       ))}
 
@@ -70,7 +80,7 @@ function InfoPage() {
         <Steps.PrevTrigger asChild>
           <Button
             variant="solid"
-            textStyle="sm"
+            textStyle="xs"
             bgColor="#A9ABBC"
             mt="72px"
             w="112px"
@@ -83,7 +93,7 @@ function InfoPage() {
         <Steps.NextTrigger asChild>
           <Button
             variant="solid"
-            textStyle="sm"
+            textStyle="xs"
             bgColor="primary"
             mt="72px"
             w="112px"
