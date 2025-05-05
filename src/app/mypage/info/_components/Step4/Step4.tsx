@@ -29,14 +29,18 @@ function Step4() {
           <Input
             type="number"
             placeholder="월 수입은 얼마인가요?"
-            {...register('cashflows.regular_income')}
+            {...register('cashflows.regular_income', {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label="비정기 수입" gap="9px">
           <Input
             type="number"
             placeholder="비정기 수입은 연간 얼마인가요?"
-            {...register('cashflows.irregular_income')}
+            {...register('cashflows.irregular_income', {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label="메모" gap="9px">
@@ -54,14 +58,18 @@ function Step4() {
           <Input
             type="number"
             placeholder="월 저축 금액은 얼마인가요?"
-            {...register('cashflows.regular_saving')}
+            {...register('cashflows.regular_saving', {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label="비정기 저축" gap="9px">
           <Input
             type="number"
             placeholder="비정기 저축 금액은 연간 얼마인가요?"
-            {...register('cashflows.irregular_saving')}
+            {...register('cashflows.irregular_saving', {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label="메모" gap="9px">
@@ -79,14 +87,18 @@ function Step4() {
           <Input
             type="number"
             placeholder="월 투자 금액은 얼마인가요?"
-            {...register('cashflows.regular_investment')}
+            {...register('cashflows.regular_investment', {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label="비정기 투자" gap="9px">
           <Input
             type="number"
             placeholder="비정기 투자 금액은 연간 얼마인가요?"
-            {...register('cashflows.irregular_investment')}
+            {...register('cashflows.irregular_investment', {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label="메모" gap="9px">

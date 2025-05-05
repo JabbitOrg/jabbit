@@ -79,7 +79,7 @@ const postUserFinancialInfo = async (
   userId: string,
   financialInfo: UserFinancialInfo,
 ) => {
-  const response = await fetch(`${BASE_URL}/users/${userId}/financial-info`, {
+  const response = await fetch(`${BASE_URL}/users/${userId}/all-info`, {
     method: 'POST',
     body: JSON.stringify(financialInfo),
   });

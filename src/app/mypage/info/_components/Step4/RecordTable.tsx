@@ -37,10 +37,7 @@ function RecordTable({
                 collection={options}
                 placeholder={subFields[0].placeholder}
                 name={field.name}
-                onValueChange={({ value }) => {
-                  console.log('val', value);
-                  field.onChange(value[0]);
-                }}
+                onValueChange={({ value }) => field.onChange(value[0])}
                 onInteractOutside={() => field.onBlur()}
               />
             )}
@@ -50,7 +47,9 @@ function RecordTable({
           <Input
             type="number"
             placeholder={subFields[1].placeholder}
-            {...register(`${fieldName}.0.amount`)}
+            {...register(`${fieldName}.0.amount`, {
+              valueAsNumber: true,
+            })}
           />
         </Field>
         <Field label={subFields[2].label} gap="9px">
@@ -79,7 +78,9 @@ function RecordTable({
             <Input
               type="number"
               placeholder={subFields[1].placeholder}
-              {...register(`${fieldName}.${index + 1}.amount`)}
+              {...register(`${fieldName}.${index + 1}.amount`, {
+                valueAsNumber: true,
+              })}
             />
             <Input
               placeholder={subFields[2].placeholder}

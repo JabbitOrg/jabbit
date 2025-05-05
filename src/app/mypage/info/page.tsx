@@ -5,7 +5,9 @@ import { Button, ButtonGroup, Steps } from '@chakra-ui/react';
 import { FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 
-import postUserFinancialInfo from '@/src/client/lib/api/postUserFinancialInfo';
+import postUserFinancialInfo, {
+  UserFinancialInfo,
+} from '@/src/client/lib/api/postUserFinancialInfo';
 import { useAuthStore } from '@/src/client/store/authStore';
 
 import Step1 from './_components/Step1';
@@ -47,10 +49,16 @@ function InfoPage() {
     if (!user) return;
     const values = methods.getValues();
 
-    postUserFinancialInfo(user.id, values);
-  };
+    const FINANCIAL_GOALS_KEY = ['short_term', 'mid_term', 'long_term'];
 
-  console.log('currentStep', currentStep);
+    postUserFinancialInfo(user.id, {
+      ...values,
+      financial_goals: values.financial_goals.map((goal, idx) => ({
+        ...goal,
+        goal_type: FINANCIAL_GOALS_KEY[idx],
+      })) as UserFinancialInfo['financial_goals'],
+    });
+  };
 
   return (
     <FormProvider {...methods}>

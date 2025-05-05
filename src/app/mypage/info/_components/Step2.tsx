@@ -38,7 +38,9 @@ function Step2() {
                 type="number"
                 placeholder="99"
                 w="50px"
-                {...register('financial_goals.0.target_years')}
+                {...register('financial_goals.0.target_years', {
+                  valueAsNumber: true,
+                })}
               />
               <Text>년 후까지</Text>
             </Flex>
@@ -47,7 +49,9 @@ function Step2() {
             <Input
               type="number"
               placeholder="금액을 입력하세요"
-              {...register('financial_goals.0.target_amount')}
+              {...register('financial_goals.0.target_amount', {
+                valueAsNumber: true,
+              })}
             />
           </Field>
         </Flex>
@@ -74,7 +78,9 @@ function Step2() {
                 type="number"
                 placeholder="99"
                 w="50px"
-                {...register('financial_goals.1.target_years')}
+                {...register('financial_goals.1.target_years', {
+                  valueAsNumber: true,
+                })}
               />
               <Text>년 후까지</Text>
             </Flex>
@@ -83,7 +89,9 @@ function Step2() {
             <Input
               type="number"
               placeholder="금액을 입력하세요"
-              {...register('financial_goals.1.target_amount')}
+              {...register('financial_goals.1.target_amount', {
+                valueAsNumber: true,
+              })}
             />
           </Field>
         </Flex>
@@ -110,7 +118,9 @@ function Step2() {
                 type="number"
                 placeholder="99"
                 w="50px"
-                {...register('financial_goals.2.target_years')}
+                {...register('financial_goals.2.target_years', {
+                  valueAsNumber: true,
+                })}
               />
               <Text>년 후까지</Text>
             </Flex>
@@ -119,7 +129,9 @@ function Step2() {
             <Input
               type="number"
               placeholder="금액을 입력하세요"
-              {...register('financial_goals.2.target_amount')}
+              {...register('financial_goals.2.target_amount', {
+                valueAsNumber: true,
+              })}
             />
           </Field>
         </Flex>

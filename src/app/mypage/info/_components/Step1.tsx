@@ -40,7 +40,9 @@ function Step1() {
             <Input
               type="number"
               placeholder="출생연도를 입력하세요"
-              {...register('personal_info.birth_year')}
+              {...register('personal_info.birth_year', {
+                valueAsNumber: true,
+              })}
             />
           </Field>
 
@@ -73,7 +75,9 @@ function Step1() {
             <Input
               type="number"
               placeholder="연차를 입력하세요 (없으면 0 으로 입력해주세요)"
-              {...register('personal_info.years_of_experience')}
+              {...register('personal_info.years_of_experience', {
+                valueAsNumber: true,
+              })}
             />
           </Field>
         </Flex>
