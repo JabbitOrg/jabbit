@@ -1,8 +1,13 @@
 import { Flex, Separator, Stack, Text } from '@chakra-ui/react';
+import { useFormContext } from 'react-hook-form';
+
 import Input from '@/src/app/components/Input/Input';
 import Field from '@/src/app/components/Field/Field';
+import { UserFinancialInfo } from '@/src/client/lib/api/postUserFinancialInfo';
 
 function Step2() {
+  const { register } = useFormContext<UserFinancialInfo>();
+
   return (
     <Stack dir="column" width="100%" gap="0">
       <Stack dir="column" gap="12px" mb="34px">
@@ -21,17 +26,27 @@ function Step2() {
         fontSize="20px"
       >
         <Field label="목적" gap="9px">
-          <Input placeholder="이루고 싶은 목표를 입력하세요 (ex. 종잣돈 모으기)" />
+          <Input
+            placeholder="이루고 싶은 목표를 입력하세요 (ex. 종잣돈 모으기)"
+            {...register('financial_goals.0.goal_title')}
+          />
         </Field>
         <Flex alignItems="center" gap="138px" width="100%">
           <Field label="목표 기간" gap="9px" width="fit-content">
             <Flex alignItems="center" gap="10px">
-              <Input placeholder="99" w="50px" />
+              <Input
+                placeholder="99"
+                w="50px"
+                {...register('financial_goals.0.target_years')}
+              />
               <Text>년 후까지</Text>
             </Flex>
           </Field>
           <Field label="목표 금액" gap="9px" flex={1}>
-            <Input placeholder="금액을 입력하세요" />
+            <Input
+              placeholder="금액을 입력하세요"
+              {...register('financial_goals.0.target_amount')}
+            />
           </Field>
         </Flex>
       </Field>
@@ -45,17 +60,27 @@ function Step2() {
         fontSize="20px"
       >
         <Field label="목적" gap="9px">
-          <Input placeholder="이루고 싶은 목표를 입력하세요 (ex. 종잣돈 모으기)" />
+          <Input
+            placeholder="이루고 싶은 목표를 입력하세요 (ex. 종잣돈 모으기)"
+            {...register('financial_goals.1.goal_title')}
+          />
         </Field>
         <Flex alignItems="center" gap="138px" width="100%">
           <Field label="목표 기간" gap="9px" width="fit-content">
             <Flex alignItems="center" gap="10px">
-              <Input placeholder="99" w="50px" />
+              <Input
+                placeholder="99"
+                w="50px"
+                {...register('financial_goals.1.target_years')}
+              />
               <Text>년 후까지</Text>
             </Flex>
           </Field>
           <Field label="목표 금액" gap="9px" flex={1}>
-            <Input placeholder="금액을 입력하세요" />
+            <Input
+              placeholder="금액을 입력하세요"
+              {...register('financial_goals.1.target_amount')}
+            />
           </Field>
         </Flex>
       </Field>
@@ -69,17 +94,27 @@ function Step2() {
         fontSize="20px"
       >
         <Field label="목적" gap="9px">
-          <Input placeholder="이루고 싶은 목표를 입력하세요 (ex. 종잣돈 모으기)" />
+          <Input
+            placeholder="이루고 싶은 목표를 입력하세요 (ex. 종잣돈 모으기)"
+            {...register('financial_goals.2.goal_title')}
+          />
         </Field>
         <Flex alignItems="center" gap="138px" width="100%">
           <Field label="목표 기간" gap="9px" width="fit-content">
             <Flex alignItems="center" gap="10px">
-              <Input placeholder="99" w="50px" />
+              <Input
+                placeholder="99"
+                w="50px"
+                {...register('financial_goals.2.target_years')}
+              />
               <Text>년 후까지</Text>
             </Flex>
           </Field>
           <Field label="목표 금액" gap="9px" flex={1}>
-            <Input placeholder="금액을 입력하세요" />
+            <Input
+              placeholder="금액을 입력하세요"
+              {...register('financial_goals.2.target_amount')}
+            />
           </Field>
         </Flex>
       </Field>

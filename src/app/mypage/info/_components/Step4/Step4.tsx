@@ -2,15 +2,18 @@ import {
   Separator,
   Stack,
   Text,
-  Grid,
   Portal,
   Select,
   createListCollection,
   ListCollection,
+  // Button,
 } from '@chakra-ui/react';
 import Input from '@/src/app/components/Input/Input';
 import Field from '@/src/app/components/Field/Field';
-import { FINANCIAL_EXPENSE_OPTIONS } from '../_constants/financial-info-form';
+import { FINANCIAL_EXPENSE_OPTIONS } from '../../_constants/financial-info-form';
+import { UserFinancialInfo } from '@/src/client/lib/api/postUserFinancialInfo';
+import { useFormContext } from 'react-hook-form';
+import RecordTable from './RecordTable';
 
 const spendingTypes = createListCollection({
   items: FINANCIAL_EXPENSE_OPTIONS,
@@ -51,6 +54,8 @@ export const DropdownSelect = ({
 };
 
 function Step4() {
+  const { register } = useFormContext<UserFinancialInfo>();
+
   return (
     <Stack dir="column" width="100%">
       <Stack dir="column" gap="12px" mb="34px">
@@ -64,13 +69,22 @@ function Step4() {
 
       <Field label="소득" required gap="34px" fontSize="20px" fontWeight={600}>
         <Field label="정기 수입" gap="9px">
-          <Input placeholder="월 수입은 얼마인가요?" />
+          <Input
+            placeholder="월 수입은 얼마인가요?"
+            {...register('cashflows.regular_income')}
+          />
         </Field>
         <Field label="비정기 수입" gap="9px">
-          <Input placeholder="비정기 수입은 연간 얼마인가요?" />
+          <Input
+            placeholder="비정기 수입은 연간 얼마인가요?"
+            {...register('cashflows.irregular_income')}
+          />
         </Field>
         <Field label="메모" gap="9px">
-          <Input placeholder="메모를 작성하면 더 정확한 진단이 이뤄져요" />
+          <Input
+            placeholder="메모를 작성하면 더 정확한 진단이 이뤄져요"
+            {...register('cashflows.income_memo')}
+          />
         </Field>
       </Field>
 
@@ -78,13 +92,22 @@ function Step4() {
 
       <Field label="저축" required gap="34px" fontSize="20px" fontWeight={600}>
         <Field label="정기 저축" gap="9px">
-          <Input placeholder="월 저축 금액은 얼마인가요?" />
+          <Input
+            placeholder="월 저축 금액은 얼마인가요?"
+            {...register('cashflows.regular_saving')}
+          />
         </Field>
         <Field label="비정기 저축" gap="9px">
-          <Input placeholder="비정기 저축 금액은 연간 얼마인가요?" />
+          <Input
+            placeholder="비정기 저축 금액은 연간 얼마인가요?"
+            {...register('cashflows.irregular_saving')}
+          />
         </Field>
         <Field label="메모" gap="9px">
-          <Input placeholder="메모를 작성하면 더 정확한 진단이 이뤄져요" />
+          <Input
+            placeholder="메모를 작성하면 더 정확한 진단이 이뤄져요"
+            {...register('cashflows.saving_memo')}
+          />
         </Field>
       </Field>
 
@@ -92,46 +115,37 @@ function Step4() {
 
       <Field label="투자" required gap="34px" fontSize="20px" fontWeight={600}>
         <Field label="정기 투자" gap="9px">
-          <Input placeholder="월 투자 금액은 얼마인가요?" />
+          <Input
+            placeholder="월 투자 금액은 얼마인가요?"
+            {...register('cashflows.regular_investment')}
+          />
         </Field>
         <Field label="비정기 투자" gap="9px">
-          <Input placeholder="비정기 투자 금액은 연간 얼마인가요?" />
+          <Input
+            placeholder="비정기 투자 금액은 연간 얼마인가요?"
+            {...register('cashflows.irregular_investment')}
+          />
         </Field>
         <Field label="메모" gap="9px">
-          <Input placeholder="메모를 작성하면 더 정확한 진단이 이뤄져요" />
+          <Input
+            placeholder="메모를 작성하면 더 정확한 진단이 이뤄져요"
+            {...register('cashflows.investment_memo')}
+          />
         </Field>
       </Field>
 
       <Separator my="50px" />
 
       <Field label="지출" required gap="34px" fontSize="20px" fontWeight={600}>
-        <Grid templateColumns="1fr 1fr 2fr" columnGap="20px" rowGap="24px">
-          <Field label="지출 종류" gap="9px">
-            <DropdownSelect
-              options={spendingTypes}
-              placeholder="카테고리를 선택하세요"
-            />
-          </Field>
-          <Field label="지출 금액" gap="9px">
-            <Input placeholder="월 지출은 얼마인가요?" />
-          </Field>
-          <Field label="메모" gap="9px">
-            <Input placeholder="어떤 목적으로 지출했나요?" />
-          </Field>
-
-          <Field label="지출 종류" gap="9px">
-            <DropdownSelect
-              options={spendingTypes}
-              placeholder="카테고리를 선택하세요"
-            />
-          </Field>
-          <Field label="지출 금액" gap="9px">
-            <Input placeholder="월 지출은 얼마인가요?" />
-          </Field>
-          <Field label="메모" gap="9px">
-            <Input placeholder="어떤 목적으로 지출했나요?!" />
-          </Field>
-        </Grid>
+        <RecordTable
+          fieldName="expenses"
+          options={spendingTypes}
+          subFields={[
+            { label: '지출 종류', placeholder: '카테고리를 선택하세요' },
+            { label: '지출 금액', placeholder: '월 지출은 얼마인가요?' },
+            { label: '메모', placeholder: '어떤 목적으로 지출했나요?' },
+          ]}
+        />
       </Field>
     </Stack>
   );
