@@ -35,6 +35,7 @@ function Step2() {
           <Field label="목표 기간" gap="9px" width="fit-content">
             <Flex alignItems="center" gap="10px">
               <Input
+                type="number"
                 placeholder="99"
                 w="50px"
                 {...register('financial_goals.0.target_years')}
@@ -44,6 +45,7 @@ function Step2() {
           </Field>
           <Field label="목표 금액" gap="9px" flex={1}>
             <Input
+              type="number"
               placeholder="금액을 입력하세요"
               {...register('financial_goals.0.target_amount')}
             />
@@ -69,6 +71,7 @@ function Step2() {
           <Field label="목표 기간" gap="9px" width="fit-content">
             <Flex alignItems="center" gap="10px">
               <Input
+                type="number"
                 placeholder="99"
                 w="50px"
                 {...register('financial_goals.1.target_years')}
@@ -78,6 +81,7 @@ function Step2() {
           </Field>
           <Field label="목표 금액" gap="9px" flex={1}>
             <Input
+              type="number"
               placeholder="금액을 입력하세요"
               {...register('financial_goals.1.target_amount')}
             />
@@ -103,6 +107,7 @@ function Step2() {
           <Field label="목표 기간" gap="9px" width="fit-content">
             <Flex alignItems="center" gap="10px">
               <Input
+                type="number"
                 placeholder="99"
                 w="50px"
                 {...register('financial_goals.2.target_years')}
@@ -112,6 +117,7 @@ function Step2() {
           </Field>
           <Field label="목표 금액" gap="9px" flex={1}>
             <Input
+              type="number"
               placeholder="금액을 입력하세요"
               {...register('financial_goals.2.target_amount')}
             />

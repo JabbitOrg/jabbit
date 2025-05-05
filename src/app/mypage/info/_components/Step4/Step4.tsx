@@ -27,12 +27,14 @@ function Step4() {
       <Field label="소득" required gap="34px" fontSize="20px" fontWeight={600}>
         <Field label="정기 수입" gap="9px">
           <Input
+            type="number"
             placeholder="월 수입은 얼마인가요?"
             {...register('cashflows.regular_income')}
           />
         </Field>
         <Field label="비정기 수입" gap="9px">
           <Input
+            type="number"
             placeholder="비정기 수입은 연간 얼마인가요?"
             {...register('cashflows.irregular_income')}
           />
@@ -50,12 +52,14 @@ function Step4() {
       <Field label="저축" required gap="34px" fontSize="20px" fontWeight={600}>
         <Field label="정기 저축" gap="9px">
           <Input
+            type="number"
             placeholder="월 저축 금액은 얼마인가요?"
             {...register('cashflows.regular_saving')}
           />
         </Field>
         <Field label="비정기 저축" gap="9px">
           <Input
+            type="number"
             placeholder="비정기 저축 금액은 연간 얼마인가요?"
             {...register('cashflows.irregular_saving')}
           />
@@ -73,12 +77,14 @@ function Step4() {
       <Field label="투자" required gap="34px" fontSize="20px" fontWeight={600}>
         <Field label="정기 투자" gap="9px">
           <Input
+            type="number"
             placeholder="월 투자 금액은 얼마인가요?"
             {...register('cashflows.regular_investment')}
           />
         </Field>
         <Field label="비정기 투자" gap="9px">
           <Input
+            type="number"
             placeholder="비정기 투자 금액은 연간 얼마인가요?"
             {...register('cashflows.irregular_investment')}
           />

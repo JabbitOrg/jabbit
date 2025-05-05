@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Button, Flex, Grid, ListCollection } from '@chakra-ui/react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 
 import Input from '@/src/app/components/Input/Input';
 import Select from '@/src/app/components/Select/Select';
@@ -29,14 +29,26 @@ function RecordTable({
     <Flex flexDirection="column" gap="40px">
       <Grid templateColumns="1fr 1fr 2fr" columnGap="20px" rowGap="24px">
         <Field label={subFields[0].label} gap="9px">
-          <Select
-            options={options}
-            placeholder={subFields[0].placeholder}
-            {...register(`${fieldName}.0.category`)}
+          <Controller
+            name={`${fieldName}.0.category`}
+            control={control}
+            render={({ field }) => (
+              <Select
+                collection={options}
+                placeholder={subFields[0].placeholder}
+                name={field.name}
+                onValueChange={({ value }) => {
+                  console.log('val', value);
+                  field.onChange(value[0]);
+                }}
+                onInteractOutside={() => field.onBlur()}
+              />
+            )}
           />
         </Field>
         <Field label={subFields[1].label} gap="9px">
           <Input
+            type="number"
             placeholder={subFields[1].placeholder}
             {...register(`${fieldName}.0.amount`)}
           />
@@ -50,12 +62,22 @@ function RecordTable({
 
         {fields.slice(1).map((field, index) => (
           <Fragment key={field.id}>
-            <Select
-              options={options}
-              placeholder={subFields[0].placeholder}
-              {...register(`${fieldName}.${index + 1}.category`)}
+            <Controller
+              name={`${fieldName}.${index + 1}.category`}
+              control={control}
+              render={({ field }) => (
+                <Select
+                  collection={options}
+                  placeholder={subFields[0].placeholder}
+                  name={field.name}
+                  onValueChange={({ value }) => field.onChange(value[0])}
+                  onInteractOutside={() => field.onBlur()}
+                />
+              )}
             />
+
             <Input
+              type="number"
               placeholder={subFields[1].placeholder}
               {...register(`${fieldName}.${index + 1}.amount`)}
             />

@@ -1,15 +1,12 @@
 import { Portal, Select as ChakraSelect } from '@chakra-ui/react';
-import { ListCollection } from '@chakra-ui/react';
 
-const Select = ({
-  options,
-  placeholder,
-}: {
-  options: ListCollection<{ label: string; value: string }>;
+interface SelectProps extends ChakraSelect.RootProps {
   placeholder: string;
-}) => {
+}
+
+const Select = ({ placeholder, ...props }: SelectProps) => {
   return (
-    <ChakraSelect.Root collection={options} width="100%">
+    <ChakraSelect.Root width="100%" {...props}>
       <ChakraSelect.HiddenSelect />
       <ChakraSelect.Control>
         <ChakraSelect.Trigger borderRadius="12px" height="50px">
@@ -27,7 +24,7 @@ const Select = ({
       <Portal>
         <ChakraSelect.Positioner>
           <ChakraSelect.Content w="190px" borderRadius="12px">
-            {options.items.map((option) => (
+            {props.collection.items.map((option) => (
               <ChakraSelect.Item
                 item={option}
                 key={option.value}

@@ -38,6 +38,7 @@ function Step1() {
 
           <Field label="출생연도" required maxW="200px" gap="9px">
             <Input
+              type="number"
               placeholder="출생연도를 입력하세요"
               {...register('personal_info.birth_year')}
             />
@@ -70,6 +71,7 @@ function Step1() {
 
           <Field label="연차" required>
             <Input
+              type="number"
               placeholder="연차를 입력하세요 (없으면 0 으로 입력해주세요)"
               {...register('personal_info.years_of_experience')}
             />

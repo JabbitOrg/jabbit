@@ -1,10 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import { Button, ButtonGroup, Steps } from '@chakra-ui/react';
 import { FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 
-import { UserFinancialInfo } from '@/src/client/lib/api/postUserFinancialInfo';
+import postUserFinancialInfo from '@/src/client/lib/api/postUserFinancialInfo';
+import { useAuthStore } from '@/src/client/store/authStore';
+
 import Step1 from './_components/Step1';
 import Step2 from './_components/Step2';
 import Step3 from './_components/Step3/Step3';
@@ -36,16 +39,27 @@ const steps = [
 ];
 
 function InfoPage() {
+  const { user } = useAuthStore();
   const methods = useFinancialInfoForm({});
+  const [currentStep, setCurrentStep] = useState(0);
 
-  const onSubmit = (data: UserFinancialInfo) => {
-    console.log(data);
+  const handleSubmit = () => {
+    if (!user) return;
+    const values = methods.getValues();
+
+    postUserFinancialInfo(user.id, values);
   };
+
+  console.log('currentStep', currentStep);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} style={{ width: '100%' }}>
-        <Steps.Root defaultStep={0} count={steps.length}>
+      <form style={{ width: '100%' }}>
+        <Steps.Root
+          defaultStep={0}
+          count={steps.length}
+          onStepChange={(index) => setCurrentStep(index.step)}
+        >
           <Steps.List width="640px" alignSelf="center" mb="50px">
             {steps.map((step, index) => (
               <Steps.Item key={index} index={index}>
@@ -82,7 +96,6 @@ function InfoPage() {
             ))}
           </Steps.List>
 
-          {/* TODO: add contents */}
           {steps.map((step, index) => (
             <Steps.Content key={index} index={index}>
               {step.description}
@@ -90,20 +103,22 @@ function InfoPage() {
           ))}
 
           <ButtonGroup alignSelf="center" gap="20px">
-            <Steps.PrevTrigger asChild>
-              <Button
-                variant="solid"
-                textStyle="xs"
-                bgColor="#A9ABBC"
-                mt="72px"
-                w="112px"
-                h="49px"
-                borderRadius="16px"
-              >
-                이전으로
-              </Button>
-            </Steps.PrevTrigger>
-            <Steps.NextTrigger asChild>
+            {currentStep >= 1 ? (
+              <Steps.PrevTrigger asChild>
+                <Button
+                  variant="solid"
+                  textStyle="xs"
+                  bgColor="#A9ABBC"
+                  mt="72px"
+                  w="112px"
+                  h="49px"
+                  borderRadius="16px"
+                >
+                  이전으로
+                </Button>
+              </Steps.PrevTrigger>
+            ) : null}
+            {currentStep === steps.length - 1 ? (
               <Button
                 variant="solid"
                 textStyle="xs"
@@ -112,10 +127,25 @@ function InfoPage() {
                 w="112px"
                 h="49px"
                 borderRadius="16px"
+                onClick={handleSubmit}
               >
-                다음으로
+                완료하기
               </Button>
-            </Steps.NextTrigger>
+            ) : (
+              <Steps.NextTrigger asChild>
+                <Button
+                  variant="solid"
+                  textStyle="xs"
+                  bgColor="primary"
+                  mt="72px"
+                  w="112px"
+                  h="49px"
+                  borderRadius="16px"
+                >
+                  다음으로
+                </Button>
+              </Steps.NextTrigger>
+            )}
           </ButtonGroup>
         </Steps.Root>
 
