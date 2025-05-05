@@ -13,69 +13,23 @@ import ChildCareSVG from '@/src/client/assets/child_care.svg';
 import InsuranceSVG from '@/src/client/assets/insurance.svg';
 import SeedMoneySVG from '@/src/client/assets/seed_money.svg';
 import ConsultingSVG from '@/src/client/assets/consulting.svg';
+import {
+  FINANCIAL_CONCERN_OPTIONS,
+  FINANCIAL_CONCERN_PERIOD_OPTIONS,
+} from '../_constants/financial-info-form';
 
-const 재무고민_Options = [
-  {
-    label: '소득 관리 및 지출통제',
-    value: '소득 관리 및 지출통제',
-    icon: <ExpenditureManagementSVG width="43px" height="43px" />,
-  },
-  {
-    label: '내 집 마련',
-    value: '내 집 마련',
-    icon: <RealEstateSVG width="43px" height="43px" />,
-  },
-  {
-    label: '부채 관리',
-    value: '부채 관리',
-    icon: <DebtSVG width="43px" height="43px" />,
-  },
-  {
-    label: '투자 및 자산관리',
-    value: '투자 및 자산관리',
-    icon: <InvestmentConsultingSVG width="43px" height="43px" />,
-  },
-  {
-    label: '노후/은퇴 준비',
-    value: '노후/은퇴 준비',
-    icon: <ConsultingSVG width="43px" height="43px" />,
-  },
-  {
-    label: '자녀 교육 및 양육비',
-    value: '자녀 교육 및 양육비',
-    icon: <ChildCareSVG width="43px" height="43px" />,
-  },
-  {
-    label: '절세',
-    value: '절세',
-    icon: <InsuranceSVG width="43px" height="43px" />,
-  },
-  {
-    label: '종잣돈 마련',
-    value: '종잣돈 마련',
-    icon: <SeedMoneySVG width="43px" height="43px" />,
-  },
-];
-
-const 고용여부_Options = [
-  { value: 'now', label: '지금 당장' },
-  {
-    value: 'within 3months',
-    label: '1~3개월 이내',
-  },
-  {
-    value: 'within 1year',
-    label: '6개월~1년 이내',
-  },
-  {
-    value: 'within 5year',
-    label: '향후 1~5년 이내',
-  },
-  {
-    value: 'not sure',
-    label: '아직 잘 모르겠어요',
-  },
-];
+const FINANCIAL_CONCERN_OPTIONS_ICON_MAP: Record<string, React.ReactNode> = {
+  '소득 관리 및 지출통제': (
+    <ExpenditureManagementSVG width="43px" height="43px" />
+  ),
+  '내 집 마련': <RealEstateSVG width="43px" height="43px" />,
+  '부채 관리': <DebtSVG width="43px" height="43px" />,
+  '투자 및 자산관리': <InvestmentConsultingSVG width="43px" height="43px" />,
+  '노후/은퇴 준비': <ConsultingSVG width="43px" height="43px" />,
+  '자녀 교육 및 양육비': <ChildCareSVG width="43px" height="43px" />,
+  절세: <InsuranceSVG width="43px" height="43px" />,
+  '종잣돈 마련': <SeedMoneySVG width="43px" height="43px" />,
+};
 
 const CategorySelect = () => {
   const [selectedItem, setSelectedItem] = useState<string[]>([]);
@@ -95,7 +49,7 @@ const CategorySelect = () => {
       gridTemplateColumns="repeat(4,1fr)"
       w="100%"
     >
-      {재무고민_Options.map((item) => (
+      {FINANCIAL_CONCERN_OPTIONS.map((item) => (
         <GridItem key={item.value}>
           <Stack
             dir="column"
@@ -109,7 +63,7 @@ const CategorySelect = () => {
             }
             onClick={() => handleSelectItem(item.value)}
           >
-            {item.icon}
+            {FINANCIAL_CONCERN_OPTIONS_ICON_MAP[item.value]}
             <Text textStyle="xs" fontWeight={500} paddingLeft="5px">
               {item.label}
             </Text>
@@ -150,7 +104,7 @@ function Step3() {
         </Field>
 
         <Field label="고용 안정 여부" required gap="22px">
-          <RadioGroup options={고용여부_Options} />
+          <RadioGroup options={FINANCIAL_CONCERN_PERIOD_OPTIONS} />
         </Field>
 
         <Field label="전문가님이 이해할 수 있게 재무고민을 자세히 적어주세요">

@@ -8,37 +8,17 @@ import {
 import Input from '@/src/app/components/Input/Input';
 import Field from '@/src/app/components/Field/Field';
 import { DropdownSelect } from './Step4';
+import {
+  FINANCIAL_ASSET_OPTIONS,
+  FINANCIAL_DEBT_OPTIONS,
+} from '../_constants/financial-info-form';
 
 const assetTypes = createListCollection({
-  items: [
-    { label: '자가', value: '자가' },
-    { label: '보증금', value: '보증금' },
-    { label: '투자형 부동산', value: '투자형 부동산' },
-    { label: '예금', value: '예금' },
-    { label: '적금', value: '적금' },
-    { label: '수시입출금', value: '수시입출금' },
-    { label: '저축성 보험', value: '저축성 보험' },
-    { label: '청약', value: '청약' },
-    { label: '주식', value: '주식' },
-    { label: '투자성 연금 + IRP', value: '투자성 연금 + IRP' },
-    { label: 'ISA', value: 'ISA' },
-    { label: '실물자산 (ex. 금 등)', value: '실물자산 (ex. 금 등)' },
-    { label: '채권', value: '채권' },
-    { label: '코인', value: '코인' },
-    { label: '기타', value: '기타' },
-  ],
+  items: FINANCIAL_ASSET_OPTIONS,
 });
 
 const debtTypes = createListCollection({
-  items: [
-    { label: '주택 담보 대출', value: '주택 담보 대출' },
-    { label: '전세자금 대출', value: '전세자금 대출' },
-    { label: '보증금 대출', value: '보증금 대출' },
-    { label: '학자금 대출', value: '학자금 대출' },
-    { label: '신용 대출', value: '신용 대출' },
-    { label: '마이너스 통장', value: '마이너스 통장' },
-    { label: '기타', value: '기타' },
-  ],
+  items: FINANCIAL_DEBT_OPTIONS,
 });
 
 function Step5() {

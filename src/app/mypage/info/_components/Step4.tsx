@@ -10,23 +10,10 @@ import {
 } from '@chakra-ui/react';
 import Input from '@/src/app/components/Input/Input';
 import Field from '@/src/app/components/Field/Field';
+import { FINANCIAL_EXPENSE_OPTIONS } from '../_constants/financial-info-form';
 
 const spendingTypes = createListCollection({
-  items: [
-    { label: '주거 / 관리비', value: '식주거 / 관리비비' },
-    { label: '대출 이자', value: '대출 이자' },
-    { label: '의료 / 건강 / 보험료', value: '의료 / 건강 / 보험료' },
-    { label: '통신비', value: '통신비' },
-    { label: '교통비', value: '교통비' },
-    { label: '식비', value: '식비' },
-    { label: '취미 / 여가', value: '취미 / 여가' },
-    { label: '교육 / 운동', value: '교육 / 운동' },
-    { label: '카페 / 간식', value: '카페 / 간식' },
-    { label: '편의점 / 마트 / 잡화', value: '편의점 / 마트 / 잡화' },
-    { label: '술 / 유흥', value: '술 / 유흥' },
-    { label: '미용 / 의복', value: '미용 / 의복' },
-    { label: '기타', value: '기타' },
-  ],
+  items: FINANCIAL_EXPENSE_OPTIONS,
 });
 
 export const DropdownSelect = ({
