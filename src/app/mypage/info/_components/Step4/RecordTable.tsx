@@ -1,10 +1,11 @@
-import { Button, Flex, Grid, ListCollection } from '@chakra-ui/react';
-import { DropdownSelect } from './Step4';
-import { Input } from '@chakra-ui/react';
-import { Field } from '@/src/client/components/ui/field';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { UserFinancialInfo } from '@/src/client/lib/api/postUserFinancialInfo';
 import { Fragment } from 'react';
+import { Button, Flex, Grid, ListCollection } from '@chakra-ui/react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+
+import Input from '@/src/app/components/Input/Input';
+import Select from '@/src/app/components/Select/Select';
+import { Field } from '@/src/client/components/ui/field';
+import { UserFinancialInfo } from '@/src/client/lib/api/postUserFinancialInfo';
 
 function RecordTable({
   options,
@@ -28,7 +29,7 @@ function RecordTable({
     <Flex flexDirection="column" gap="40px">
       <Grid templateColumns="1fr 1fr 2fr" columnGap="20px" rowGap="24px">
         <Field label={subFields[0].label} gap="9px">
-          <DropdownSelect
+          <Select
             options={options}
             placeholder={subFields[0].placeholder}
             {...register(`${fieldName}.0.category`)}
@@ -49,7 +50,7 @@ function RecordTable({
 
         {fields.slice(1).map((field, index) => (
           <Fragment key={field.id}>
-            <DropdownSelect
+            <Select
               options={options}
               placeholder={subFields[0].placeholder}
               {...register(`${fieldName}.${index + 1}.category`)}

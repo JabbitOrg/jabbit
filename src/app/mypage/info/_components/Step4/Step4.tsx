@@ -1,13 +1,4 @@
-import {
-  Separator,
-  Stack,
-  Text,
-  Portal,
-  Select,
-  createListCollection,
-  ListCollection,
-  // Button,
-} from '@chakra-ui/react';
+import { Separator, Stack, Text, createListCollection } from '@chakra-ui/react';
 import Input from '@/src/app/components/Input/Input';
 import Field from '@/src/app/components/Field/Field';
 import { FINANCIAL_EXPENSE_OPTIONS } from '../../_constants/financial-info-form';
@@ -18,40 +9,6 @@ import RecordTable from './RecordTable';
 const spendingTypes = createListCollection({
   items: FINANCIAL_EXPENSE_OPTIONS,
 });
-
-export const DropdownSelect = ({
-  options,
-  placeholder,
-}: {
-  options: ListCollection<{ label: string; value: string }>;
-  placeholder: string;
-}) => {
-  return (
-    <Select.Root collection={options} width="100%">
-      <Select.HiddenSelect />
-      <Select.Control>
-        <Select.Trigger>
-          <Select.ValueText placeholder={placeholder} />
-        </Select.Trigger>
-        <Select.IndicatorGroup>
-          <Select.Indicator />
-        </Select.IndicatorGroup>
-      </Select.Control>
-      <Portal>
-        <Select.Positioner>
-          <Select.Content w="190px">
-            {options.items.map((option) => (
-              <Select.Item item={option} key={option.value}>
-                {option.label}
-                <Select.ItemIndicator />
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Positioner>
-      </Portal>
-    </Select.Root>
-  );
-};
 
 function Step4() {
   const { register } = useFormContext<UserFinancialInfo>();
