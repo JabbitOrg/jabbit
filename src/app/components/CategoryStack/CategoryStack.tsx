@@ -1,6 +1,9 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Flex, HStack, Text } from '@chakra-ui/react';
+
 import ConsultingSVG from '@/src/client/assets/consulting.svg';
 import InsuranceSVG from '@/src/client/assets/insurance.svg';
 import DebtSVG from '@/src/client/assets/debt.svg';
@@ -8,9 +11,7 @@ import ExpenditureSVG from '@/src/client/assets/expenditure_management.svg';
 import InvestmentSVG from '@/src/client/assets/invest_consulting.svg';
 import RealEstateSVG from '@/src/client/assets/real_estate.svg';
 import SeedMoneySVG from '@/src/client/assets/seed_money.svg';
-import { useState } from 'react';
 import HoverMenu from './HoverMenu/HoverMenu';
-import { useRouter } from 'next/navigation';
 
 const CATEGORY_ITEMS = [
   {

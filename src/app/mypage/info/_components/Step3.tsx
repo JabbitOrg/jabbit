@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Flex, Grid, GridItem, Stack, Text } from '@chakra-ui/react';
+import { Grid, GridItem, Stack, Text } from '@chakra-ui/react';
 
 import Textarea from '@/src/app/components/Textarea/Textarea';
 import Field from '@/src/app/components/Field/Field';
@@ -18,42 +18,42 @@ const 재무고민_Options = [
   {
     label: '소득 관리 및 지출통제',
     value: '소득 관리 및 지출통제',
-    icon: <ExpenditureManagementSVG width="100%" height="100%" />,
+    icon: <ExpenditureManagementSVG width="43px" height="43px" />,
   },
   {
     label: '내 집 마련',
     value: '내 집 마련',
-    icon: <RealEstateSVG width="100%" height="100%" />,
+    icon: <RealEstateSVG width="43px" height="43px" />,
   },
   {
     label: '부채 관리',
     value: '부채 관리',
-    icon: <DebtSVG width="100%" height="100%" />,
+    icon: <DebtSVG width="43px" height="43px" />,
   },
   {
     label: '투자 및 자산관리',
     value: '투자 및 자산관리',
-    icon: <InvestmentConsultingSVG width="100%" height="100%" />,
+    icon: <InvestmentConsultingSVG width="43px" height="43px" />,
   },
   {
     label: '노후/은퇴 준비',
     value: '노후/은퇴 준비',
-    icon: <ConsultingSVG width="100%" height="100%" />,
+    icon: <ConsultingSVG width="43px" height="43px" />,
   },
   {
     label: '자녀 교육 및 양육비',
     value: '자녀 교육 및 양육비',
-    icon: <ChildCareSVG width="100%" height="100%" />,
+    icon: <ChildCareSVG width="43px" height="43px" />,
   },
   {
     label: '절세',
     value: '절세',
-    icon: <InsuranceSVG width="100%" height="100%" />,
+    icon: <InsuranceSVG width="43px" height="43px" />,
   },
   {
     label: '종잣돈 마련',
     value: '종잣돈 마련',
-    icon: <SeedMoneySVG width="100%" height="100%" />,
+    icon: <SeedMoneySVG width="43px" height="43px" />,
   },
 ];
 
@@ -109,15 +109,7 @@ const CategorySelect = () => {
             }
             onClick={() => handleSelectItem(item.value)}
           >
-            <Flex
-              width="43px"
-              height="43px"
-              justifyContent="center"
-              alignItems="center"
-              padding={item.value === '자녀 교육 및 양육비' ? '0px' : '6px'}
-            >
-              {item.icon}
-            </Flex>
+            {item.icon}
             <Text textStyle="xs" fontWeight={500} paddingLeft="5px">
               {item.label}
             </Text>

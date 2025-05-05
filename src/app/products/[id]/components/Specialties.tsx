@@ -10,32 +10,32 @@ import { Flex, Text } from '@chakra-ui/react';
 const CATEGORY_ITEMS = [
   {
     title: '종합재무상담',
-    image: <ConsultingSVG width="100%" height="100%" />,
+    image: <ConsultingSVG width="80px" height="80px" />,
   },
   {
     title: '보험진단',
-    image: <InsuranceSVG width="100%" height="100%" />,
+    image: <InsuranceSVG width="80px" height="80px" />,
   },
   {
     title: '부채상환',
-    image: <DebtSVG width="100%" height="100%" />,
+    image: <DebtSVG width="80px" height="80px" />,
   },
   {
     title: '투자점검',
-    image: <InvestmentSVG width="100%" height="100%" />,
+    image: <InvestmentSVG width="80px" height="80px" />,
   },
   {
     title: '종잣돈 마련',
-    image: <SeedMoneySVG width="100%" height="100%" />,
+    image: <SeedMoneySVG width="80px" height="80px" />,
   },
   {
     title: '지출관리',
-    image: <ExpenditureSVG width="100%" height="100%" />,
+    image: <ExpenditureSVG width="80px" height="80px" />,
   },
 
   {
     title: '부동산',
-    image: <RealEstateSVG width="100%" height="100%" />,
+    image: <RealEstateSVG width="80px" height="80px" />,
   },
 ];
 
@@ -49,14 +49,7 @@ const Specialties = ({ specialty }: { specialty: string }) => {
       justifyContent="center"
       alignItems="center"
     >
-      <Flex
-        width="80px"
-        height="80px"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {item?.image}
-      </Flex>
+      {item?.image}
       <Text textStyle="md" color="main.black_1">
         {item?.title}
       </Text>
