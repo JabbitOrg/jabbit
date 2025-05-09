@@ -528,9 +528,10 @@ export type Database = {
           birth_year: number | null
           created_at: string
           email: string | null
-          has_children: boolean | null
+          gender: Database["public"]["Enums"]["gender"] | null
           id: string
-          is_married: boolean | null
+          name: string | null
+          phone_number: string | null
           provider: string
           provider_id: string
         }
@@ -538,9 +539,10 @@ export type Database = {
           birth_year?: number | null
           created_at?: string
           email?: string | null
-          has_children?: boolean | null
+          gender?: Database["public"]["Enums"]["gender"] | null
           id?: string
-          is_married?: boolean | null
+          name?: string | null
+          phone_number?: string | null
           provider: string
           provider_id: string
         }
@@ -548,9 +550,10 @@ export type Database = {
           birth_year?: number | null
           created_at?: string
           email?: string | null
-          has_children?: boolean | null
+          gender?: Database["public"]["Enums"]["gender"] | null
           id?: string
-          is_married?: boolean | null
+          name?: string | null
+          phone_number?: string | null
           provider?: string
           provider_id?: string
         }
@@ -583,6 +586,7 @@ export type Database = {
         | "independent_no_support"
         | "independent_partial_support"
       marital_status: "married" | "single"
+      user_status: "active" | "pending" | "inactive"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -720,6 +724,7 @@ export const Constants = {
         "independent_partial_support",
       ],
       marital_status: ["married", "single"],
+      user_status: ["active", "pending", "inactive"],
     },
   },
 } as const
