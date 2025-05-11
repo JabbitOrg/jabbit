@@ -7,7 +7,6 @@ import RadioGroup from '@/src/app/components/RadioGroup/RadioGroup';
 import Checkbox from '@/src/app/components/Checkbox/Checkbox';
 import { Controller, FormProvider } from 'react-hook-form';
 import postUser from '@/src/client/lib/api/postUser';
-import { GENDER_OPTIONS } from '../mypage/info/_constants/financial-info-form';
 import { DevTool } from '@hookform/devtools';
 import { useSignUpForm } from './_hooks/useSignUpForm';
 import { useSearchParams } from 'next/navigation';
@@ -19,6 +18,11 @@ import {
   PRIVACY_POLICY_URL,
   TERMS_OF_SERVICE_URL,
 } from '@/src/client/constants/URL';
+
+const GENDER_OPTIONS = [
+  { value: 'male', label: '남성' },
+  { value: 'female', label: '여성' },
+];
 
 const SignUp = () => {
   const router = useRouter();

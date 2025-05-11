@@ -475,42 +475,33 @@ export type Database = {
       }
       user_personal_info: {
         Row: {
-          birth_year: number
           employment_status: Database["public"]["Enums"]["employment_stability"]
           family_support_status: Database["public"]["Enums"]["family_support_status"]
-          gender: Database["public"]["Enums"]["gender"]
           health_status: Database["public"]["Enums"]["health_status"]
           id: string
           independent_status: Database["public"]["Enums"]["independence_status"]
           job: string
           marital_status: Database["public"]["Enums"]["marital_status"]
-          name: string
           years_of_experience: number
         }
         Insert: {
-          birth_year: number
           employment_status: Database["public"]["Enums"]["employment_stability"]
           family_support_status: Database["public"]["Enums"]["family_support_status"]
-          gender: Database["public"]["Enums"]["gender"]
           health_status: Database["public"]["Enums"]["health_status"]
           id: string
           independent_status: Database["public"]["Enums"]["independence_status"]
           job?: string
           marital_status: Database["public"]["Enums"]["marital_status"]
-          name: string
           years_of_experience: number
         }
         Update: {
-          birth_year?: number
           employment_status?: Database["public"]["Enums"]["employment_stability"]
           family_support_status?: Database["public"]["Enums"]["family_support_status"]
-          gender?: Database["public"]["Enums"]["gender"]
           health_status?: Database["public"]["Enums"]["health_status"]
           id?: string
           independent_status?: Database["public"]["Enums"]["independence_status"]
           job?: string
           marital_status?: Database["public"]["Enums"]["marital_status"]
-          name?: string
           years_of_experience?: number
         }
         Relationships: [
