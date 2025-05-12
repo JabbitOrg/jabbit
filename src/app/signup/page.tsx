@@ -1,6 +1,6 @@
 'use client';
 
-import { Flex, Text, Button, Link } from '@chakra-ui/react';
+import { Flex, Text, Button, Link, Box } from '@chakra-ui/react';
 import Input from '@/src/app/components/Input/Input';
 import Field from '@/src/app/components/Field/Field';
 import RadioGroup from '@/src/app/components/RadioGroup/RadioGroup';
@@ -18,6 +18,7 @@ import {
   PRIVACY_POLICY_URL,
   TERMS_OF_SERVICE_URL,
 } from '@/src/client/constants/URL';
+import Logo from '../common/Logo/Logo';
 
 const GENDER_OPTIONS = [
   { value: 'male', label: '남성' },
@@ -67,6 +68,9 @@ const SignUp = () => {
 
   return (
     <FormProvider {...methods}>
+      <Box width="100%" padding="38px 320px">
+        <Logo />
+      </Box>
       <Flex
         as="form"
         onSubmit={methods.handleSubmit(handleSubmit)}
