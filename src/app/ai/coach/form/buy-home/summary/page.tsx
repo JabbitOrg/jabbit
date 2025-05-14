@@ -4,6 +4,7 @@ import { Box, Stack, Text, Button, VStack, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CircularProgress from '../../../_components/form/CircularProgress';
+import { useSurveyStore } from '../../../../../../client/store/surveyStore';
 
 function ResultRow({ label, value }: { label: string; value: string }) {
   return (
@@ -28,6 +29,7 @@ function ResultRow({ label, value }: { label: string; value: string }) {
 function SummaryPage() {
   const router = useRouter();
   const [percentage, setPercentage] = useState(0);
+  const { setAnswer, answers } = useSurveyStore();
 
   useEffect(() => {
     const steps = [
@@ -69,11 +71,17 @@ function SummaryPage() {
         </Text>
         <Box padding="0px 16px" borderRadius="24px" mt="54px" width="100%">
           <VStack align="stretch" gap="4px">
-            <ResultRow label="기간" value="10년 뒤" />
-            <ResultRow label="결혼계획" value="신혼부부" />
-            <ResultRow label="거주지역" value="경기도 화성시" />
-            <ResultRow label="거주 형태" value="아파트 (15평)" />
-            <ResultRow label="소유 형태" value="자가" />
+            <ResultRow label="기간" value={answers[2]?.answer} />
+            <ResultRow label="결혼계획" value={answers[3]?.answer} />
+            <ResultRow
+              label="거주지역"
+              value={answers[4]?.answer + answers[5]?.answer}
+            />
+            <ResultRow
+              label="거주 형태"
+              value={answers[7]?.answer + answers[6]?.answer}
+            />
+            <ResultRow label="소유 형태" value={answers[8].answer} />
           </VStack>
         </Box>
       </Stack>
