@@ -3,21 +3,22 @@ import { create } from 'zustand';
 interface answer {
   id: number;
   answer: string | number;
+  text: string;
 }
 
 interface SurveyState {
   answers: Record<number, answer>;
-  setAnswer: (id: number, answer: string | number) => void;
+  setAnswer: (id: number, answer: string | number, text: string) => void;
   clearAnswers: () => void;
 }
 
 export const useSurveyStore = create<SurveyState>((set) => ({
   answers: {},
-  setAnswer: (id, answer) =>
+  setAnswer: (id, answer, text) =>
     set((state) => ({
       answers: {
         ...state.answers,
-        [id]: { id, answer },
+        [id]: { id, answer, text },
       },
     })),
   clearAnswers: () => set({ answers: {} }),
