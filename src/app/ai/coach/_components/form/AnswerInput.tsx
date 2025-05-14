@@ -1,8 +1,14 @@
 import { Input } from '@chakra-ui/react';
 
-function AnswerInput() {
+interface AnswerInputProps {
+  value: string | number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function AnswerInput({ value, onChange }: AnswerInputProps) {
   return (
     <Input
+      type="number"
       placeholder="0"
       size="lg"
       textAlign="right"
@@ -17,6 +23,8 @@ function AnswerInput() {
       borderWidth="2px"
       borderColor="gray.100"
       pl="8px"
+      value={value}
+      onChange={onChange}
       _focus={{
         backgroundColor: 'blue.300',
         color: 'brand.blue',

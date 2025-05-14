@@ -2,6 +2,7 @@ import { Stack, Text, SimpleGrid, HStack } from '@chakra-ui/react';
 import AnswerButton from './AnswerButton';
 import AnswerInput from './AnswerInput';
 import Region from '../../../../data/region.json';
+
 interface AnswerChoice {
   code: string;
   label: string;
@@ -10,21 +11,46 @@ interface AnswerChoice {
 interface AnswerProps {
   type: 'choice-full' | 'input-year' | 'input-area' | 'choice-grid';
   answerChoices: AnswerChoice[];
+  onAnswerSelect: (answer: string | number) => void;
+  selectedAnswers: Record<number, { id: number; answer: string | number }>;
+  currentStep: number;
 }
 
-function Answer({ type, answerChoices }: AnswerProps) {
+function Answer({
+  type,
+  answerChoices,
+  onAnswerSelect,
+  selectedAnswers,
+  currentStep,
+}: AnswerProps) {
+  const selectedAnswer = selectedAnswers[currentStep]?.answer;
+
+  const handleSelect = (answer: string | number) => {
+    onAnswerSelect(answer);
+  };
+
+  const renderChoiceButtons = (choices: AnswerChoice[]) =>
+    choices.map((choice) => (
+      <AnswerButton
+        key={choice.code}
+        isSelected={selectedAnswer === choice.code}
+        onClick={() => handleSelect(choice.code)}
+      >
+        {choice.label}
+      </AnswerButton>
+    ));
+
   const renderAnswerChoices = () => {
     switch (type) {
       case 'choice-full':
-        return answerChoices.map((choice) => (
-          <AnswerButton
-            key={choice.code}
-            isSelected={true}
-            onClick={() => true}
-          >
-            {choice.label}
-          </AnswerButton>
-        ));
+        return renderChoiceButtons(answerChoices);
+
+      case 'choice-grid':
+        return (
+          <SimpleGrid columns={3} gap="8px">
+            {renderChoiceButtons(Region.SEOUL)}
+          </SimpleGrid>
+        );
 
       case 'input-year':
         return (
@@ -32,7 +58,10 @@ function Answer({ type, answerChoices }: AnswerProps) {
             <Text textStyle="mobile_b1_semi" color="font.700">
               지금부터
             </Text>
-            <AnswerInput></AnswerInput>
+            <AnswerInput
+              value={selectedAnswer ?? ''}
+              onChange={(e) => handleSelect(Number(e.target.value))}
+            />
             <Text textStyle="mobile_b1_semi" color="font.700">
               년 뒤
             </Text>
@@ -42,24 +71,12 @@ function Answer({ type, answerChoices }: AnswerProps) {
       case 'input-area':
         return (
           <HStack align="center" justify="center" gap="12px">
-            <AnswerInput></AnswerInput>
+            <AnswerInput
+              value={selectedAnswer ?? ''}
+              onChange={(e) => handleSelect(Number(e.target.value))}
+            />
             <Text>평</Text>
           </HStack>
-        );
-
-      case 'choice-grid':
-        return (
-          <SimpleGrid columns={3} gap="8px">
-            {Region.SEOUL.map((choice) => (
-              <AnswerButton
-                key={choice.code}
-                isSelected={true}
-                onClick={() => true}
-              >
-                {choice.label}
-              </AnswerButton>
-            ))}
-          </SimpleGrid>
         );
 
       default:

@@ -15,10 +15,10 @@ function AnswerButton({
       height="60px"
       colorScheme={isSelected ? 'blue' : 'gray'}
       variant={isSelected ? 'solid' : 'outline'}
-      color={isSelected ? 'gray.700' : 'gray.700'}
-      backgroundColor={isSelected ? 'white' : 'white'}
+      color="gray.700"
+      backgroundColor={isSelected ? 'blue.300' : 'white'}
       borderWidth="2px"
-      borderColor="gray.100"
+      borderColor={isSelected ? 'brand.blue' : 'gray.100'}
       _hover={{
         backgroundColor: isSelected ? 'blue.300' : 'blue.300',
         color: isSelected ? 'brand.blue' : 'gray.800',
