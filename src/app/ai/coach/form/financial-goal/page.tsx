@@ -9,22 +9,33 @@ import Question from '../../_components/form/Question';
 import Answer from '../../_components/form/Answer';
 import SurveyQuestions from '../../../../data/financial-goal-survey.json';
 import Modal from '../../../../common/Modal/Modal';
-import { useSurveyStore } from '../../../../../client/store/surveyStore';
+import { usefinancialGoalSurveyStore } from '../../../../../client/store/survey/financialGoalSurveyStore';
+import { useRouter } from 'next/navigation';
 
 const totalStep = 12;
 
 function FinancialGoalFormPage() {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
-  const [isOpen, setIsOpen] = useState(true);
-  const { setAnswer, answers } = useSurveyStore();
+  const [isOpen, setIsOpen] = useState(false);
+  const { setAnswer, answers } = usefinancialGoalSurveyStore();
   console.log(answers);
 
   const handleConfirm = () => {
     setIsOpen(false);
+    router.push('/ai/coach');
   };
 
   const handleClose = () => {
     setIsOpen(false);
+  };
+
+  const handleAnswer = (answer: string | number, text: string) => {
+    setAnswer(currentStep, answer, text);
+
+    if (currentStep === totalStep) {
+      setIsOpen(true);
+    }
   };
 
   const renderStepContent = () => {
@@ -42,7 +53,7 @@ function FinancialGoalFormPage() {
             type as 'input-year' | 'input-area' | 'choice-full' | 'choice-grid'
           }
           answerChoices={answerChoices}
-          onAnswerSelect={(answer) => setAnswer(currentStep, answer)}
+          onAnswerSelect={handleAnswer}
           selectedAnswers={answers}
           currentStep={currentStep}
         />
@@ -61,7 +72,6 @@ function FinancialGoalFormPage() {
         cancelText="취소"
       />
       <Box pt="60px">
-        '
         <Stack direction="column" gap="36px" px="20px">
           <ProgressBar progress={(currentStep / totalStep) * 100} />
           <Flex alignItems="center" justifyContent="space-between">
@@ -73,8 +83,6 @@ function FinancialGoalFormPage() {
               onNextStep={() => setCurrentStep(currentStep + 1)}
             />
           </Flex>
-
-          {/* step content */}
           {renderStepContent()}
         </Stack>
       </Box>

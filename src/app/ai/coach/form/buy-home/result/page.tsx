@@ -1,6 +1,18 @@
 'use client';
 
 import { Box, Stack, Text, Button, VStack, Flex } from '@chakra-ui/react';
+import { useBuyHomeSurveyStore } from '../../../../../../client/store/survey/buyHomeSurveyStore';
+
+interface answer {
+  id: number;
+  answer: string | number;
+  text: string;
+  code?: string;
+}
+interface ResultItem {
+  label: string;
+  value: (answers: Record<number, answer>) => string;
+}
 
 function ResultRow({ label, value }: { label: string; value: string }) {
   return (
@@ -21,6 +33,26 @@ function ResultRow({ label, value }: { label: string; value: string }) {
 }
 
 function ResultPage() {
+  const { answers } = useBuyHomeSurveyStore();
+
+  const resultItems: ResultItem[] = [
+    { label: '기간', value: (answers) => `${answers[2]?.text}년 뒤` },
+    {
+      label: '결혼계획',
+      value: (answers) =>
+        answers[3]?.code === 'a' ? '신혼부부' : '비혼으로 1인 가구',
+    },
+    {
+      label: '거주지역',
+      value: (answers) => `${answers[4]?.text} ${answers[5]?.text}`,
+    },
+    {
+      label: '거주 형태',
+      value: (answers) => `${answers[7]?.text} (${answers[6]?.text}평)`,
+    },
+    { label: '소유 형태', value: (answers) => answers[8]?.text },
+  ];
+
   return (
     <Box px="20px" backgroundColor="white" minHeight="100vh" pb="120px">
       <Stack pt="60px" align="center">
@@ -45,11 +77,9 @@ function ResultPage() {
           </Text>
 
           <VStack align="stretch" gap="0" mt="54px">
-            <ResultRow label="기간" value="10년 뒤" />
-            <ResultRow label="결혼계획" value="신혼부부" />
-            <ResultRow label="거주지역" value="경기도 화성시" />
-            <ResultRow label="거주 형태" value="아파트 (15평)" />
-            <ResultRow label="소유 형태" value="자가" />
+            {resultItems.map(({ label, value }) => (
+              <ResultRow key={label} label={label} value={value(answers)} />
+            ))}
           </VStack>
         </Box>
       </Stack>

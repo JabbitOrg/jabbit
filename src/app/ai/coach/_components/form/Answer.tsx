@@ -2,6 +2,7 @@ import { Stack, Text, SimpleGrid, HStack } from '@chakra-ui/react';
 import AnswerButton from './AnswerButton';
 import AnswerInput from './AnswerInput';
 import Region from '../../../../data/region.json';
+import { useBuyHomeSurveyStore } from '../../../../../client/store/survey/buyHomeSurveyStore';
 
 interface AnswerChoice {
   code: string;
@@ -11,7 +12,7 @@ interface AnswerChoice {
 interface AnswerProps {
   type: 'choice-full' | 'input-year' | 'input-area' | 'choice-grid';
   answerChoices: AnswerChoice[];
-  onAnswerSelect: (answer: string | number) => void;
+  onAnswerSelect: (answer: string | number, label: string) => void;
   selectedAnswers: Record<number, { id: number; answer: string | number }>;
   currentStep: number;
 }
@@ -24,9 +25,23 @@ function Answer({
   currentStep,
 }: AnswerProps) {
   const selectedAnswer = selectedAnswers[currentStep]?.answer;
+  const handleSelect = (answer: string | number, label: string) => {
+    onAnswerSelect(answer, label);
+  };
 
-  const handleSelect = (answer: string | number) => {
-    onAnswerSelect(answer);
+  const { answers } = useBuyHomeSurveyStore();
+  const getRegionChoices = (): AnswerChoice[] => {
+    const prevChoice = answers[4]?.answer;
+    switch (prevChoice) {
+      case 'a':
+        return Region.SEOUL;
+      case 'b':
+        return Region.KYEONGGI;
+      case 'c':
+        return Region.ETC;
+      default:
+        return Region.SEOUL;
+    }
   };
 
   const renderChoiceButtons = (choices: AnswerChoice[]) =>
@@ -34,7 +49,7 @@ function Answer({
       <AnswerButton
         key={choice.code}
         isSelected={selectedAnswer === choice.code}
-        onClick={() => handleSelect(choice.code)}
+        onClick={() => handleSelect(choice.code, choice.label)}
       >
         {choice.label}
       </AnswerButton>
@@ -46,9 +61,10 @@ function Answer({
         return renderChoiceButtons(answerChoices);
 
       case 'choice-grid':
+        const regionChoices = getRegionChoices();
         return (
           <SimpleGrid columns={3} gap="8px">
-            {renderChoiceButtons(Region.SEOUL)}
+            {renderChoiceButtons(regionChoices)}
           </SimpleGrid>
         );
 
@@ -60,7 +76,9 @@ function Answer({
             </Text>
             <AnswerInput
               value={selectedAnswer ?? ''}
-              onChange={(e) => handleSelect(Number(e.target.value))}
+              onChange={(e) =>
+                handleSelect(Number(e.target.value), e.target.value)
+              }
             />
             <Text textStyle="mobile_b1_semi" color="font.700">
               년 뒤
@@ -73,7 +91,9 @@ function Answer({
           <HStack align="center" justify="center" gap="12px">
             <AnswerInput
               value={selectedAnswer ?? ''}
-              onChange={(e) => handleSelect(Number(e.target.value))}
+              onChange={(e) =>
+                handleSelect(Number(e.target.value), e.target.value)
+              }
             />
             <Text>평</Text>
           </HStack>

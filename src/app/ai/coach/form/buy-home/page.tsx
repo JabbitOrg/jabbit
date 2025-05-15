@@ -9,20 +9,19 @@ import Step from '../../_components/form/Step';
 import Question from '../../_components/form/Question';
 import Answer from '../../_components/form/Answer';
 import SurveyQuestions from '../../../../data/buy-home-survey.json';
-import { useSurveyStore } from '../../../../../client/store/surveyStore';
+import { useBuyHomeSurveyStore } from '../../../../../client/store/survey/buyHomeSurveyStore';
 
 const totalStep = 8;
 
 function BuyHomeFormPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
-  const { setAnswer, answers } = useSurveyStore();
+  const { setAnswer, answers } = useBuyHomeSurveyStore();
   console.log('buyanswers', answers);
 
-  const handleAnswer = (answer: string | number) => {
-    setAnswer(currentStep, answer);
+  const handleAnswer = (answer: string | number, text: string) => {
+    setAnswer(currentStep, answer, text);
 
-    // If this is the last question, navigate to summary
     if (currentStep === totalStep) {
       router.push('/ai/coach/form/buy-home/summary');
     }

@@ -1,10 +1,21 @@
 'use client';
 
-import { Box, Stack, Text, Button, VStack, Flex } from '@chakra-ui/react';
+import { Box, Stack, Text, VStack, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CircularProgress from '../../../_components/form/CircularProgress';
-import { useSurveyStore } from '../../../../../../client/store/surveyStore';
+import { useBuyHomeSurveyStore } from '../../../../../../client/store/survey/buyHomeSurveyStore';
+
+interface answer {
+  id: number;
+  answer: string | number;
+  text: string;
+  code?: string;
+}
+interface ResultItem {
+  label: string;
+  value: (answers: Record<number, answer>) => string;
+}
 
 function ResultRow({ label, value }: { label: string; value: string }) {
   return (
@@ -29,7 +40,24 @@ function ResultRow({ label, value }: { label: string; value: string }) {
 function SummaryPage() {
   const router = useRouter();
   const [percentage, setPercentage] = useState(0);
-  const { setAnswer, answers } = useSurveyStore();
+  const { answers } = useBuyHomeSurveyStore();
+  const resultItems: ResultItem[] = [
+    { label: '기간', value: (answers) => `${answers[2]?.text}년 뒤` },
+    {
+      label: '결혼계획',
+      value: (answers) =>
+        answers[3]?.code === 'a' ? '신혼부부' : '비혼으로 1인 가구',
+    },
+    {
+      label: '거주지역',
+      value: (answers) => `${answers[4]?.text} ${answers[5]?.text}`,
+    },
+    {
+      label: '거주 형태',
+      value: (answers) => `${answers[7]?.text} (${answers[6]?.text}평)`,
+    },
+    { label: '소유 형태', value: (answers) => answers[8]?.text },
+  ];
 
   useEffect(() => {
     const steps = [
@@ -56,11 +84,14 @@ function SummaryPage() {
       <Stack pt="60px" align="center" gap="0">
         <Text textStyle="mobile_h1" textAlign="center">
           회원님을 위한 예상
-          <br /> 목표 금액을 계산 중이에요
+          <br />
+          목표 금액을 계산 중이에요
         </Text>
+
         <Box mt="70px" display="flex" justifyContent="center">
           <CircularProgress height={175} width={175} percentage={percentage} />
         </Box>
+
         <Text
           textStyle="mobile_b1_semi"
           color="gray.800"
@@ -69,19 +100,12 @@ function SummaryPage() {
         >
           입력하신 정보를 분석하고 있어요···
         </Text>
+
         <Box padding="0px 16px" borderRadius="24px" mt="54px" width="100%">
           <VStack align="stretch" gap="4px">
-            <ResultRow label="기간" value={answers[2]?.answer} />
-            <ResultRow label="결혼계획" value={answers[3]?.answer} />
-            <ResultRow
-              label="거주지역"
-              value={answers[4]?.answer + answers[5]?.answer}
-            />
-            <ResultRow
-              label="거주 형태"
-              value={answers[7]?.answer + answers[6]?.answer}
-            />
-            <ResultRow label="소유 형태" value={answers[8].answer} />
+            {resultItems.map(({ label, value }) => (
+              <ResultRow key={label} label={label} value={value(answers)} />
+            ))}
           </VStack>
         </Box>
       </Stack>
