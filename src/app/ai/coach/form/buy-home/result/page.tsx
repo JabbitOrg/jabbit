@@ -1,8 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Box, Stack, Text, Button, VStack, Flex } from '@chakra-ui/react';
 import { useBuyHomeSurveyStore } from '../../../../../../client/store/survey/buyHomeSurveyStore';
-
+import postBuyHomeSurvey from '../../../../../../client/lib/api/postBuyHomeSurvey';
 interface answer {
   id: number;
   answer: string | number;
@@ -33,6 +34,7 @@ function ResultRow({ label, value }: { label: string; value: string }) {
 }
 
 function ResultPage() {
+  const router = useRouter();
   const { answers } = useBuyHomeSurveyStore();
 
   const resultItems: ResultItem[] = [
@@ -52,6 +54,12 @@ function ResultPage() {
     },
     { label: '소유 형태', value: (answers) => answers[8]?.text },
   ];
+
+  const handleSubmitSurvey = () => {
+    //todo: API 호출 
+    postBuyHomeSurvey(answers);
+    router.push('/ai/coach')
+  };
 
   return (
     <Box px="20px" backgroundColor="white" minHeight="100vh" pb="120px">
@@ -96,6 +104,7 @@ function ResultPage() {
         borderWidth="2px"
         borderColor="gray.100"
         minWidth="335px"
+        onClick={handleSubmitSurvey}
       >
         <Text textStyle="mobile_b1_semi" color="white">
           장기목표로 설정하기

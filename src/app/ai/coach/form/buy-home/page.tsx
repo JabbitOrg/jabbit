@@ -17,7 +17,6 @@ function BuyHomeFormPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const { setAnswer, answers } = useBuyHomeSurveyStore();
-  console.log('buyanswers', answers);
 
   const handleAnswer = (answer: string | number, text: string) => {
     setAnswer(currentStep, answer, text);

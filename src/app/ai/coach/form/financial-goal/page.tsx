@@ -11,7 +11,7 @@ import SurveyQuestions from '../../../../data/financial-goal-survey.json';
 import Modal from '../../../../common/Modal/Modal';
 import { usefinancialGoalSurveyStore } from '../../../../../client/store/survey/financialGoalSurveyStore';
 import { useRouter } from 'next/navigation';
-
+import postFinancialGoalSurvey from '../../../../../client/lib/api/postFinancialGoalSurvey';
 const totalStep = 12;
 
 function FinancialGoalFormPage() {
@@ -23,6 +23,7 @@ function FinancialGoalFormPage() {
 
   const handleConfirm = () => {
     setIsOpen(false);
+    postFinancialGoalSurvey(answers);
     router.push('/ai/coach');
   };
 
