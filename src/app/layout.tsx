@@ -4,7 +4,6 @@ import localFont from 'next/font/local';
 import { Toaster } from '@/src/client/components/ui/toaster';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import ChannelTalk from './common/ChannelTalk/ChannelTalk';
-import MobileNotSupported from './components/MobileNotSupported/MobileNotSupported';
 import Provider from './common/Provider/Provider';
 
 export const metadata: Metadata = {
@@ -27,9 +26,7 @@ export default function RootLayout({
       <body>
         <ChannelTalk />
         <Provider>
-          <MobileNotSupported>
-            <Theme>{children}</Theme>
-          </MobileNotSupported>
+          <Theme>{children}</Theme>
           <Toaster />
         </Provider>
         <GoogleAnalytics gaId="G-Q797S4KDG1" />
