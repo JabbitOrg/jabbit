@@ -27,8 +27,8 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
           bgColor="brand.white"
           overflowY="scroll"
         >
-          <Header {...header} />
-          <Box pb="68px">{children}</Box>
+          {header && <Header {...header} />}
+          <Box pb={hasNav ? '68px' : '0px'}>{children}</Box>
           {hasNav && <Navigation />}
         </Box>
       </Box>
