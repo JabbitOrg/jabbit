@@ -12,7 +12,9 @@ interface AnswerChoice {
 interface AnswerProps {
   type: 'choice-full' | 'input-year' | 'input-area' | 'choice-grid';
   answerChoices: AnswerChoice[];
-  onAnswerSelect: (answer: string | number, label: string) => void;
+  onClick: (answer: string | number, text: string) => void;
+  onChange: (answer: string | number, text: string) => void;
+  onEnter: () => void;
   selectedAnswers: Record<number, { id: number; answer: string | number }>;
   currentStep: number;
 }
@@ -20,15 +22,13 @@ interface AnswerProps {
 function Answer({
   type,
   answerChoices,
-  onAnswerSelect,
+  onClick,
+  onChange,
+  onEnter,
   selectedAnswers,
   currentStep,
 }: AnswerProps) {
   const selectedAnswer = selectedAnswers[currentStep]?.answer;
-  const handleSelect = (answer: string | number, label: string) => {
-    onAnswerSelect(answer, label);
-  };
-
   const { answers } = useBuyHomeSurveyStore();
   const getRegionChoices = (): AnswerChoice[] => {
     const prevChoice = answers[4]?.answer;
@@ -49,7 +49,7 @@ function Answer({
       <AnswerButton
         key={choice.code}
         isSelected={selectedAnswer === choice.code}
-        onClick={() => handleSelect(choice.code, choice.label)}
+        onClick={() => onClick(choice.code, choice.label)}
       >
         {choice.label}
       </AnswerButton>
@@ -76,9 +76,8 @@ function Answer({
             </Text>
             <AnswerInput
               value={selectedAnswer ?? ''}
-              onChange={(e) =>
-                handleSelect(Number(e.target.value), e.target.value)
-              }
+              onChange={(e) => onChange(Number(e.target.value), e.target.value)}
+              onEnter={() => onEnter()}
             />
             <Text textStyle="mobile_b1_semi" color="font.700">
               년 뒤
@@ -91,9 +90,8 @@ function Answer({
           <HStack align="center" justify="center" gap="12px">
             <AnswerInput
               value={selectedAnswer ?? ''}
-              onChange={(e) =>
-                handleSelect(Number(e.target.value), e.target.value)
-              }
+              onChange={(e) => onChange(Number(e.target.value), e.target.value)}
+              onEnter={onEnter}
             />
             <Text>평</Text>
           </HStack>

@@ -31,11 +31,24 @@ function FinancialGoalFormPage() {
     setIsOpen(false);
   };
 
-  const handleAnswer = (answer: string | number, text: string) => {
+  const handleSelectClick = (answer: string | number, text: string) => {
     setAnswer(currentStep, answer, text);
+    goToNextPage();
+  };
 
+  const handleInputChange = (answer: string | number, text: string) => {
+    setAnswer(currentStep, answer, text);
+  };
+
+  const handleInputEnter = () => {
+    goToNextPage();
+  };
+
+  const goToNextPage = () => {
     if (currentStep === totalStep) {
       setIsOpen(true);
+    } else {
+      setCurrentStep(currentStep + 1);
     }
   };
 
@@ -54,7 +67,9 @@ function FinancialGoalFormPage() {
             type as 'input-year' | 'input-area' | 'choice-full' | 'choice-grid'
           }
           answerChoices={answerChoices}
-          onAnswerSelect={handleAnswer}
+          onClick={handleSelectClick}
+          onChange={handleInputChange}
+          onEnter={handleInputEnter}
           selectedAnswers={answers}
           currentStep={currentStep}
         />

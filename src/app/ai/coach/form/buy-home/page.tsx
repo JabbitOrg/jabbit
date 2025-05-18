@@ -18,11 +18,24 @@ function BuyHomeFormPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const { setAnswer, answers } = useBuyHomeSurveyStore();
 
-  const handleAnswer = (answer: string | number, text: string) => {
+  const handleSelectClick = (answer: string | number, text: string) => {
     setAnswer(currentStep, answer, text);
+    goToNextPage();
+  };
 
+  const handleInputChange = (answer: string | number, text: string) => {
+    setAnswer(currentStep, answer, text);
+  };
+
+  const handleInputEnter = () => {
+    goToNextPage();
+  };
+
+  const goToNextPage = () => {
     if (currentStep === totalStep) {
       router.push('/ai/coach/form/buy-home/summary');
+    } else {
+      setCurrentStep(currentStep + 1);
     }
   };
 
@@ -41,7 +54,9 @@ function BuyHomeFormPage() {
             type as 'input-year' | 'input-area' | 'choice-full' | 'choice-grid'
           }
           answerChoices={answerChoices}
-          onAnswerSelect={handleAnswer}
+          onClick={handleSelectClick}
+          onChange={handleInputChange}
+          onEnter={handleInputEnter}
           selectedAnswers={answers}
           currentStep={currentStep}
         />
