@@ -35,8 +35,7 @@
     "type": "choice-full",
     "answerChoices": [
       { "code": "a", "label": "서울" },
-      { "code": "b", "label": "경기" },
-      { "code": "c", "label": "그외" }
+      { "code": "b", "label": "경기" }
     ]
   },
   {
