@@ -63,7 +63,7 @@ function Answer({
       case 'choice-grid':
         const regionChoices = getRegionChoices();
         return (
-          <SimpleGrid columns={3} gap="8px">
+          <SimpleGrid columns={3} gap="8px" maxH="200px" overflowY="auto">
             {renderChoiceButtons(regionChoices)}
           </SimpleGrid>
         );
