@@ -1,8 +1,8 @@
 import { Stack, Text, SimpleGrid, HStack } from '@chakra-ui/react';
 import AnswerButton from './AnswerButton';
 import AnswerInput from './AnswerInput';
-import Region from '../../../../data/region.json';
-import { useBuyHomeSurveyStore } from '../../../../../client/store/survey/buyHomeSurveyStore';
+import Region from '@/src/app/data/region.json';
+import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
 
 interface AnswerChoice {
   code: string;

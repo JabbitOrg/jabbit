@@ -1,6 +1,4 @@
 import { Input } from '@chakra-ui/react';
-import { useEffect } from 'react';
-
 interface AnswerInputProps {
   value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

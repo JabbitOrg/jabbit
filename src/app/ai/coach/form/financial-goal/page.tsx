@@ -1,24 +1,24 @@
 'use client';
 
 import { Box, Flex, Stack } from '@chakra-ui/react';
-import ProgressBar from '../../_components/form/ProgressBar';
+import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
 import { useState } from 'react';
-import StepController from '../../_components/form/StepController';
-import Step from '../../_components/form/Step';
-import Question from '../../_components/form/Question';
-import Answer from '../../_components/form/Answer';
-import SurveyQuestions from '../../../../data/financial-goal-survey.json';
-import Modal from '../../../../common/Modal/Modal';
-import { usefinancialGoalSurveyStore } from '../../../../../client/store/survey/financialGoalSurveyStore';
+import StepController from '@/src/app/ai/coach/_components/form/StepController';
+import Step from '@/src/app/ai/coach/_components/form/Step';
+import Question from '@/src/app/ai/coach/_components/form/Question';
+import Answer from '@/src/app/ai/coach/_components/form/Answer';
+import SurveyQuestions from '@/src/app/data/financial-goal-survey.json';
+import Modal from '@/src/app/common/Modal/Modal';
+import { useFinancialGoalSurveyStore } from '@/src/client/store/survey/financialGoalSurveyStore';
 import { useRouter } from 'next/navigation';
-import postFinancialGoalSurvey from '../../../../../client/lib/api/postFinancialGoalSurvey';
+import postFinancialGoalSurvey from '@/src/client/lib/api/postFinancialGoalSurvey';
 const totalStep = 12;
 
 function FinancialGoalFormPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { setAnswer, answers } = usefinancialGoalSurveyStore();
+  const { setAnswer, answers } = useFinancialGoalSurveyStore();
 
   const handleConfirm = () => {
     setIsOpen(false);

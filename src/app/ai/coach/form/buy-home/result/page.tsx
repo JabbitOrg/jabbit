@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { Box, Stack, Text, Button, VStack, Flex } from '@chakra-ui/react';
-import { useBuyHomeSurveyStore } from '../../../../../../client/store/survey/buyHomeSurveyStore';
-import postBuyHomeSurvey from '../../../../../../client/lib/api/postBuyHomeSurvey';
+import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
+import postBuyHomeSurvey from '@/src/client/lib/api/postBuyHomeSurvey';
 interface answer {
   id: number;
   answer: string | number;
