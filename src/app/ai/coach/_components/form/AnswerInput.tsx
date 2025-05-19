@@ -1,4 +1,5 @@
 import { Input } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 interface AnswerInputProps {
   value: string | number;
@@ -7,39 +8,45 @@ interface AnswerInputProps {
 }
 
 function AnswerInput({ value, onChange, onEnter }: AnswerInputProps) {
+  useEffect(() => {
+    const handleFocusOut = (e: FocusEvent) => {
+      e.preventDefault();
+      if (value) onEnter();
+    };
+
+    window.addEventListener('focusout', handleFocusOut);
+    return () => {
+      window.removeEventListener('focusout', handleFocusOut);
+    };
+  }, [onEnter]);
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onEnter(); 
+    <Input
+      type="text"
+      inputMode="numeric"
+      placeholder="0"
+      size="lg"
+      textAlign="right"
+      height="60px"
+      display="inline-block"
+      width="full"
+      minWidth="223px"
+      maxWidth="280px"
+      borderRadius="10px"
+      padding="0 16px"
+      backgroundColor="white"
+      borderWidth="2px"
+      borderColor="gray.100"
+      pl="8px"
+      value={value}
+      onChange={onChange}
+      _focus={{
+        backgroundColor: 'blue.300',
+        color: 'brand.blue',
+        borderWidth: '2px',
+        borderColor: 'brand.blue',
       }}
-    >
-      <Input
-        type="number"
-        placeholder="0"
-        size="lg"
-        textAlign="right"
-        height="60px"
-        display="inline-block"
-        width="full"
-        minWidth="223px"
-        maxWidth="280px"
-        borderRadius="10px"
-        padding="0 16px"
-        backgroundColor="white"
-        borderWidth="2px"
-        borderColor="gray.100"
-        pl="8px"
-        value={value}
-        onChange={onChange}
-        _focus={{
-          backgroundColor: 'blue.300',
-          color: 'brand.blue',
-          borderWidth: '2px',
-          borderColor: 'brand.blue',
-        }}
-      />
-    </form>
+    />
   );
 }
 
