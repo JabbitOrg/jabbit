@@ -7,7 +7,7 @@ import StepController from '@/src/app/ai/coach/_components/form/StepController';
 import Step from '@/src/app/ai/coach/_components/form/Step';
 import Question from '@/src/app/ai/coach/_components/form/Question';
 import Answer from '@/src/app/ai/coach/_components/form/Answer';
-import SurveyQuestions from '@/src/app/data/financial-goal-survey.json';
+import { financialGoalSurvey } from '@/src/client/types/survey';
 import Modal from '@/src/app/common/Modal/Modal';
 import { useFinancialGoalSurveyStore } from '@/src/client/store/survey/financialGoalSurveyStore';
 import { useRouter } from 'next/navigation';
@@ -57,7 +57,9 @@ function FinancialGoalFormPage() {
   };
 
   const renderStepContent = () => {
-    const currentQuestion = SurveyQuestions.find((q) => q.id === currentStep);
+    const currentQuestion = financialGoalSurvey.find(
+      (q) => q.id === currentStep,
+    );
 
     if (!currentQuestion) return null;
 

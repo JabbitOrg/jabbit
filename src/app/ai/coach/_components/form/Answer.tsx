@@ -1,8 +1,8 @@
 import { Stack, Text, SimpleGrid, HStack } from '@chakra-ui/react';
 import AnswerButton from './AnswerButton';
 import AnswerInput from './AnswerInput';
-import Region from '@/src/app/data/region.json';
 import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
+import { region } from '@/src/client/types/survey';
 
 interface AnswerChoice {
   code: string;
@@ -36,13 +36,13 @@ function Answer({
     const prevChoice = answers[4]?.answer;
     switch (prevChoice) {
       case 'a':
-        return Region.SEOUL;
+        return region.SEOUL.map((item) => ({ ...item }));
       case 'b':
-        return Region.KYEONGGI;
+        return region.KYEONGGI.map((item) => ({ ...item }));
       case 'c':
-        return Region.ETC;
+        return region.ETC.map((item) => ({ ...item }));
       default:
-        return Region.SEOUL;
+        return region.SEOUL.map((item) => ({ ...item }));
     }
   };
 

@@ -8,7 +8,7 @@ import StepController from '@/src/app/ai/coach/_components/form/StepController';
 import Step from '@/src/app/ai/coach/_components/form/Step';
 import Question from '@/src/app/ai/coach/_components/form/Question';
 import Answer from '@/src/app/ai/coach/_components/form/Answer';
-import SurveyQuestions from '@/src/app/data/buy-home-survey.json';
+import { buyHomeSurvey } from '@/src/client/types/survey';
 import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
 
 const totalStep = 8;
@@ -55,7 +55,7 @@ function BuyHomeFormPage() {
   };
 
   const renderStepContent = () => {
-    const currentQuestion = SurveyQuestions.find((q) => q.id === currentStep);
+    const currentQuestion = buyHomeSurvey.find((q) => q.id === currentStep);
 
     if (!currentQuestion) return null;
 
