@@ -8,17 +8,9 @@ interface AnswerInputProps {
 }
 
 function AnswerInput({ value, onChange, onEnter }: AnswerInputProps) {
-  useEffect(() => {
-    const handleFocusOut = (e: FocusEvent) => {
-      e.preventDefault();
-      if (value) onEnter();
-    };
-
-    window.addEventListener('focusout', handleFocusOut);
-    return () => {
-      window.removeEventListener('focusout', handleFocusOut);
-    };
-  }, [onEnter]);
+  const handleBlur = () => {
+    if (value) onEnter();
+  };
 
   return (
     <Input
@@ -46,6 +38,7 @@ function AnswerInput({ value, onChange, onEnter }: AnswerInputProps) {
         borderWidth: '2px',
         borderColor: 'brand.blue',
       }}
+      onBlur={handleBlur}
     />
   );
 }

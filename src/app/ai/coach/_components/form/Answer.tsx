@@ -17,6 +17,7 @@ interface AnswerProps {
   onEnter: () => void;
   selectedAnswers: Record<number, { id: number; answer: string | number }>;
   currentStep: number;
+  error?: string;
 }
 
 function Answer({
@@ -27,6 +28,7 @@ function Answer({
   onEnter,
   selectedAnswers,
   currentStep,
+  error,
 }: AnswerProps) {
   const selectedAnswer = selectedAnswers[currentStep]?.answer;
   const { answers } = useBuyHomeSurveyStore();
@@ -70,31 +72,60 @@ function Answer({
 
       case 'input-year':
         return (
-          <HStack align="center" justify="center" gap="12px">
-            <Text textStyle="mobile_b1_semi" color="font.700">
-              지금부터
-            </Text>
-            <AnswerInput
-              value={selectedAnswer ?? ''}
-              onChange={(e) => onChange(Number(e.target.value), e.target.value)}
-              onEnter={() => onEnter()}
-            />
-            <Text textStyle="mobile_b1_semi" color="font.700">
-              년 뒤
-            </Text>
-          </HStack>
+          <>
+            <HStack align="center" justify="center" gap="12px">
+              <Text textStyle="mobile_b1_semi" color="font.700">
+                지금부터
+              </Text>
+              <AnswerInput
+                value={selectedAnswer ?? ''}
+                onChange={(e) =>
+                  onChange(Number(e.target.value), e.target.value)
+                }
+                onEnter={() => onEnter()}
+              />
+              <Text textStyle="mobile_b1_semi" color="font.700">
+                년 뒤
+              </Text>
+            </HStack>
+
+            {error && (
+              <Text
+                mt="8px"
+                textAlign="center"
+                color="red"
+                textStyle="mobile_b2"
+              >
+                {error}
+              </Text>
+            )}
+          </>
         );
 
       case 'input-area':
         return (
-          <HStack align="center" justify="center" gap="12px">
-            <AnswerInput
-              value={selectedAnswer ?? ''}
-              onChange={(e) => onChange(Number(e.target.value), e.target.value)}
-              onEnter={onEnter}
-            />
-            <Text>평</Text>
-          </HStack>
+          <>
+            <HStack align="center" justify="center" gap="12px">
+              <AnswerInput
+                value={selectedAnswer ?? ''}
+                onChange={(e) =>
+                  onChange(Number(e.target.value), e.target.value)
+                }
+                onEnter={onEnter}
+              />
+              <Text>평</Text>
+            </HStack>
+            {error && (
+              <Text
+                mt="8px"
+                textAlign="center"
+                color="red"
+                textStyle="mobile_b2"
+              >
+                {error}
+              </Text>
+            )}
+          </>
         );
 
       default:

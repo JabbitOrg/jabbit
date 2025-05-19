@@ -16,15 +16,25 @@ const totalStep = 8;
 function BuyHomeFormPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
+  const [error, setError] = useState('');
   const { setAnswer, answers } = useBuyHomeSurveyStore();
-
   const handleSelectClick = (answer: string | number, text: string) => {
     setAnswer(currentStep, answer, text);
     goToNextPage();
   };
-
+  console.log('answers', answers);
+  console.log(answers[currentStep]?.answer !== undefined);
   const handleInputChange = (answer: string | number, text: string) => {
-    setAnswer(currentStep, answer, text);
+    const min = 1;
+    const max = 50;
+    const numAnswer = Number(answer);
+    if (numAnswer < min || numAnswer > max) {
+      setError('1과 50사이 값을 입력해주시기 바랍니다.');
+      setAnswer(currentStep, '', '');
+    } else {
+      setError('');
+      setAnswer(currentStep, answer, text);
+    }
   };
 
   const handleInputEnter = () => {
@@ -37,6 +47,11 @@ function BuyHomeFormPage() {
     } else {
       setCurrentStep(currentStep + 1);
     }
+  };
+
+  const isAnswerValid = (step: number) => {
+    const answer = answers[step]?.answer;
+    return answer !== undefined && answer !== '' && answer !== null;
   };
 
   const renderStepContent = () => {
@@ -59,6 +74,7 @@ function BuyHomeFormPage() {
           onEnter={handleInputEnter}
           selectedAnswers={answers}
           currentStep={currentStep}
+          error={error}
         />
       </Stack>
     );
@@ -74,6 +90,7 @@ function BuyHomeFormPage() {
             totalStep={totalStep}
             onPrevStep={() => setCurrentStep(currentStep - 1)}
             onNextStep={() => setCurrentStep(currentStep + 1)}
+            isAnswered={isAnswerValid(currentStep)}
           />
         </Flex>
         {renderStepContent()}

@@ -19,7 +19,6 @@ function FinancialGoalFormPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const { setAnswer, answers } = usefinancialGoalSurveyStore();
-  console.log(answers);
 
   const handleConfirm = () => {
     setIsOpen(false);
@@ -50,6 +49,11 @@ function FinancialGoalFormPage() {
     } else {
       setCurrentStep(currentStep + 1);
     }
+  };
+
+  const isAnswerValid = (step: number) => {
+    const answer = answers[step]?.answer;
+    return answer !== undefined && answer !== '' && answer !== null;
   };
 
   const renderStepContent = () => {
@@ -97,6 +101,7 @@ function FinancialGoalFormPage() {
               totalStep={totalStep}
               onPrevStep={() => setCurrentStep(currentStep - 1)}
               onNextStep={() => setCurrentStep(currentStep + 1)}
+              isAnswered={isAnswerValid(currentStep)}
             />
           </Flex>
           {renderStepContent()}
