@@ -85,7 +85,7 @@ export const ROUTES: Record<
   COACH_ROUTINE: {
     path: '/ai/coach/routine',
     header: {
-      title: '루틴',
+      title: 'routine',
       hasPrev: true,
     },
     hasNav: false,
