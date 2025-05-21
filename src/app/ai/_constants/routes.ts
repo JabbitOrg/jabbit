@@ -49,25 +49,25 @@ export const ROUTES: Record<
       title: '목표',
       hasPrev: true,
     },
-    hasNav: true,
+    hasNav: false,
   },
 
   COACH_PLAN: {
     path: '/ai/coach/plan',
     header: {
-      title: '계획',
+      title: 'plan',
       hasPrev: true,
     },
-    hasNav: true,
+    hasNav: false,
   },
 
   COACH_ROUTINE: {
     path: '/ai/coach/routine',
     header: {
-      title: '루틴',
+      title: 'routine',
       hasPrev: true,
     },
-    hasNav: true,
+    hasNav: false,
   },
 
   // 루틴
