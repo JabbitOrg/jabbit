@@ -16,7 +16,7 @@ function Header({ title, hasPrev, rightButton }: Route['header']) {
       bgColor="brand.white"
     >
       {hasPrev ? (
-        <Button onClick={() => router.back()}>
+        <Button onClick={() => router.back()} backgroundColor="white">
           <ArrowLeftSVG width="24px" height="24px" />
         </Button>
       ) : (
