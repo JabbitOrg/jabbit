@@ -2,17 +2,13 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getCurrentTimestamp } from '@/src/client/utils/parser';
 
-interface Answer {
-  id: number;
-  answer: string | number;
-  text: string;
-}
+export type Answer = Record<string, string | number>;
 
 interface financialGoalSurveyState {
-  answers: Record<number, Answer>;
+  response: Answer;
   isSubmitted: boolean;
   dateSubmitted: string | null;
-  setAnswer: (id: number, answer: string | number, text: string) => void;
+  setResponse: (id: number, answer: string | number) => void;
   clearSurvey: () => void;
   submitSurvey: () => void;
   isNotificationEnabled: boolean;
@@ -28,22 +24,22 @@ interface financialGoalSurveyState {
 export const useFinancialGoalSurveyStore = create<financialGoalSurveyState>()(
   persist(
     (set) => ({
-      answers: {},
+      response: {},
       isSubmitted: false,
       dateSubmitted: null,
       isNotificationEnabled: false,
       dateScenarioCreated: null,
       datePlanCreated: null,
       dateRoutineCreated: null,
-      setAnswer: (id, answer, text) =>
+      setResponse: (id, answer) =>
         set((state) => ({
-          answers: {
-            ...state.answers,
-            [id]: { id, answer, text },
+          response: {
+            ...state.response,
+            [`q${id}`]: answer,
           },
         })),
       clearSurvey: () =>
-        set({ answers: {}, isSubmitted: false, dateSubmitted: null }),
+        set({ response: {}, isSubmitted: false, dateSubmitted: null }),
       submitSurvey: () =>
         set({
           isSubmitted: true,

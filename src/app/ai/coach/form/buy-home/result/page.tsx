@@ -4,15 +4,11 @@ import { useRouter } from 'next/navigation';
 import { Box, Stack, Text, Button, VStack, Flex } from '@chakra-ui/react';
 import { useBuyHomeSurveyStore } from '@/src/app/ai/coach/_store/buyHomeSurveyStore';
 import postBuyHomeSurvey from '@/src/client/lib/api/postBuyHomeSurvey';
-interface answer {
-  id: number;
-  answer: string | number;
-  text: string;
-  code?: string;
-}
+import { Answer } from '@/src/app/ai/coach/_store/buyHomeSurveyStore';
+
 interface ResultItem {
   label: string;
-  value: (answers: Record<number, answer>) => string;
+  value: (response: Answer) => string | number;
 }
 
 function ResultRow({ label, value }: { label: string; value: string }) {
@@ -35,43 +31,45 @@ function ResultRow({ label, value }: { label: string; value: string }) {
 
 function ResultPage() {
   const router = useRouter();
-  const { answers, submitSurvey } = useBuyHomeSurveyStore();
+  const { response, submitSurvey } = useBuyHomeSurveyStore();
   const resultItems: ResultItem[] = [
-    { label: '기간', value: (answers) => `${answers[2]?.text}년 뒤` },
+    { label: '기간', value: (response) => `${response[`q2`]}년 뒤` },
     {
       label: '결혼계획',
-      value: (answers) =>
-        answers[3]?.code === 'a' ? '신혼부부' : '비혼으로 1인 가구',
+      value: (response) =>
+        response[`q3`] === '결혼해서 신혼부부에요'
+          ? '신혼부부'
+          : '비혼으로 1인 가구',
     },
     {
       label: '거주지역',
-      value: (answers) => `${answers[4]?.text} ${answers[5]?.text}`,
+      value: (response) => `${response[`q4`]} ${response[`q5`]}`,
     },
     {
       label: '거주 형태',
-      value: (answers) => `${answers[7]?.text} (${answers[6]?.text}평)`,
+      value: (response) => `${response[`q7`]} (${response[`q6`]}평)`,
     },
-    { label: '소유 형태', value: (answers) => answers[8]?.text },
+    { label: '소유 형태', value: (response) => response[`q8`] },
   ];
 
   const calculateEstimatedAmount = () => {
-    const region = answers[4]?.answer;
-    const buildingType = answers[7]?.answer;
-    const rentalType = answers[8]?.answer;
+    const region = response[`q4`];
+    const buildingType = response[`q7`];
+    const rentalType = response[`q8`];
 
     const estimateTable: Record<
       string,
       Record<string, Record<string, number>>
     > = {
-      a: {
-        a: { a: 45000, b: 25000 },
-        b: { a: 35000, b: 20000 },
-        c: { a: 40000, b: 22000 },
+      서울: {
+        아파트: { 전세: 45000, '자가(매매)': 25000 },
+        오피스텔: { 전세: 35000, '자가(매매)': 20000 },
+        빌라: { 전세: 40000, '자가(매매)': 22000 },
       },
-      b: {
-        a: { a: 30000, b: 17000 },
-        b: { a: 25000, b: 14000 },
-        c: { a: 28000, b: 16000 },
+      경기: {
+        아파트: { 전세: 30000, '자가(매매)': 17000 },
+        오피스텔: { 전세: 25000, '자가(매매)': 14000 },
+        빌라: { 전세: 28000, '자가(매매)': 16000 },
       },
     };
 
@@ -92,7 +90,7 @@ function ResultPage() {
   const handleSubmitSurvey = () => {
     //todo: API 호출
     submitSurvey();
-    postBuyHomeSurvey(answers);
+    postBuyHomeSurvey(response);
     router.push('/ai/coach');
   };
 
@@ -121,7 +119,11 @@ function ResultPage() {
 
           <VStack align="stretch" gap="0" mt="54px">
             {resultItems.map(({ label, value }) => (
-              <ResultRow key={label} label={label} value={value(answers)} />
+              <ResultRow
+                key={label}
+                label={label}
+                value={String(value(response))}
+              />
             ))}
           </VStack>
         </Box>

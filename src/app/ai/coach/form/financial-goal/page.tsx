@@ -18,11 +18,11 @@ function FinancialGoalFormPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { setAnswer, answers, submitSurvey } = useFinancialGoalSurveyStore();
+  const { setResponse, response, submitSurvey } = useFinancialGoalSurveyStore();
 
   const handleConfirm = () => {
     setIsOpen(false);
-    postFinancialGoalSurvey(answers);
+    postFinancialGoalSurvey(response);
     submitSurvey();
     router.push('/ai/coach');
   };
@@ -31,13 +31,13 @@ function FinancialGoalFormPage() {
     setIsOpen(false);
   };
 
-  const handleSelectClick = (answer: string | number, text: string) => {
-    setAnswer(currentStep, answer, text);
+  const handleSelectClick = (answer: string | number) => {
+    setResponse(currentStep, answer);
     goToNextPage();
   };
 
-  const handleInputChange = (answer: string | number, text: string) => {
-    setAnswer(currentStep, answer, text);
+  const handleInputChange = (answer: string | number) => {
+    setResponse(currentStep, answer);
   };
 
   const handleInputEnter = () => {
@@ -53,7 +53,7 @@ function FinancialGoalFormPage() {
   };
 
   const isAnswerValid = (step: number) => {
-    const answer = answers[step]?.answer;
+    const answer = response[`q${step}`];
     return answer !== undefined && answer !== '' && answer !== null;
   };
 
@@ -77,7 +77,7 @@ function FinancialGoalFormPage() {
           onClick={handleSelectClick}
           onChange={handleInputChange}
           onEnter={handleInputEnter}
-          selectedAnswers={answers}
+          selectedAnswers={response}
           currentStep={currentStep}
         />
       </Stack>

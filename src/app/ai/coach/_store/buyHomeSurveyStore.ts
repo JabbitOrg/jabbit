@@ -2,18 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getCurrentTimestamp } from '@/src/client/utils/parser';
 
-interface Answer {
-  id: number;
-  answer: string | number;
-  text: string;
-}
+export type Answer = Record<string, string | number>;
 
 interface BuyHomeSurveyState {
-  answers: Record<number, Answer>;
+  response: Answer;
   isSubmitted: boolean;
   dateSubmitted: string | null;
   dateFirstVisit: string | null;
-  setAnswer: (id: number, answer: string | number, text: string) => void;
+  setResponse: (id: number, answer: string | number) => void;
   setDateFirstVisit: () => void;
   clearSurvey: () => void;
   submitSurvey: () => void;
@@ -22,7 +18,7 @@ interface BuyHomeSurveyState {
 export const useBuyHomeSurveyStore = create<BuyHomeSurveyState>()(
   persist(
     (set, get) => ({
-      answers: {},
+      response: {},
       isSubmitted: false,
       dateSubmitted: null,
       dateFirstVisit: null,
@@ -34,15 +30,15 @@ export const useBuyHomeSurveyStore = create<BuyHomeSurveyState>()(
           }));
         }
       },
-      setAnswer: (id, answer, text) =>
+      setResponse: (id, answer) =>
         set((state) => ({
-          answers: {
-            ...state.answers,
-            [id]: { id, answer, text },
+          response: {
+            ...state.response,
+            [`q${id}`]: answer,
           },
         })),
       clearSurvey: () =>
-        set({ answers: {}, isSubmitted: false, dateSubmitted: null }),
+        set({ response: {}, isSubmitted: false, dateSubmitted: null }),
       submitSurvey: () =>
         set({
           isSubmitted: true,
