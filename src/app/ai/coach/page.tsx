@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { Stack, Text, Flex, Box } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import ChatbotMessage from './_components/ChatbotMessage';
-import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
-import { useFinancialGoalSurveyStore } from '@/src/client/store/survey/financialGoalSurveyStore';
+import { useBuyHomeSurveyStore } from '@/src/app/ai/coach/_store/buyHomeSurveyStore';
+import { useFinancialGoalSurveyStore } from '@/src/app/ai/coach/_store/financialGoalSurveyStore';
 import {
   parseTimeFromTimestamp,
   groupMessagesByDate,

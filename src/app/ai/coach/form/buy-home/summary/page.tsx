@@ -4,7 +4,7 @@ import { Box, Stack, Text, VStack, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CircularProgress from '@/src/app/ai/coach/_components/form/CircularProgress';
-import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
+import { useBuyHomeSurveyStore } from '@/src/app/ai/coach/_store/buyHomeSurveyStore';
 
 interface answer {
   id: number;

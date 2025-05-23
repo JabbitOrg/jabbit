@@ -8,8 +8,8 @@ import StepController from '@/src/app/ai/coach/_components/form/StepController';
 import Step from '@/src/app/ai/coach/_components/form/Step';
 import Question from '@/src/app/ai/coach/_components/form/Question';
 import Answer from '@/src/app/ai/coach/_components/form/Answer';
-import { buyHomeSurvey } from '@/src/client/types/survey';
-import { useBuyHomeSurveyStore } from '@/src/client/store/survey/buyHomeSurveyStore';
+import { buyHomeSurvey } from '@/src/app/ai/_constants/survey';
+import { useBuyHomeSurveyStore } from '@/src/app/ai/coach/_store/buyHomeSurveyStore';
 
 const totalStep = 8;
 
