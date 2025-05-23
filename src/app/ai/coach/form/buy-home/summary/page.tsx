@@ -36,24 +36,24 @@ function SummaryPage() {
   const router = useRouter();
   const [percentage, setPercentage] = useState(0);
   const { response } = useBuyHomeSurveyStore();
+  const { q2, q3, q4, q5, q6, q7, q8 } = response;
+
   const resultItems: ResultItem[] = [
-    { label: '기간', value: (response) => `${response[`q2`]}년 뒤` },
+    { label: '기간', value: () => `${q2}년 뒤` },
     {
       label: '결혼계획',
-      value: (response) =>
-        response[`q3`] === '결혼해서 신혼부부에요'
-          ? '신혼부부'
-          : '비혼으로 1인 가구',
+      value: () =>
+        q3 === '결혼해서 신혼부부에요' ? '신혼부부' : '비혼으로 1인 가구',
     },
     {
       label: '거주지역',
-      value: (response) => `${response[`q4`]} ${response[`q5`]}`,
+      value: () => `${q4} ${q5}`,
     },
     {
       label: '거주 형태',
-      value: (response) => `${response[`q7`]} (${response[`q6`]}평)`,
+      value: () => `${q7} (${q6}평)`,
     },
-    { label: '소유 형태', value: (response) => response[`q8`] },
+    { label: '소유 형태', value: () => String(q8) },
   ];
 
   useEffect(() => {
@@ -101,7 +101,11 @@ function SummaryPage() {
         <Box padding="0px 16px" borderRadius="24px" mt="54px" width="100%">
           <VStack align="stretch" gap="4px">
             {resultItems.map(({ label, value }) => (
-              <ResultRow key={label} label={label} value={String(value(response))} />
+              <ResultRow
+                key={label}
+                label={label}
+                value={String(value(response))}
+              />
             ))}
           </VStack>
         </Box>

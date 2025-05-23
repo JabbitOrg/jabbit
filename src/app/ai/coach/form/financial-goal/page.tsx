@@ -20,10 +20,10 @@ function FinancialGoalFormPage() {
   const [isOpen, setIsOpen] = useState(false);
   const { setResponse, response, submitSurvey } = useFinancialGoalSurveyStore();
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setIsOpen(false);
-    postFinancialGoalSurvey(response);
     submitSurvey();
+    await postFinancialGoalSurvey({ response });
     router.push('/ai/coach');
   };
 
