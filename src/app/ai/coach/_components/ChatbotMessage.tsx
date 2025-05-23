@@ -8,6 +8,7 @@ interface ChatbotMessageProps {
   buttonText: string;
   onButtonClick: () => void;
   isDisabled?: boolean;
+  buttonDisabledText?: string;
 }
 
 function ChatbotMessage({
@@ -15,6 +16,7 @@ function ChatbotMessage({
   buttonText,
   onButtonClick,
   isDisabled,
+  buttonDisabledText,
 }: ChatbotMessageProps) {
   return (
     <Stack direction="column" gap="8px" w="258px">
@@ -55,7 +57,7 @@ function ChatbotMessage({
             backgroundColor: 'blue_gray.100',
           }}
         >
-          {buttonText}
+          {buttonDisabledText && isDisabled ? buttonDisabledText : buttonText}
         </Button>
       </Flex>
     </Stack>
