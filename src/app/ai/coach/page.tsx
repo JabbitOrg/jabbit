@@ -13,6 +13,9 @@ import {
   formatKoreanDate,
 } from '@/src/client/utils/parser';
 import { useAuthStore } from '@/src/client/store/authStore';
+import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAISolutionStore';
+import getAiScenario from '@/src/client/lib/api/getAiScenario';
+import { useQuery } from '@tanstack/react-query';
 
 function CoachPage() {
   const { push } = useRouter();
@@ -23,31 +26,90 @@ function CoachPage() {
     setDateFirstVisit,
   } = useBuyHomeSurveyStore();
 
+  const { isSubmitted: isFinancialGoalSubmitted } =
+    useFinancialGoalSurveyStore();
+
   const {
-    isSubmitted: isFinancialGoalSubmitted,
-    dateSubmitted: financialGoalDateSubmitted,
-    isNotificationEnabled,
-    setNotification,
-    // setScenarioCreated,
-    // setPlanCreated,
-    // setRoutineCreated,
-    dateScenarioCreated,
-    datePlanCreated,
-    dateRoutineCreated,
-  } = useFinancialGoalSurveyStore();
+    scenario: {
+      notificationEnabled: isScenarioNotificationEnabled,
+      requestedAt: dateScenarioRequested,
+      createdAt: dateScenarioCreated,
+    },
+    plan: {
+      notificationEnabled: isPlanNotificationEnabled,
+      requestedAt: datePlanRequested,
+      createdAt: datePlanCreated,
+    },
+    routine: {
+      notificationEnabled: isRoutineNotificationEnabled,
+      createdAt: dateRoutineCreated,
+      requestedAt: dateRoutineRequested,
+    },
+    setScenarioCreated,
+    setPlanCreated,
+    setRoutineCreated,
+    setScenarioNotification,
+    setPlanNotification,
+    setRoutineNotification,
+  } = useGenerateAiSolutionStore();
+
+  useEffect(() => {
+    if (!dateScenarioRequested) return;
+    if (dateScenarioRequested && !dateScenarioCreated) {
+      const fetchAiScenario = async () => {
+        const response = await getAiScenario();
+        if (response.status === 200) {
+          setScenarioCreated();
+        }
+      };
+      fetchAiScenario();
+    }
+  }, [dateScenarioRequested, dateScenarioCreated]);
+
+  useEffect(() => {
+    if (!datePlanRequested) return;
+    if (datePlanRequested && !datePlanCreated) {
+      console.log('plan API Called!');
+      const fetchAiPlan = async () => {
+        const response = await getAiScenario();
+        if (response.status === 200) {
+          setPlanCreated();
+        }
+      };
+      fetchAiPlan();
+    }
+  }, [datePlanRequested, datePlanCreated]);
+
+  useEffect(() => {
+    if (!dateRoutineRequested) return;
+    if (dateRoutineRequested && !dateRoutineCreated) {
+      const fetchAiRoutine = async () => {
+        const response = await getAiScenario();
+        if (response.status === 200) {
+          setRoutineCreated();
+        }
+      };
+      fetchAiRoutine();
+    }
+  }, [dateRoutineRequested, dateRoutineCreated]);
 
   const { user } = useAuthStore();
 
-  const handleGetNotification = () => {
-    setNotification(!isNotificationEnabled);
+  const handleGetNotification = (type: 'scenario' | 'plan' | 'routine') => {
+    if (type === 'scenario') {
+      setScenarioNotification(!isScenarioNotificationEnabled);
+      // 알림 신청 API 호출 필요
+    } else if (type === 'plan') {
+      setPlanNotification(!isPlanNotificationEnabled);
+    } else if (type === 'routine') {
+      setRoutineNotification(!isRoutineNotificationEnabled);
+    }
   };
 
   useEffect(() => {
     if (!dateFirstVisit) {
       setDateFirstVisit();
     }
-    // api 호출 로직
-    // 응답 200일 경우 setScenarioCreated, setPlanCreated, setRoutineCreated 순으로 호출
   }, []);
 
   const messages = [
@@ -84,19 +146,19 @@ function CoachPage() {
         </Flex>
       ),
     },
-    isFinancialGoalSubmitted && {
-      date: extractDateOnly(financialGoalDateSubmitted || ''),
+    dateScenarioRequested && {
+      date: extractDateOnly(dateScenarioRequested || ''),
       component: (
         <Flex align="flex-end" gap="8px" key="notification">
           <ChatbotMessage
             message="코치가 나만을 위한 재무플랜을 만드는 중이에요. 완료되면 알림 드릴게요."
             buttonText="알림받기"
             buttonDisabledText="알림신청 완료"
-            onButtonClick={handleGetNotification}
-            isDisabled={isNotificationEnabled}
+            onButtonClick={() => handleGetNotification('scenario')}
+            isDisabled={isScenarioNotificationEnabled}
           />
           <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
-            {parseTimeFromTimestamp(financialGoalDateSubmitted)}
+            {parseTimeFromTimestamp(dateScenarioRequested)}
           </Text>
         </Flex>
       ),
@@ -108,10 +170,27 @@ function CoachPage() {
           <ChatbotMessage
             message="내 집 마련 목표, 지금 뭐부터 해야 할까요? 쪼개서 알려드릴게요."
             buttonText="읽어보기"
-            onButtonClick={() => push('/ai/coach/goal')}
+            onButtonClick={() => push('/ai/coach/scenario')}
           />
-          <Text fontSize="sm" color="blue.60" whiteSpace="nowrap">
+          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(dateScenarioCreated)}
+          </Text>
+        </Flex>
+      ),
+    },
+    datePlanRequested && {
+      date: extractDateOnly(datePlanRequested || ''),
+      component: (
+        <Flex align="flex-end" gap="8px" key="notification">
+          <ChatbotMessage
+            message="코치가 나만을 위한 재무플랜을 만드는 중이에요. 완료되면 알림 드릴게요."
+            buttonText="알림받기"
+            buttonDisabledText="알림신청 완료"
+            onButtonClick={() => handleGetNotification('plan')}
+            isDisabled={isPlanNotificationEnabled}
+          />
+          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+            {parseTimeFromTimestamp(datePlanRequested)}
           </Text>
         </Flex>
       ),
@@ -125,8 +204,25 @@ function CoachPage() {
             buttonText="읽어보기"
             onButtonClick={() => push('/ai/coach/plan')}
           />
-          <Text fontSize="sm" color="blue.60" whiteSpace="nowrap">
+          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(datePlanCreated)}
+          </Text>
+        </Flex>
+      ),
+    },
+    dateRoutineRequested && {
+      date: extractDateOnly(dateRoutineRequested || ''),
+      component: (
+        <Flex align="flex-end" gap="8px" key="notification">
+          <ChatbotMessage
+            message="코치가 나만을 위한 재무플랜을 만드는 중이에요. 완료되면 알림 드릴게요."
+            buttonText="알림받기"
+            buttonDisabledText="알림신청 완료"
+            onButtonClick={() => handleGetNotification('routine')}
+            isDisabled={isRoutineNotificationEnabled}
+          />
+          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+            {parseTimeFromTimestamp(dateRoutineRequested)}
           </Text>
         </Flex>
       ),
