@@ -1,6 +1,6 @@
 export const ROUTE_PATH_MAP = {
   '/ai/coach': 'COACH_MAIN',
-  '/ai/coach/goal': 'COACH_GOAL',
+  '/ai/coach/scenario': 'COACH_SCENARIO',
   '/ai/coach/plan': 'COACH_PLAN',
   '/ai/coach/routine': 'COACH_ROUTINE',
 
@@ -43,10 +43,10 @@ export const ROUTES: Record<
     hasNav: true,
   },
 
-  COACH_GOAL: {
-    path: '/ai/coach/goal',
+  COACH_SCENARIO: {
+    path: '/ai/coach/scenario',
     header: {
-      title: '목표',
+      title: '시나리오',
       hasPrev: true,
     },
     hasNav: false,
@@ -55,7 +55,7 @@ export const ROUTES: Record<
   COACH_PLAN: {
     path: '/ai/coach/plan',
     header: {
-      title: 'plan',
+      title: '플랜',
       hasPrev: true,
     },
     hasNav: false,
@@ -64,7 +64,7 @@ export const ROUTES: Record<
   COACH_ROUTINE: {
     path: '/ai/coach/routine',
     header: {
-      title: 'routine',
+      title: '루틴',
       hasPrev: true,
     },
     hasNav: false,

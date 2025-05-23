@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { Button, Text, Flex } from '@chakra-ui/react';
+import { Button, Text, Flex, Box } from '@chakra-ui/react';
 import Image from 'next/image';
 
 export default function GuidePage() {
@@ -18,9 +18,9 @@ export default function GuidePage() {
   const [buttonText, setButtonText] = useState('');
 
   const buttonTextMap: Record<string, string> = {
+    scenario: '시나리오 추가하기',
     plan: '플랜으로 설정하기',
     routine: '루틴으로 설정하기',
-    goal: '시나리오 추가하기',
   };
 
   const handleButtonClick = () => {
@@ -53,7 +53,7 @@ export default function GuidePage() {
       <Flex
         align="center"
         gap="8px"
-        margin="25px 30px"
+        padding="24px 30px"
         justifyContent="flex-start"
       >
         <Image
@@ -70,9 +70,10 @@ export default function GuidePage() {
   //   if (!data) return <p>No data found for topic: {topicStr}</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold mb-4">AI Guide: {topicStr}</h1>
-      <pre className="bg-gray-100 p-4 rounded mb-6">{JSON.stringify(data)}</pre>
+    <Box>
+      <Box px="20px" rounded="md" mt="16px">
+        <pre>{JSON.stringify(data)}</pre>
+      </Box>
       <Button
         position="fixed"
         bottom="20px"
@@ -91,6 +92,6 @@ export default function GuidePage() {
           {buttonText}
         </Text>
       </Button>
-    </div>
+    </Box>
   );
 }
