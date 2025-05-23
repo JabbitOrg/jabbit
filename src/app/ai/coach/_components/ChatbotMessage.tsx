@@ -1,22 +1,30 @@
 'use client';
 
-import { Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
+import { Button, Flex, Stack, Text } from '@chakra-ui/react';
+import Image from 'next/image';
 
 interface ChatbotMessageProps {
   message: string;
   buttonText: string;
   onButtonClick: () => void;
+  isDisabled?: boolean;
 }
 
 function ChatbotMessage({
   message,
   buttonText,
   onButtonClick,
+  isDisabled,
 }: ChatbotMessageProps) {
   return (
     <Stack direction="column" gap="8px" w="258px">
       <Flex alignItems="center" gap="8px">
-        <Box boxSize="24px" bgColor="red.100" borderRadius="50%" />
+        <Image
+          src="/assets/ai_chat_profile.svg"
+          alt="AI 코치"
+          width={24}
+          height={24}
+        />
         <Text textStyle="mobile_cap" color="font.800">
           AI 코치 재빗
         </Text>
@@ -36,11 +44,16 @@ function ChatbotMessage({
         </Text>
         <Button
           h="40px"
-          bgColor="blue.200"
+          bgColor="brand.blue"
           borderRadius="10px"
           onClick={onButtonClick}
-          color="blue.700"
+          color="blue.100"
           textStyle="mobile_b1_semi"
+          disabled={isDisabled}
+          _disabled={{
+            color: 'font.700',
+            backgroundColor: 'blue_gray.100',
+          }}
         >
           {buttonText}
         </Button>
