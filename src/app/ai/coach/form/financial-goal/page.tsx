@@ -12,6 +12,7 @@ import Modal from '@/src/app/common/Modal/Modal';
 import { useFinancialGoalSurveyStore } from '@/src/app/ai/coach/_store/financialGoalSurveyStore';
 import { useRouter } from 'next/navigation';
 import postFinancialGoalSurvey from '@/src/client/lib/api/postFinancialGoalSurvey';
+import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAISolutionStore';
 const totalStep = 12;
 
 function FinancialGoalFormPage() {
@@ -19,10 +20,12 @@ function FinancialGoalFormPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const { setResponse, response, submitSurvey } = useFinancialGoalSurveyStore();
+  const { setScenarioRequested } = useGenerateAiSolutionStore();
 
   const handleConfirm = async () => {
     setIsOpen(false);
     submitSurvey();
+    setScenarioRequested();
     await postFinancialGoalSurvey({ response });
     router.push('/ai/coach');
   };

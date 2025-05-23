@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { Button, Text, Flex, Box } from '@chakra-ui/react';
 import Image from 'next/image';
+import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAISolutionStore';
 
 export default function GuidePage() {
   const { topic } = useParams();
@@ -17,6 +18,9 @@ export default function GuidePage() {
   const [data, setData] = useState<any>(null);
   const [buttonText, setButtonText] = useState('');
 
+  const { setPlanRequested, setRoutineRequested } =
+    useGenerateAiSolutionStore();
+
   const buttonTextMap: Record<string, string> = {
     scenario: '시나리오 추가하기',
     plan: '플랜으로 설정하기',
@@ -24,7 +28,15 @@ export default function GuidePage() {
   };
 
   const handleButtonClick = () => {
-    push('/ai/coach');
+    if (topicStr === 'scenario') {
+      setPlanRequested();
+      push('/ai/coach');
+    } else if (topicStr === 'plan') {
+      setRoutineRequested();
+      push('/ai/coach');
+    } else if (topicStr === 'routine') {
+      // 페이지 이동
+    }
   };
 
   useEffect(() => {
