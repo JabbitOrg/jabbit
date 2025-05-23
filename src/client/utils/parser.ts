@@ -73,9 +73,8 @@ export const extractDateOnly = (timestamp?: string): string => {
   if (!timestamp) return '';
   return timestamp.split('-').slice(0, 3).join('-');
 };
-
 export const formatKoreanDate = (dateString: string) => {
-  const [year, month, day] = dateString.split('-');
+  const [, month, day] = dateString.split('-');
   return `${Number(month)}월 ${Number(day)}일`;
 };
 

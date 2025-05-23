@@ -28,9 +28,9 @@ function CoachPage() {
     dateSubmitted: financialGoalDateSubmitted,
     isNotificationEnabled,
     setNotification,
-    setScenarioCreated,
-    setPlanCreated,
-    setRoutineCreated,
+    // setScenarioCreated,
+    // setPlanCreated,
+    // setRoutineCreated,
     dateScenarioCreated,
     datePlanCreated,
     dateRoutineCreated,
@@ -43,7 +43,6 @@ function CoachPage() {
   };
 
   useEffect(() => {
-    console.log('dateFirstVisit', dateFirstVisit);
     if (!dateFirstVisit) {
       setDateFirstVisit();
     }
@@ -152,7 +151,7 @@ function CoachPage() {
   console.log('grouped', grouped);
 
   return (
-    <Stack direction="column" gap="20px" px="20px">
+    <Stack direction="column" gap="20px" px="20px" height="100%" mt="24px">
       {Object.entries(grouped).map(([date, items]) => (
         <Box key={date}>
           <Flex align="center" gap="8px" my="12px">

@@ -46,7 +46,7 @@ export default function GuidePage() {
     };
 
     fetchData();
-  }, [topicStr]);
+  }, [buttonTextMap, topicStr]);
 
   if (loading)
     return (
