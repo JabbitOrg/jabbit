@@ -18,11 +18,12 @@ function FinancialGoalFormPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { setAnswer, answers } = useFinancialGoalSurveyStore();
+  const { setAnswer, answers, submitSurvey } = useFinancialGoalSurveyStore();
 
   const handleConfirm = () => {
     setIsOpen(false);
     postFinancialGoalSurvey(answers);
+    submitSurvey();
     router.push('/ai/coach');
   };
 

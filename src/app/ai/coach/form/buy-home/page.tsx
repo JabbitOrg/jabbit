@@ -18,12 +18,11 @@ function BuyHomeFormPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [error, setError] = useState('');
   const { setAnswer, answers } = useBuyHomeSurveyStore();
+
   const handleSelectClick = (answer: string | number, text: string) => {
     setAnswer(currentStep, answer, text);
     goToNextPage();
   };
-  console.log('answers', answers);
-  console.log(answers[currentStep]?.answer !== undefined);
   const handleInputChange = (answer: string | number, text: string) => {
     const min = 1;
     const max = 50;

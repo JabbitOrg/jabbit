@@ -35,7 +35,7 @@ function ResultRow({ label, value }: { label: string; value: string }) {
 
 function ResultPage() {
   const router = useRouter();
-  const { answers } = useBuyHomeSurveyStore();
+  const { answers, submitSurvey } = useBuyHomeSurveyStore();
   const resultItems: ResultItem[] = [
     { label: '기간', value: (answers) => `${answers[2]?.text}년 뒤` },
     {
@@ -80,7 +80,10 @@ function ResultPage() {
 
     const amountInBillions = Math.floor(estimatedAmount / 10000);
     const amountInThousands = Math.floor((estimatedAmount % 10000) / 1000);
-    const formattedAmount = `${amountInBillions}억 ${amountInThousands}천만원`;
+    const formattedAmount =
+      amountInThousands === 0
+        ? `${amountInBillions}억원`
+        : `${amountInBillions}억 ${amountInThousands}천만원`;
     return formattedAmount;
   };
 
@@ -88,6 +91,7 @@ function ResultPage() {
 
   const handleSubmitSurvey = () => {
     //todo: API 호출
+    submitSurvey();
     postBuyHomeSurvey(answers);
     router.push('/ai/coach');
   };
