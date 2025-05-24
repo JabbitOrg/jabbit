@@ -123,7 +123,7 @@ function CoachPage() {
             onButtonClick={() => push('/ai/coach/form/buy-home')}
             isDisabled={isBuyHomeSubmitted}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(dateFirstVisit)}
           </Text>
         </Flex>
@@ -140,7 +140,7 @@ function CoachPage() {
             onButtonClick={() => push('/ai/coach/form/financial-goal')}
             isDisabled={isFinancialGoalSubmitted}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(buyHomeDateSubmitted)}
           </Text>
         </Flex>
@@ -157,7 +157,7 @@ function CoachPage() {
             onButtonClick={() => handleGetNotification('scenario')}
             isDisabled={isScenarioNotificationEnabled}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(dateScenarioRequested)}
           </Text>
         </Flex>
@@ -172,7 +172,7 @@ function CoachPage() {
             buttonText="읽어보기"
             onButtonClick={() => push('/ai/coach/scenario')}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(dateScenarioCreated)}
           </Text>
         </Flex>
@@ -189,7 +189,7 @@ function CoachPage() {
             onButtonClick={() => handleGetNotification('plan')}
             isDisabled={isPlanNotificationEnabled}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(datePlanRequested)}
           </Text>
         </Flex>
@@ -200,11 +200,11 @@ function CoachPage() {
       component: (
         <Flex align="flex-end" gap="8px" key="plan">
           <ChatbotMessage
-            message={`${user?.name ? user.name : "회원"}님의 재무 목표, 어떻게 이룰 수 있을까요? 현실 가능한 여러 가지 플랜을 제안드릴게요.`}
+            message={`${user?.name ? user.name : '회원'}님의 재무 목표, 어떻게 이룰 수 있을까요? 현실 가능한 여러 가지 플랜을 제안드릴게요.`}
             buttonText="읽어보기"
             onButtonClick={() => push('/ai/coach/plan')}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(datePlanCreated)}
           </Text>
         </Flex>
@@ -221,7 +221,7 @@ function CoachPage() {
             onButtonClick={() => handleGetNotification('routine')}
             isDisabled={isRoutineNotificationEnabled}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(dateRoutineRequested)}
           </Text>
         </Flex>
@@ -236,7 +236,7 @@ function CoachPage() {
             buttonText="읽어보기"
             onButtonClick={() => push('/ai/coach/routine')}
           />
-          <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
             {parseTimeFromTimestamp(dateRoutineCreated)}
           </Text>
         </Flex>
@@ -253,7 +253,7 @@ function CoachPage() {
         <Box key={date}>
           <Flex align="center" gap="8px" my="12px">
             <Box borderBottom="1px solid" borderColor="blue.600" width="100%" />
-            <Text fontSize="sm" color="blue.600" whiteSpace="nowrap">
+            <Text textStyle="mobile_b2" color="blue.600" whiteSpace="nowrap">
               {formatKoreanDate(date)}
             </Text>
             <Box borderBottom="1px solid" borderColor="blue.600" width="100%" />
