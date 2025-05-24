@@ -52,7 +52,6 @@ const AuthPageContent = () => {
       setExecutedCode(code);
       setIsFetching(true);
 
-      const state = localStorage.getItem('naverState');
       fetch(`/api/auth/naver/callback?code=${code}&state=${state}`)
         .then(async (res) => {
           const response = await res.json();
