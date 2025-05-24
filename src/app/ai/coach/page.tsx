@@ -200,7 +200,7 @@ function CoachPage() {
       component: (
         <Flex align="flex-end" gap="8px" key="plan">
           <ChatbotMessage
-            message={`${user?.name}님의 재무 목표, 어떻게 이룰 수 있을까요? 현실 가능한 여러 가지 플랜을 제안드릴게요.`}
+            message={`${user?.name ? user.name : "회원"}님의 재무 목표, 어떻게 이룰 수 있을까요? 현실 가능한 여러 가지 플랜을 제안드릴게요.`}
             buttonText="읽어보기"
             onButtonClick={() => push('/ai/coach/plan')}
           />
