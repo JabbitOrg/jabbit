@@ -88,7 +88,7 @@ export const useGenerateAiSolutionStore = create<GenerateAiSolutionState>()(
       };
     },
     {
-      name: 'generate-ai-solution-store',
+      name: 'generate-ai-solution-storage',
     },
   ),
 );

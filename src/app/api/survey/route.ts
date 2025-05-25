@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  return NextResponse.json({ message: 'Survey API is working', status: 200 });
+  await new Promise((resolve) => setTimeout(resolve, 5000)); 
+
+  return NextResponse.json({
+    error: 'This endpoint does not support GET requests.',
+    status: 200,
+  });
 }

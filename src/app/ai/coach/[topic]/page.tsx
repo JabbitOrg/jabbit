@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Button, Text, Flex, Box } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
 import Image from 'next/image';
 import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAiSolutionStore';
+import postAiContent from '@/src/client/lib/api/postAiContent';
+import getAiContent from '@/src/client/lib/api/getAiContent';
 
 function Loading({ message }: { message: string }) {
   const typing = keyframes`
@@ -56,8 +57,8 @@ function Loading({ message }: { message: string }) {
 }
 
 export default function GuidePage() {
+  const router = useRouter();
   const { topic } = useParams();
-  const { push } = useRouter();
   const topicStr = typeof topic === 'string' ? topic : '';
   const buttonTextMap: Record<string, string> = {
     scenario: '시나리오 추가하기',
@@ -77,19 +78,22 @@ export default function GuidePage() {
     useGenerateAiSolutionStore();
 
   const [typingDone, setTypingDone] = useState(false);
-  console.log('loadingMessage', loadingMessage);
 
   useEffect(() => {
     if (!topicStr) return;
 
     const fetchData = async () => {
       try {
-        const response = await Promise.all([
-          // fetch(`/api/coach/guide/${topicStr}`).then((res) => res.json()),
+        const [response] = await Promise.all([
+          getAiContent(
+            topicStr.toUpperCase() as 'SCENARIO' | 'PLAN' | 'ROUTINE',
+          ),
           new Promise((resolve) => setTimeout(resolve, 5000)),
         ]);
-        setData('abc');
-        setTypingDone(true);
+        if (response.status === 200) {
+          setData(response);
+          setTypingDone(true);
+        }
       } catch (error) {
         console.error('Error fetching guide:', error);
       } finally {
@@ -99,13 +103,15 @@ export default function GuidePage() {
     fetchData();
   }, [buttonTextMap, topicStr]);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (topicStr === 'scenario') {
       setPlanRequested();
-      push('/ai/coach');
+      await postAiContent({ contentType: 'PLAN' });
+      router.push('/ai/coach');
     } else if (topicStr === 'plan') {
       setRoutineRequested();
-      push('/ai/coach');
+      await postAiContent({ contentType: 'ROUTINE' });
+      router.push('/ai/coach');
     } else if (topicStr === 'routine') {
       // 페이지 이동
     }
@@ -116,7 +122,9 @@ export default function GuidePage() {
   return (
     <Box>
       <Box px="20px" rounded="md" mt="16px">
-        {/* <pre>{JSON.stringify(data)}</pre> */}
+        <Text textStyle="mobile_b1_med" color="main.black_1">
+          {JSON.stringify(data)}
+        </Text>
       </Box>
       <Button
         position="fixed"
