@@ -40,10 +40,6 @@ export const ROUTES: Record<
   // 코치
   COACH_MAIN: {
     path: '/ai/coach',
-    header: {
-      title: 'AI 코치 재빗',
-      hasPrev: false,
-    },
     hasNav: true,
     pageBgColor: 'white',
     mobileBgColor: 'app_background',
@@ -85,7 +81,7 @@ export const ROUTES: Record<
   COACH_ROUTINE: {
     path: '/ai/coach/routine',
     header: {
-      title: 'routine',
+      title: '루틴',
       hasPrev: true,
     },
     hasNav: false,
