@@ -22,7 +22,7 @@ const GOAL_LAUNCH_PAGE_CONTENT = {
 };
 
 function GoalLauchPage() {
-  return <LaunchPage launchData={GOAL_LAUNCH_PAGE_CONTENT} />;
+  return <LaunchPage launchData={GOAL_LAUNCH_PAGE_CONTENT} type="goal"/>;
 }
 
 export default GoalLauchPage;
