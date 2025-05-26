@@ -179,6 +179,9 @@ export const ROUTES: Record<
 
   MONEY_TRACKER_GUIDE: {
     path: '/ai/money-tracker/guide',
+    header: {
+      hasPrev: true,
+    },
     hasNav: false,
   },
 
