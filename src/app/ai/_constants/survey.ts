@@ -37,8 +37,8 @@ export const buyHomeSurvey: Question[] = [
     description: null,
     type: 'choice-full',
     answerChoices: [
-      { code: 'a', label: '결혼해서 신혼부부에요' },
-      { code: 'b', label: '비혼으로 1인 가구로 살아요' },
+      { code: 'a', label: '결혼했어요 or 결혼할거에요' },
+      { code: 'b', label: '비혼으로 1인가구로 살거에요' },
     ],
   },
   {
