@@ -19,11 +19,13 @@ function Question({ title, description, id }: QuestionProps) {
         color="font.900"
         dangerouslySetInnerHTML={{ __html: title }}
       />
-      {description && id && id >= 4 && (
+      {description && id && (
         <Text
           textStyle="mobile_b1_semi"
           color="font.700"
-          dangerouslySetInnerHTML={{ __html: householdType + description }}
+          dangerouslySetInnerHTML={{
+            __html: id >= 4 ? householdType + description : description,
+          }}
         />
       )}
     </Stack>

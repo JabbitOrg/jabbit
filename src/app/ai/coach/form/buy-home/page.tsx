@@ -61,8 +61,8 @@ function BuyHomeFormPage() {
     const { id, title, description, type, answerChoices } = currentQuestion;
 
     return (
-      <Stack gap="200px">
-        <Question title={title} description={description} id={id}/>
+      <Stack>
+        <Question title={title} description={description} id={id} />
         <Answer
           type={
             type as 'input-year' | 'input-area' | 'choice-full' | 'choice-grid'
