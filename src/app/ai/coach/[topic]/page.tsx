@@ -90,8 +90,8 @@ export default function GuidePage() {
           ),
           new Promise((resolve) => setTimeout(resolve, 5000)),
         ]);
-        if (response.status === 200) {
-          setData(response);
+        if (response.body.response !== null) {
+          setData(response.body.response);
           setTypingDone(true);
         }
       } catch (error) {
