@@ -11,7 +11,6 @@ function MixPanelProvider({ children }: { children: React.ReactNode }) {
     mixpanel.init(mixpanelToken, {
       debug: true,
       track_pageview: true,
-      autotrack: true,
     });
   }, []);
 
