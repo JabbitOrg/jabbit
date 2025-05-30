@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Stack, Text, Flex, Box } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import ChatbotMessage from './_components/ChatbotMessage';
@@ -266,6 +266,11 @@ function CoachPage() {
   ].filter(Boolean) as { date: string; component: React.ReactNode }[];
 
   const grouped = groupMessagesByDate(messages);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <Stack direction="column" gap="20px" px="20px" height="100%" mt="24px">
@@ -280,6 +285,7 @@ function CoachPage() {
           </Flex>
           <Stack direction="column" gap="20px">
             {items}
+            <div ref={bottomRef} />
           </Stack>
         </Box>
       ))}
