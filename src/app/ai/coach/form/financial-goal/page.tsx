@@ -14,6 +14,8 @@ import { useFinancialGoalSurveyStore } from '@/src/app/ai/coach/_store/financial
 import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAiSolutionStore';
 import postAiContent from '@/src/client/lib/api/postAiContent';
 import postFinancialGoalSurvey from '@/src/client/lib/api/postFinancialGoalSurvey';
+import { mixpanelTrack } from '@/src/client/utils/mixpanelHelpers';
+import { useAuthStore } from '@/src/client/store/authStore';
 
 const totalStep = 12;
 
@@ -23,8 +25,10 @@ function FinancialGoalFormPage() {
   const { setResponse, response, submitSurvey } = useFinancialGoalSurveyStore();
   const { setScenarioRequested } = useGenerateAiSolutionStore();
   const router = useRouter();
+  const { user } = useAuthStore();
 
   const handleConfirm = async () => {
+    mixpanelTrack('코치탭', '제출하기 버튼 클릭', user);
     setIsOpen(false);
     submitSurvey();
     setScenarioRequested();
