@@ -121,7 +121,7 @@ export default function GuidePage() {
 
   return (
     <Box>
-      <Box px="20px" rounded="md" mt="16px">
+      <Box px="20px" rounded="md" mt="16px" pb="80px">
         <Text textStyle="mobile_b1_med" color="main.black_1">
           {JSON.stringify(data)}
         </Text>
