@@ -31,7 +31,9 @@ function BudgetPage() {
         bottom="88px"
         right="0px"
         onClick={() =>
-          router.push(IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_BUDGET_SETTING)
+          router.push(
+            IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_INCOME_EXPENSE_CREATE,
+          )
         }
       >
         <PlusSvg />

@@ -9,7 +9,7 @@ function BudgetStatus() {
     <Fragment>
       <BudgetBalanceGraph />
       <Stack gap="30px">
-        {EXPENSE_CATEGORY_MAP.map((item) => (
+        {Object.values(EXPENSE_CATEGORY_MAP).map((item) => (
           <Stack key={item.name} gap="7px">
             <Flex alignItems="center" gap="8px">
               <Text textStyle="mobile_b1_semi">{`${item.icon} ${item.name}`}</Text>

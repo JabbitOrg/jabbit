@@ -5,7 +5,7 @@ import Input from '@/src/app/components/Input/Input';
 function BudgetSettingPage() {
   return (
     <Stack gap="24px" p="20px" pt="10px">
-      {EXPENSE_CATEGORY_MAP.map((item) => (
+      {Object.values(EXPENSE_CATEGORY_MAP).map((item) => (
         <Stack key={item.name} gap="8px">
           <Text textStyle="mobile_b2">{`${item.icon} ${item.name}`}</Text>
           <Input
