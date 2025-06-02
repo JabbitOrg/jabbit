@@ -2,10 +2,12 @@ import { Fragment } from 'react';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 import { EXPENSE_CATEGORY_MAP } from '@/src/app/ai/money-tracker/_ constants/category';
 import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
+import BudgetBalanceGraph from './BudgetBalanceGraph';
 
 function BudgetStatus() {
   return (
     <Fragment>
+      <BudgetBalanceGraph />
       <Stack gap="30px">
         {EXPENSE_CATEGORY_MAP.map((item) => (
           <Stack key={item.name} gap="7px">
