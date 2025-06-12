@@ -1,16 +1,31 @@
-import { Chart as ChartJS, ArcElement } from 'chart.js';
+import { useRouter } from 'next/navigation';
 import { Doughnut } from 'react-chartjs-2';
-import { COLORS } from '@/src/client/theme/colors';
+import { Chart as ChartJS, ArcElement } from 'chart.js';
 import { Flex, Stack, Text } from '@chakra-ui/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+
+import { COLORS } from '@/src/client/theme/colors';
+import getBudget from '@/src/client/lib/api/ai/money-tracker/getBudget';
+import ChevronRightSVG from '@/src/client/assets/chevron-right.svg';
+import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
 
 ChartJS.register(ArcElement);
 
 function BudgetBalanceGraph() {
-  const data = {
+  const router = useRouter();
+  const { data } = useSuspenseQuery({
+    queryKey: ['money-tracker', 'budget'],
+    queryFn: getBudget,
+  });
+
+  const { totalBudget, totalSpent } = data.body;
+  const leftBudget = totalBudget - totalSpent;
+
+  const chartData = {
     datasets: [
       {
-        data: [80, 20],
-        backgroundColor: [COLORS.brand.blue.value, COLORS.blue[200].value],
+        data: [totalSpent, Math.max(leftBudget, 0)],
+        backgroundColor: [COLORS.brand.blue.value, COLORS.blue_gray[200].value],
         borderWidth: 1,
         borderColor: 'transparent',
       },
@@ -20,7 +35,11 @@ function BudgetBalanceGraph() {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '75%',
+    cutout: '80%',
+  };
+
+  const handleClick = () => {
+    router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_BUDGET_SETTING']);
   };
 
   return (
@@ -40,22 +59,28 @@ function BudgetBalanceGraph() {
         alignItems="center"
         position="relative"
       >
-        <Doughnut data={data} options={options} width={270} height={270} />
+        <Doughnut data={chartData} options={options} width={270} height={270} />
+
         <Stack
           w="100%"
-          gap="12px"
           position="absolute"
           top="50%"
           left="50%"
           transform="translate(-50%, -50%)"
+          gap="12px"
           textAlign="center"
+          onClick={handleClick}
+          cursor="pointer"
         >
           <Text textStyle="mobile_b1_semi">남은 예산</Text>
-          <Text textStyle="mobile_h1" fontWeight={600}>
-            3,000,000원
-          </Text>
+          <Flex gap="6px" alignItems="center" justifyContent="center" pl="10px">
+            <Text textStyle="mobile_h1" fontWeight={600}>
+              {leftBudget.toLocaleString()}원
+            </Text>
+            <ChevronRightSVG width={24} height={24} />
+          </Flex>
           <Text textStyle="mobile_b1_semi" color="font.600">
-            / 3,000,000원
+            {`/ ${totalBudget.toLocaleString()}원`}
           </Text>
         </Stack>
       </Flex>
