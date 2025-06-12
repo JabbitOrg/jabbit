@@ -2,57 +2,100 @@
 
 import { useRouter } from 'next/navigation';
 import { Flex, Stack, Text } from '@chakra-ui/react';
-import PlusSvg from '@/src/client/assets/plus.svg';
-import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
-import TransactionItem, {
-  ExpenseTransaction,
-  IncomeTransaction,
-} from './_components/TransactionItem';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-const MOCK_TRANSACTIONS: Record<
-  string,
-  (IncomeTransaction | ExpenseTransaction)[]
-> = {
-  '2025-06-01': [
-    {
-      type: 'expense',
-      category: 'CAR',
-      amount: 100000,
-      paymentMethod: 'CREDIT_CARD',
-      memo: '주유비',
-    },
-    {
-      type: 'income',
-      category: 'ETC',
-      amount: 50000,
-      memo: '상품 환불',
-    },
-    {
-      type: 'expense',
-      category: 'CAFE',
-      amount: 2000,
-      paymentMethod: 'DEBIT_CARD',
-      memo: '편의점 스낵',
-    },
-  ],
-  '2025-06-02': [
-    {
-      type: 'expense',
-      category: 'CAFE',
-      amount: 2000,
-      paymentMethod: 'CREDIT_CARD',
-      memo: '간식',
-    },
-  ],
+import PlusSvg from '@/src/client/assets/plus.svg';
+import getIncomeExpenseHistory from '@/src/client/lib/api/ai/money-tracker/getIncomExpense';
+import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
+import TransactionItem from './_components/TransactionItem';
+
+type HistoryItem = {
+  historyId: string;
+  dateTime: string;
+  incomeCategory: string | null;
+  expenseCategory: string | null;
+  paymentCategory: string | null;
+  amount: number;
+  memo: string;
 };
+
+export type GroupedHistoryEntry = {
+  historyId: string;
+  dateTime: string;
+  type: 'INCOME' | 'EXPENSE';
+  category: string;
+  paymentCategory: string | null;
+  amount: number;
+  memo: string;
+};
+
+type GroupedHistory = {
+  date: string;
+  entries: GroupedHistoryEntry[];
+};
+
+function formatKoreanDate(dateTime: string): string {
+  const date = new Date(dateTime);
+  const day = date.getDate();
+  const weekday = new Intl.DateTimeFormat('ko-KR', { weekday: 'long' }).format(
+    date,
+  );
+
+  return `${day}일 ${weekday}`;
+}
+
+function groupHistoryByDate(historyList: HistoryItem[]): GroupedHistory[] {
+  const grouped: Record<string, GroupedHistory['entries']> = {};
+
+  for (const item of historyList) {
+    const date = item.dateTime.slice(0, 10);
+    const type = item.incomeCategory
+      ? 'INCOME'
+      : ('EXPENSE' as GroupedHistory['entries'][number]['type']);
+    const category = item.incomeCategory ?? item.expenseCategory ?? 'UNKNOWN';
+
+    const entry = {
+      historyId: item.historyId,
+      dateTime: item.dateTime,
+      type,
+      category,
+      paymentCategory: item.paymentCategory,
+      amount: item.amount,
+      memo: item.memo,
+    };
+
+    if (!grouped[date]) {
+      grouped[date] = [];
+    }
+
+    grouped[date].push(entry);
+  }
+
+  return Object.entries(grouped)
+    .map(([date, entries]) => ({
+      date,
+      entries: entries.sort(
+        (a, b) =>
+          new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime(),
+      ),
+    }))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
 
 function IncomeExpensePage() {
   const router = useRouter();
+  const { data } = useSuspenseQuery({
+    queryKey: ['money-tracker', 'income-expense'],
+    queryFn: getIncomeExpenseHistory,
+  });
+
+  const { dateTime, totalExpense, totalIncome, historyList } = data.body;
+  const groupedByDate = groupHistoryByDate(historyList);
 
   return (
     <Stack gap="24px" p="20px">
       <Stack gap="16px">
-        <Text textStyle="mobile_h3">2025년 6월</Text>
+        <Text textStyle="mobile_h3">{dateTime}</Text>
         <Flex gap="20px" alignItems="center">
           <Stack
             gap="4px"
@@ -63,7 +106,7 @@ function IncomeExpensePage() {
           >
             <Text textStyle="mobile_b2">이번 달 지출</Text>
             <Text textStyle="mobile_h3" color="font.800">
-              204,000 원
+              {totalExpense.toLocaleString()} 원
             </Text>
           </Stack>
           <Stack
@@ -75,18 +118,20 @@ function IncomeExpensePage() {
           >
             <Text textStyle="mobile_b2">이번 달 수입</Text>
             <Text textStyle="mobile_h3" color="brand.blue">
-              104,000 원
+              {totalIncome.toLocaleString()} 원
             </Text>
           </Stack>
         </Flex>
       </Stack>
 
-      {Object.entries(MOCK_TRANSACTIONS).map(([date, transactions]) => (
-        <Stack gap="10px" key={date}>
-          <Text textStyle="mobile_b2">{date}</Text>
+      {groupedByDate.map((dailyHistory) => (
+        <Stack gap="10px" key={dailyHistory.date}>
+          <Text textStyle="mobile_b2">
+            {formatKoreanDate(dailyHistory.date)}
+          </Text>
           <Stack gap="20px">
-            {transactions.map((transaction) => (
-              <TransactionItem key={transaction.memo} data={transaction} />
+            {dailyHistory.entries.map((entry) => (
+              <TransactionItem key={entry.historyId} data={entry} />
             ))}
           </Stack>
         </Stack>
@@ -101,9 +146,7 @@ function IncomeExpensePage() {
         bottom="88px"
         right="0px"
         onClick={() =>
-          router.push(
-            IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_INCOME_EXPENSE_CREATE,
-          )
+          router.push(IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_EXPENSE_CREATE)
         }
       >
         <PlusSvg />

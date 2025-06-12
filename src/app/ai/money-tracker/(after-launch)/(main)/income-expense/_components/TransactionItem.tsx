@@ -1,44 +1,40 @@
+import { useRouter } from 'next/navigation';
 import { Flex, Stack, Text } from '@chakra-ui/react';
+
 import {
-  IncomeCategoryKey,
-  ExpenseCategoryKey,
   EXPENSE_CATEGORY_MAP,
   INCOME_CATEGORY_MAP,
   PAYMENT_METHOD_MAP,
-  PaymentMethodKey,
 } from '@/src/app/ai/money-tracker/_ constants/category';
-
-export interface IncomeTransaction {
-  category: IncomeCategoryKey;
-  amount: number;
-  type: 'income';
-  memo: string;
-}
-
-export interface ExpenseTransaction {
-  category: ExpenseCategoryKey;
-  paymentMethod: PaymentMethodKey;
-  amount: number;
-  type: 'expense';
-  memo: string;
-}
+import { GroupedHistoryEntry } from '../page';
 
 interface TransactionItemProps {
-  data: IncomeTransaction | ExpenseTransaction;
+  data: GroupedHistoryEntry;
 }
 
 function TransactionItem({ data }: TransactionItemProps) {
-  const isIncome = data.type === 'income';
+  const router = useRouter();
+  const isIncome = data.type === 'INCOME';
   const dataMap = isIncome
     ? INCOME_CATEGORY_MAP[data.category as keyof typeof INCOME_CATEGORY_MAP]
     : EXPENSE_CATEGORY_MAP[data.category as keyof typeof EXPENSE_CATEGORY_MAP];
 
   const paymentMethodMap = !isIncome
-    ? PAYMENT_METHOD_MAP[data.paymentMethod as keyof typeof PAYMENT_METHOD_MAP]
+    ? PAYMENT_METHOD_MAP[
+        data.paymentCategory as keyof typeof PAYMENT_METHOD_MAP
+      ]
     : undefined;
 
+  const handleClick = () => {
+    if (isIncome) {
+      router.push(`/ai/money-tracker/income-expense/income/${data.historyId}`);
+    } else {
+      router.push(`/ai/money-tracker/income-expense/expense/${data.historyId}`);
+    }
+  };
+
   return (
-    <Flex gap="10px">
+    <Flex gap="10px" cursor="pointer" onClick={handleClick}>
       <Flex
         alignItems="center"
         justifyContent="center"
