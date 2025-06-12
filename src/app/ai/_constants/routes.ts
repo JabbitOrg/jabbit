@@ -16,9 +16,14 @@ export const ROUTE_PATH_MAP = {
   '/ai/money-tracker/budget': 'MONEY_TRACKER_BUDGET',
   '/ai/money-tracker/budget/setting': 'MONEY_TRACKER_BUDGET_SETTING',
   '/ai/money-tracker/income-expense': 'MONEY_TRACKER_INCOME_EXPENSE',
-  '/ai/money-tracker/income-expense/create':
-    'MONEY_TRACKER_INCOME_EXPENSE_CREATE',
-  '/ai/money-tracker/income-expense/:id': 'MONEY_TRACKER_INCOME_EXPENSE_DETAIL',
+  '/ai/money-tracker/income-expense/create/income':
+    'MONEY_TRACKER_INCOME_CREATE',
+  '/ai/money-tracker/income-expense/create/expense':
+    'MONEY_TRACKER_EXPENSE_CREATE',
+  '/ai/money-tracker/income-expense/expense/:historyId':
+    'MONEY_TRACKER_EXPENSE_EDIT',
+  '/ai/money-tracker/income-expense/income/:historyId':
+    'MONEY_TRACKER_INCOME_EDIT',
   '/ai/money-tracker/guide': 'MONEY_TRACKER_GUIDE',
   '/ai/money-tracker/launch': 'MONEY_TRACKER_LAUNCH',
 } as const;
@@ -41,10 +46,6 @@ export type Route = {
   header?: {
     title?: string;
     hasPrev: boolean;
-    rightButton?: {
-      label: string;
-      color?: string;
-    };
   };
   hasNav: boolean;
   bgColor?: string;
@@ -142,14 +143,6 @@ export const ROUTES: Record<
 
   MONEY_TRACKER_BUDGET_SETTING: {
     path: '/ai/money-tracker/budget/setting',
-    header: {
-      title: '예산 설정',
-      hasPrev: true,
-      rightButton: {
-        label: '저장',
-        color: 'brand.blue',
-      },
-    },
     hasNav: false,
   },
 
@@ -158,8 +151,8 @@ export const ROUTES: Record<
     hasNav: true,
   },
 
-  MONEY_TRACKER_INCOME_EXPENSE_CREATE: {
-    path: '/ai/money-tracker/income-expense/create',
+  MONEY_TRACKER_INCOME_CREATE: {
+    path: '/ai/money-tracker/income-expense/create/income',
     header: {
       title: '내역 추가',
       hasPrev: true,
@@ -167,15 +160,22 @@ export const ROUTES: Record<
     hasNav: false,
   },
 
-  MONEY_TRACKER_INCOME_EXPENSE_DETAIL: {
-    path: '/ai/money-tracker/income-expense/:id',
+  MONEY_TRACKER_EXPENSE_CREATE: {
+    path: '/ai/money-tracker/income-expense/create/expense',
     header: {
-      title: '내역 수정',
+      title: '내역 추가',
       hasPrev: true,
-      rightButton: {
-        label: '삭제',
-      },
     },
+    hasNav: false,
+  },
+
+  MONEY_TRACKER_EXPENSE_EDIT: {
+    path: '/ai/money-tracker/income-expense/expense/:historyId',
+    hasNav: false,
+  },
+
+  MONEY_TRACKER_INCOME_EDIT: {
+    path: '/ai/money-tracker/income-expense/income/:historyId',
     hasNav: false,
   },
 
