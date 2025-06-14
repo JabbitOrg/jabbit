@@ -5,7 +5,7 @@ import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
 
 function HistoryAddFloatingButton() {
   return (
-    <Link href={IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_EXPENSE_CREATE}>
+    <Link href={IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_CREATE_EXPENSE}>
       <Flex
         borderRadius="10px"
         justifyContent="center"

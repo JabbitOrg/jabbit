@@ -3,8 +3,9 @@
 import { Flex, Stack, Text } from '@chakra-ui/react';
 import { useGetIncomeExpenseHistory } from '../hooks/accountHistory.query';
 import HistoryAddFloatingButton from '../components/HistoryAddFloatingButton';
-import { formatDateKoreanWeekday, groupHistoryByDate } from './utils';
+import { formatDateKoreanWeekday } from '../utils/date';
 import TransactionItem from './components/TransactionItem';
+import { groupHistoryByDate } from './utils/groupHistoryByDate';
 
 function AccountHistory() {
   const { data } = useGetIncomeExpenseHistory();

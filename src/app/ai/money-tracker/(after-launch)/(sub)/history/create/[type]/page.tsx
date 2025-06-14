@@ -1,12 +1,13 @@
 import AccountHistoryCreate from '@/src/client/modules/Account/AccountHistoryCreate';
+import { TransactionTabType } from '@/src/client/modules/Account/constants/tabMenus';
 
-interface TransactionCreatePageProps {
-  params: { type: 'income' | 'expense' };
+interface AccountHistoryCreatePageProps {
+  params: { type: TransactionTabType };
 }
 
-export default function TransactionCreatePage({
+export default function AccountHistoryCreatePage({
   params,
-}: TransactionCreatePageProps) {
+}: AccountHistoryCreatePageProps) {
   const type = params.type;
 
   return <AccountHistoryCreate type={type} />;

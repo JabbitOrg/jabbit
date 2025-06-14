@@ -1,0 +1,30 @@
+import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
+
+export const MONEY_TRACKER_TABS = [
+  {
+    label: '예산',
+    value: 'budget',
+    link: IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_BUDGET'],
+  },
+  {
+    label: '수입/지출',
+    value: 'income-expense',
+    link: IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE'],
+  },
+] as const;
+
+export const TRANSACTION_TABS = [
+  {
+    label: '지출',
+    value: 'expense',
+    link: IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_CREATE_EXPENSE,
+  },
+  {
+    label: '수입',
+    value: 'income',
+    link: IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_CREATE_INCOME,
+  },
+] as const;
+
+export type TransactionTabType = (typeof TRANSACTION_TABS)[number]['value'];
+export type MoneyTrackerTabType = (typeof MONEY_TRACKER_TABS)[number]['value'];
