@@ -5,7 +5,7 @@ import {
   ExpenseCategory,
   IncomeCategory,
   PaymentMethod,
-} from '@/src/app/ai/money-tracker/_ constants/category';
+} from '../constants/category';
 
 // 지출 폼
 export const ExpenseFormSchema = z.object({

@@ -1,8 +1,8 @@
 import {
   EXPENSE_CATEGORY_MAP,
-  PAYMENT_METHOD_MAP,
   INCOME_CATEGORY_MAP,
-} from '@/src/app/ai/money-tracker/_ constants/category';
+  PAYMENT_METHOD_MAP,
+} from './category';
 
 export const incomeCategoryOptions = Object.entries(INCOME_CATEGORY_MAP).map(
   ([key, item]) => ({

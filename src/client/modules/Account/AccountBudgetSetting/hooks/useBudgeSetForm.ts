@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { typedObjectEntries } from '@/src/client/utils/type';
-import { EXPENSE_CATEGORY_MAP } from '@/src/app/ai/money-tracker/_ constants/category';
+import { EXPENSE_CATEGORY_MAP } from '../../constants/category';
 
 const budgetSchemaShape = Object.fromEntries(
   typedObjectEntries(EXPENSE_CATEGORY_MAP).map(([key]) => [key, z.number()]),

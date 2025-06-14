@@ -11,7 +11,6 @@ import Input from '@/src/app/components/Input/Input';
 import Header from '@/src/app/ai/_components/Header';
 import { typedObjectEntries } from '@/src/client/utils/type';
 
-import { EXPENSE_CATEGORY_MAP } from '@/src/app/ai/money-tracker/_ constants/category';
 import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
 import { formatNumberWithCommas, unformatNumber } from '../utils/number';
 import {
@@ -19,6 +18,7 @@ import {
   useGetBudget,
   usePostBudget,
 } from '../hooks/accountHistory.query';
+import { EXPENSE_CATEGORY_MAP } from '../constants/category';
 import useBudgeSetForm, { BudgetFormType } from './hooks/useBudgeSetForm';
 
 function AccountBudgetSetting() {

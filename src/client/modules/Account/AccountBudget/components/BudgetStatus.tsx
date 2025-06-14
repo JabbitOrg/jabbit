@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 
-import { EXPENSE_CATEGORY_MAP } from '@/src/app/ai/money-tracker/_ constants/category';
-import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
 import { typedObjectEntries } from '@/src/client/utils/type';
+import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
 
+import { EXPENSE_CATEGORY_MAP } from '../../constants/category';
 import { useGetBudget } from '../../hooks/accountHistory.query';
 import BudgetBalanceGraph from './BudgetBalanceGraph';
 

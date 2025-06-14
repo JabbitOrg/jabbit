@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { Flex, Stack, Text } from '@chakra-ui/react';
 
+import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
 import {
   EXPENSE_CATEGORY_MAP,
   INCOME_CATEGORY_MAP,
   PAYMENT_METHOD_MAP,
-} from '@/src/app/ai/money-tracker/_ constants/category';
-import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
+} from '../../constants/category';
 import { GroupedHistoryEntry } from '../utils/groupHistoryByDate';
 
 interface TransactionItemProps {

@@ -2,7 +2,7 @@ import {
   ExpenseCategoryKey,
   PaymentMethodKey,
   IncomeCategoryKey,
-} from '@/src/app/ai/money-tracker/_ constants/category';
+} from '../constants/category';
 import {
   ExpenseFormRequestBody,
   IncomeFormRequestBody,
