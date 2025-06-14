@@ -3,6 +3,10 @@ import {
   PaymentMethodKey,
   IncomeCategoryKey,
 } from '@/src/app/ai/money-tracker/_ constants/category';
+import {
+  ExpenseFormRequestBody,
+  IncomeFormRequestBody,
+} from '../hooks/useTransactionHistoryForm';
 
 export interface CategoryBudget {
   budget: number;
@@ -38,4 +42,14 @@ export interface GetIncomeExpenseHistoryResponse {
     totalIncome: number;
     historyList: HistoryItem[];
   };
+}
+
+export interface PutIncomeArgs {
+  historyId: string;
+  income: IncomeFormRequestBody;
+}
+
+export interface PutExpenseArgs {
+  historyId: string;
+  expense: ExpenseFormRequestBody;
 }

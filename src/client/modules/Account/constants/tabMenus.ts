@@ -8,8 +8,8 @@ export const MONEY_TRACKER_TABS = [
   },
   {
     label: '수입/지출',
-    value: 'income-expense',
-    link: IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE'],
+    value: 'history',
+    link: IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_HISTORY'],
   },
 ] as const;
 

@@ -63,15 +63,18 @@ export const useIncomeForm = ({
 };
 
 // 내역 폼 (지출 / 수입)
-
-const FormSchema = z.discriminatedUnion('type', [
+export const TransactionHistoryFormSchema = z.discriminatedUnion('type', [
   IncomeFormSchema,
   ExpenseFormSchema,
 ]);
-type FormValues = z.infer<typeof FormSchema>;
+export type TransactionHistoryFormValues = z.infer<
+  typeof TransactionHistoryFormSchema
+>;
 
-export const useHistoryCreateForm = (props?: UseFormProps<FormValues>) =>
-  useForm<FormValues>({
-    resolver: zodResolver(FormSchema),
+export const useTransactionHistoryForm = (
+  props?: UseFormProps<TransactionHistoryFormValues>,
+) =>
+  useForm<TransactionHistoryFormValues>({
+    resolver: zodResolver(TransactionHistoryFormSchema),
     ...props,
   });

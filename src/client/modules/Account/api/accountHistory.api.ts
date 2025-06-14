@@ -3,10 +3,12 @@ import { BudgetFormType } from '@/src/app/ai/money-tracker/(after-launch)/(sub)/
 import {
   ExpenseFormRequestBody,
   IncomeFormRequestBody,
-} from '../AccountHistoryCreate/hooks/useTransactionHistoryForm';
+} from '../hooks/useTransactionHistoryForm';
 import {
   GetBudgetResponse,
   GetIncomeExpenseHistoryResponse,
+  PutExpenseArgs,
+  PutIncomeArgs,
 } from './accountHistory.type';
 
 // 예산
@@ -32,17 +34,11 @@ export const postExpense = async (expense: ExpenseFormRequestBody) => {
   return apiHandler.post(`/account-book/history/expense`, expense);
 };
 
-export const putIncome = async (
-  historyId: string,
-  income: IncomeFormRequestBody,
-) => {
+export const putIncome = async ({ historyId, income }: PutIncomeArgs) => {
   return apiHandler.put(`/account-book/history/income/${historyId}`, income);
 };
 
-export const putExpense = async (
-  historyId: string,
-  expense: ExpenseFormRequestBody,
-) => {
+export const putExpense = async ({ historyId, expense }: PutExpenseArgs) => {
   return apiHandler.put(`/account-book/history/expense/${historyId}`, expense);
 };
 

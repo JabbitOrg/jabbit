@@ -15,11 +15,10 @@ export const ROUTE_PATH_MAP = {
   '/ai/money-tracker': 'MONEY_TRACKER_MAIN',
   '/ai/money-tracker/budget': 'MONEY_TRACKER_BUDGET',
   '/ai/money-tracker/budget/setting': 'MONEY_TRACKER_BUDGET_SETTING',
-  '/ai/money-tracker/history': 'MONEY_TRACKER_INCOME_EXPENSE',
+  '/ai/money-tracker/history': 'MONEY_TRACKER_HISTORY',
   '/ai/money-tracker/history/create/income': 'MONEY_TRACKER_CREATE_INCOME',
   '/ai/money-tracker/history/create/expense': 'MONEY_TRACKER_CREATE_EXPENSE',
-  '/ai/money-tracker/history/expense/:historyId': 'MONEY_TRACKER_EXPENSE_EDIT',
-  '/ai/money-tracker/history/income/:historyId': 'MONEY_TRACKER_INCOME_EDIT',
+  '/ai/money-tracker/history/:historyId': 'MONEY_TRACKER_EDIT',
   '/ai/money-tracker/guide': 'MONEY_TRACKER_GUIDE',
   '/ai/money-tracker/launch': 'MONEY_TRACKER_LAUNCH',
 } as const;
@@ -142,7 +141,7 @@ export const ROUTES: Record<
     hasNav: false,
   },
 
-  MONEY_TRACKER_INCOME_EXPENSE: {
+  MONEY_TRACKER_HISTORY: {
     path: '/ai/money-tracker/history',
     hasNav: true,
   },
@@ -165,13 +164,8 @@ export const ROUTES: Record<
     hasNav: false,
   },
 
-  MONEY_TRACKER_EXPENSE_EDIT: {
+  MONEY_TRACKER_EDIT: {
     path: '/ai/money-tracker/history/expense/:historyId',
-    hasNav: false,
-  },
-
-  MONEY_TRACKER_INCOME_EDIT: {
-    path: '/ai/money-tracker/history/income/:historyId',
     hasNav: false,
   },
 

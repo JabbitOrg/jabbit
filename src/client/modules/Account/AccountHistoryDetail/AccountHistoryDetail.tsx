@@ -2,7 +2,6 @@
 
 import { Fragment, useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { useParams, useRouter } from 'next/navigation';
 import {
   Box,
   Button,
@@ -11,105 +10,33 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
 
 import Modal from '@/src/app/common/Modal/Modal';
 import Input from '@/src/app/components/Input/Input';
 import Select from '@/src/app/components/Select/Select';
 import Textarea from '@/src/app/components/Textarea/Textarea';
-
 import Header from '@/src/app/ai/_components/Header';
-import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
-import getIncomeExpenseHistory from '@/src/client/lib/api/ai/money-tracker/getIncomExpense';
-import deleteIncome from '@/src/client/lib/api/ai/money-tracker/deleteIncome';
-import putIncome from '@/src/client/lib/api/ai/money-tracker/putIncome';
 
 import {
-  formatNumberWithCommas,
-  unformatNumber,
-} from '../../../budget/setting/page';
-import {
+  expenseCategoryOptions,
   incomeCategoryOptions,
-  IncomeForm,
-  useIncomeForm,
-} from '../../create/income/page';
-import { getCurrentLocalDateTimeString } from '../../create/expense/page';
+  paymentMethodOptions,
+} from '../constants/categoryOptions';
+import { formatNumberWithCommas, unformatNumber } from '../utils/number';
+import useHistoryEdit from './hooks/useHistoryEdit';
 
-function IncomeEditPage() {
-  const router = useRouter();
-  const { historyId } = useParams();
-  const queryClient = useQueryClient();
+function AccountHistoryDetail() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { data: incomeData } = useSuspenseQuery({
-    queryKey: ['money-tracker', 'income-expense'],
-    queryFn: getIncomeExpenseHistory,
-    select: (data) => {
-      const income = data.body.historyList.find(
-        (item) => item.historyId === historyId,
-      );
-
-      return income;
-    },
-  });
-
-  const { mutate: deleteIncomeMutate } = useMutation({
-    mutationFn: deleteIncome,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['money-tracker', 'income-expense'],
-      });
-      router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE']);
-    },
-    onError: () => {
-      alert('수입 내역 삭제에 실패했습니다.');
-    },
-  });
-
-  const { mutate: putIncomeMutate } = useMutation({
-    mutationFn: (income: IncomeForm) => putIncome(historyId as string, income),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['money-tracker', 'income-expense'],
-      });
-      router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE']);
-    },
-    onError: () => {
-      alert('수입 내역 수정에 실패했습니다.');
-    },
-  });
-
-  const { register, control, getValues, watch } = useIncomeForm({
-    defaultValues: {
-      dateTime: incomeData?.dateTime.split('T')[0],
-      category: incomeData?.incomeCategory ?? '',
-      amount: incomeData?.amount,
-      memo: incomeData?.memo,
-    } as unknown as IncomeForm,
-  });
-
-  const handleDelete = () => {
-    deleteIncomeMutate(historyId as string);
-  };
-
-  const handleEdit = () => {
-    const { dateTime, ...value } = getValues();
-    const body = {
-      ...value,
-      dateTime: getCurrentLocalDateTimeString(dateTime),
-    };
-
-    putIncomeMutate(body);
-  };
-
-  const amount = watch('amount');
-  const category = watch('category');
-  const dateTime = watch('dateTime');
+  const {
+    register,
+    control,
+    transactionData,
+    handleDelete,
+    handleEdit,
+    isDisabled,
+  } = useHistoryEdit();
 
   return (
     <Fragment>
@@ -173,7 +100,10 @@ function IncomeEditPage() {
                 render={({ field }) => (
                   <Select
                     collection={createListCollection({
-                      items: incomeCategoryOptions,
+                      items:
+                        transactionData.type === 'expense'
+                          ? expenseCategoryOptions
+                          : incomeCategoryOptions,
                     })}
                     placeholder="카테고리를 선택해주세요"
                     name={field.name}
@@ -184,6 +114,27 @@ function IncomeEditPage() {
                 )}
               />
             </Stack>
+            {transactionData.type === 'expense' && (
+              <Stack gap="8px">
+                <Text textStyle="mobile_b2">결제수단</Text>
+                <Controller
+                  name="paymentMethod"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      collection={createListCollection({
+                        items: paymentMethodOptions,
+                      })}
+                      placeholder="결제수단을 선택해주세요"
+                      name={field.name}
+                      value={[field.value]}
+                      onValueChange={({ value }) => field.onChange(value[0])}
+                      onInteractOutside={() => field.onBlur()}
+                    />
+                  )}
+                />
+              </Stack>
+            )}
             <Stack gap="8px">
               <Text textStyle="mobile_b2">메모</Text>
               <Textarea
@@ -212,7 +163,7 @@ function IncomeEditPage() {
               borderRadius="14px"
               w="calc(100% - 40px)"
               h="62px"
-              disabled={!amount || !category || !dateTime}
+              disabled={isDisabled}
               onClick={() => setIsEditModalOpen(true)}
             >
               수정하기
@@ -246,4 +197,4 @@ function IncomeEditPage() {
   );
 }
 
-export default IncomeEditPage;
+export default AccountHistoryDetail;

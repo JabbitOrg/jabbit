@@ -13,14 +13,14 @@ import { TransactionTabType } from '../../constants/tabMenus';
 import {
   ExpenseFormRequestBody,
   IncomeFormRequestBody,
-  useHistoryCreateForm,
-} from './useTransactionHistoryForm';
+  useTransactionHistoryForm,
+} from '../../hooks/useTransactionHistoryForm';
 
 function useHistoryCreate({ type }: { type: TransactionTabType }) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { control, getValues, register, watch } = useHistoryCreateForm({
+  const { control, getValues, register, watch } = useTransactionHistoryForm({
     mode: 'onChange',
     defaultValues: {
       type,
@@ -33,7 +33,7 @@ function useHistoryCreate({ type }: { type: TransactionTabType }) {
       queryClient.invalidateQueries({
         queryKey: ACCOUNT_QUERY_KEY.GET_INCOME_EXPENSE_HISTORY,
       });
-      router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE']);
+      router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_HISTORY']);
     },
     onError: () => {
       alert('지출 내역 저장에 실패했습니다.');
@@ -45,7 +45,7 @@ function useHistoryCreate({ type }: { type: TransactionTabType }) {
       queryClient.invalidateQueries({
         queryKey: ACCOUNT_QUERY_KEY.GET_INCOME_EXPENSE_HISTORY,
       });
-      router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE']);
+      router.push(IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_HISTORY']);
     },
     onError: () => {
       alert('수입 내역 저장에 실패했습니다.');

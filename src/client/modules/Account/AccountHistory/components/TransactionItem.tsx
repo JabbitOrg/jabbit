@@ -25,9 +25,7 @@ function TransactionItem({ data }: TransactionItemProps) {
       ]
     : undefined;
 
-  const link = `${IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_INCOME_EXPENSE}/${
-    isIncome ? 'income' : 'expense'
-  }/${data.historyId}`;
+  const link = `${IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_HISTORY}/${data.historyId}`;
 
   return (
     <Link href={link}>
