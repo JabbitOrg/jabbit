@@ -56,4 +56,63 @@ export const apiHandler = {
 
     return response.json();
   },
+
+  put: async <T>(
+    endpoint: string,
+    data?: any,
+    options: RequestOptions = {},
+  ): Promise<T> => {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await fetch(`${AI_API_URL}${endpoint}`, {
+      method: 'PUT',
+      headers: getHeaders(accessToken),
+      body: data ? JSON.stringify(data) : undefined,
+      ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  patch: async <T>(
+    endpoint: string,
+    options: RequestOptions = {},
+  ): Promise<T> => {
+    const accessToken = ACCESS_TOKEN;
+
+    const response = await fetch(`${AI_API_URL}${endpoint}`, {
+      method: 'PATCH',
+      headers: getHeaders(accessToken),
+      ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  delete: async <T>(
+    endpoint: string,
+    options: RequestOptions = {},
+  ): Promise<T> => {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await fetch(`${AI_API_URL}${endpoint}`, {
+      method: 'DELETE',
+      headers: getHeaders(accessToken),
+      ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  },
 };
