@@ -8,13 +8,13 @@ import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/accountHis
 import AccountHistoryDetail from '@/src/client/modules/Account/AccountHistoryDetail';
 
 interface AccountHistoryDetailPageProps {
-  params: { historyId: string };
+  params: Promise<{ historyId: string }>;
 }
 
 export default async function AccountHistoryDetailPage({
   params,
 }: AccountHistoryDetailPageProps) {
-  const { historyId } = params;
+  const { historyId } = await params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

@@ -1,5 +1,4 @@
 import { apiHandler } from '@/src/client/lib/api/apiHandler';
-import { BudgetFormType } from '@/src/app/ai/money-tracker/(after-launch)/(sub)/budget/setting/page';
 import {
   ExpenseFormRequestBody,
   IncomeFormRequestBody,
@@ -10,6 +9,7 @@ import {
   PutExpenseArgs,
   PutIncomeArgs,
 } from './accountHistory.type';
+import { BudgetFormType } from '../AccountBudgetSetting/hooks/useBudgeSetForm';
 
 // 예산
 export const getBudget = async (): Promise<GetBudgetResponse> => {
