@@ -1,48 +1,25 @@
-'use client';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import AccountBudget from '@/src/client/modules/Account/AccountBudget';
+import { getBudget } from '@/src/client/modules/Account/api/accountHistory.api';
+import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/accountHistory.query';
 
-import { useRouter } from 'next/navigation';
-import { Flex, Stack } from '@chakra-ui/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+export default async function AccountBudgetPage() {
+  const queryClient = new QueryClient();
 
-import PlusSvg from '@/src/client/assets/plus.svg';
-import getBudget from '@/src/client/lib/api/ai/money-tracker/getBudget';
-import GuideLinkButton from '@/src/app/ai/_components/GuideLinkButton';
-import { GUIDE_BUTTONS } from '@/src/app/ai/_constants/guide';
-import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
-import BudgetUnset from './_components/BudgetUnset';
-import BudgetStatus from './_components/BudgetStatus';
-
-function BudgetPage() {
-  const router = useRouter();
-  const { data } = useSuspenseQuery({
-    queryKey: ['money-tracker', 'budget'],
+  await queryClient.prefetchQuery({
+    queryKey: ACCOUNT_QUERY_KEY.GET_BUDGET,
     queryFn: getBudget,
   });
 
-  const isBudgetSet = data.body.totalBudget !== 0;
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Stack gap="20px" p="20px">
-      <GuideLinkButton data={GUIDE_BUTTONS['money-tracker']} />
-
-      {isBudgetSet ? <BudgetStatus /> : <BudgetUnset />}
-
-      <Flex
-        borderRadius="10px"
-        justifyContent="center"
-        alignItems="center"
-        cursor="pointer"
-        position="fixed"
-        bottom="88px"
-        right="0px"
-        onClick={() =>
-          router.push(IDENTIFIER_TO_PATH_MAP.MONEY_TRACKER_EXPENSE_CREATE)
-        }
-      >
-        <PlusSvg />
-      </Flex>
-    </Stack>
+    <HydrationBoundary state={dehydratedState}>
+      <AccountBudget />
+    </HydrationBoundary>
   );
 }
-
-export default BudgetPage;

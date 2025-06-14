@@ -1,18 +1,15 @@
 import { Fragment } from 'react';
 import { Flex, Stack, Text } from '@chakra-ui/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { EXPENSE_CATEGORY_MAP } from '@/src/app/ai/money-tracker/_ constants/category';
 import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
-import getBudget from '@/src/client/lib/api/ai/money-tracker/getBudget';
 import { typedObjectEntries } from '@/src/client/utils/type';
+
+import { useGetBudget } from '../../hooks/accountHistory.query';
 import BudgetBalanceGraph from './BudgetBalanceGraph';
 
 function BudgetStatus() {
-  const { data } = useSuspenseQuery({
-    queryKey: ['money-tracker', 'budget'],
-    queryFn: getBudget,
-  });
+  const { data } = useGetBudget();
 
   return (
     <Fragment>

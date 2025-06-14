@@ -2,21 +2,17 @@ import { useRouter } from 'next/navigation';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement } from 'chart.js';
 import { Flex, Stack, Text } from '@chakra-ui/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { COLORS } from '@/src/client/theme/colors';
-import getBudget from '@/src/client/lib/api/ai/money-tracker/getBudget';
 import ChevronRightSVG from '@/src/client/assets/chevron-right.svg';
 import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
+import { useGetBudget } from '../../hooks/accountHistory.query';
 
 ChartJS.register(ArcElement);
 
 function BudgetBalanceGraph() {
   const router = useRouter();
-  const { data } = useSuspenseQuery({
-    queryKey: ['money-tracker', 'budget'],
-    queryFn: getBudget,
-  });
+  const { data } = useGetBudget();
 
   const { totalBudget, totalSpent } = data.body;
   const leftBudget = totalBudget - totalSpent;
