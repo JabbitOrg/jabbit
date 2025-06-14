@@ -1,33 +1,18 @@
 'use client';
 
 import { Fragment } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Tab from '@/src/app/components/Tab/Tab';
-
-const TRANSACTION_TABS = [
-  {
-    label: '지출',
-    value: 'expense',
-    link: '/expense',
-    content: <div>지출</div>,
-  },
-  {
-    label: '수입',
-    value: 'income',
-    link: '/income',
-    content: <div>수입</div>,
-  },
-];
+import { TRANSACTION_TABS } from '@/src/client/modules/Account/constants/tabMenus';
 
 function IncomeExpenseSubLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
   const router = useRouter();
 
   return (
     <Fragment>
       <Tab
         menuList={TRANSACTION_TABS}
-        onClick={(value) => router.replace(`${pathname}/${value.link}`)}
+        onClick={(v) => router.push(v.link)}
         position="sticky"
         top="0"
         left="0"

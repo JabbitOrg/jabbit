@@ -2,23 +2,8 @@
 
 import { Fragment } from 'react';
 import { useRouter } from 'next/navigation';
+import { MONEY_TRACKER_TABS } from '@/src/client/modules/Account/constants/tabMenus';
 import Tab from '@/src/app/components/Tab/Tab';
-import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
-
-const MONEY_TRACKER_TABS = [
-  {
-    label: '예산',
-    value: 'budget',
-    link: IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_BUDGET'],
-    content: <div>예산</div>,
-  },
-  {
-    label: '수입/지출',
-    value: 'income-expense',
-    link: IDENTIFIER_TO_PATH_MAP['MONEY_TRACKER_INCOME_EXPENSE'],
-    content: <div>수입/지출</div>,
-  },
-];
 
 function MoneyTrackerLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

@@ -15,15 +15,11 @@ export const ROUTE_PATH_MAP = {
   '/ai/money-tracker': 'MONEY_TRACKER_MAIN',
   '/ai/money-tracker/budget': 'MONEY_TRACKER_BUDGET',
   '/ai/money-tracker/budget/setting': 'MONEY_TRACKER_BUDGET_SETTING',
-  '/ai/money-tracker/income-expense': 'MONEY_TRACKER_INCOME_EXPENSE',
-  '/ai/money-tracker/income-expense/create/income':
-    'MONEY_TRACKER_INCOME_CREATE',
-  '/ai/money-tracker/income-expense/create/expense':
-    'MONEY_TRACKER_EXPENSE_CREATE',
-  '/ai/money-tracker/income-expense/expense/:historyId':
-    'MONEY_TRACKER_EXPENSE_EDIT',
-  '/ai/money-tracker/income-expense/income/:historyId':
-    'MONEY_TRACKER_INCOME_EDIT',
+  '/ai/money-tracker/history': 'MONEY_TRACKER_INCOME_EXPENSE',
+  '/ai/money-tracker/history/create/income': 'MONEY_TRACKER_CREATE_INCOME',
+  '/ai/money-tracker/history/create/expense': 'MONEY_TRACKER_CREATE_EXPENSE',
+  '/ai/money-tracker/history/expense/:historyId': 'MONEY_TRACKER_EXPENSE_EDIT',
+  '/ai/money-tracker/history/income/:historyId': 'MONEY_TRACKER_INCOME_EDIT',
   '/ai/money-tracker/guide': 'MONEY_TRACKER_GUIDE',
   '/ai/money-tracker/launch': 'MONEY_TRACKER_LAUNCH',
 } as const;
@@ -147,12 +143,12 @@ export const ROUTES: Record<
   },
 
   MONEY_TRACKER_INCOME_EXPENSE: {
-    path: '/ai/money-tracker/income-expense',
+    path: '/ai/money-tracker/history',
     hasNav: true,
   },
 
-  MONEY_TRACKER_INCOME_CREATE: {
-    path: '/ai/money-tracker/income-expense/create/income',
+  MONEY_TRACKER_CREATE_INCOME: {
+    path: '/ai/money-tracker/history/create/income',
     header: {
       title: '내역 추가',
       hasPrev: true,
@@ -160,8 +156,8 @@ export const ROUTES: Record<
     hasNav: false,
   },
 
-  MONEY_TRACKER_EXPENSE_CREATE: {
-    path: '/ai/money-tracker/income-expense/create/expense',
+  MONEY_TRACKER_CREATE_EXPENSE: {
+    path: '/ai/money-tracker/history/create/expense',
     header: {
       title: '내역 추가',
       hasPrev: true,
@@ -170,12 +166,12 @@ export const ROUTES: Record<
   },
 
   MONEY_TRACKER_EXPENSE_EDIT: {
-    path: '/ai/money-tracker/income-expense/expense/:historyId',
+    path: '/ai/money-tracker/history/expense/:historyId',
     hasNav: false,
   },
 
   MONEY_TRACKER_INCOME_EDIT: {
-    path: '/ai/money-tracker/income-expense/income/:historyId',
+    path: '/ai/money-tracker/history/income/:historyId',
     hasNav: false,
   },
 

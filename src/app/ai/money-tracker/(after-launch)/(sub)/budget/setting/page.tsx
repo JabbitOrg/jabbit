@@ -26,7 +26,8 @@ import { EXPENSE_CATEGORY_MAP } from '@/src/app/ai/money-tracker/_ constants/cat
 const budgetSchemaShape = Object.fromEntries(
   typedObjectEntries(EXPENSE_CATEGORY_MAP).map(([key]) => [key, z.number()]),
 );
-export const BudgetSchema = z.object(budgetSchemaShape);
+
+const BudgetSchema = z.object(budgetSchemaShape);
 
 export type BudgetFormType = z.infer<typeof BudgetSchema>;
 
