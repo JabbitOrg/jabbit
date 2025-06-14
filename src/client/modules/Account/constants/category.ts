@@ -1,35 +1,35 @@
 export enum ExpenseCategory {
-  FOOD = '식비',
-  CAFE = '카페/간식',
-  CONVENIENCE_STORE = '편의점/마트/잡화',
-  ALCOHOL = '술/유흥',
-  SHOPPING = '쇼핑',
-  HOBBY = '취미/여가',
-  MEDICAL = '의료/건강/피트니스',
-  LIVING = '생활용품',
-  COMMUNICATION = '주거/통신',
-  BEAUTY = '미용/패션',
-  INSURANCE = '보험/세금/기타금융',
-  EDUCATION = '교육',
-  CAR = '교육/자동차',
-  GIFT = '경조사/회비',
-  ETC = '기타',
+  food = '식비',
+  cafe = '카페/간식',
+  convenienceStore = '편의점/마트/잡화',
+  alcohol = '술/유흥',
+  shopping = '쇼핑',
+  hobby = '취미/여가',
+  medical = '의료/건강/피트니스',
+  living = '생활용품',
+  communication = '주거/통신',
+  beauty = '미용/패션',
+  insurance = '보험/세금/기타금융',
+  education = '교육',
+  car = '교육/자동차',
+  gift = '경조사/회비',
+  etc = '기타',
 }
 
 export enum IncomeCategory {
-  SALARY = '월급',
-  ADDITIONAL_INCOME = '부수입',
-  ALLOWANCE = '용돈',
-  BONUS = '상여',
-  FINANCIAL_INCOME = '금융소득',
-  ETC = '기타',
+  salary = '월급',
+  additionalIncome = '부수입',
+  allowance = '용돈',
+  bonus = '상여',
+  financialIncome = '금융소득',
+  etc = '기타',
 }
 
 export enum PaymentMethod {
-  CREDIT_CARD = '신용카드',
-  DEBIT_CARD = '체크카드',
-  CASH = '현금',
-  ETC = '기타',
+  creditCard = '신용카드',
+  debitCard = '체크카드',
+  cash = '현금',
+  etc = '기타',
 }
 
 export type IncomeCategoryKey = keyof typeof IncomeCategory;
@@ -40,116 +40,116 @@ export const EXPENSE_CATEGORY_MAP: Record<
   ExpenseCategoryKey,
   { name: string; icon: string }
 > = {
-  FOOD: {
+  food: {
     name: '식비',
     icon: '🍜',
   },
-  CAFE: {
+  cafe: {
     name: '카페/간식',
     icon: '☕️',
   },
-  CONVENIENCE_STORE: {
+  convenienceStore: {
     name: '편의점/마트/잡화',
     icon: '🛒',
   },
-  ALCOHOL: {
+  alcohol: {
     name: '술/유흥',
     icon: '🍺',
   },
-  SHOPPING: {
+  shopping: {
     name: '쇼핑',
     icon: '🛍️',
   },
-  HOBBY: {
+  hobby: {
     name: '취미/여가',
     icon: '🕹️',
   },
-  MEDICAL: {
+  medical: {
     name: '의료/건강/피트니스',
     icon: '🧘',
   },
-  LIVING: {
+  living: {
     name: '생활용품',
     icon: '🪑',
   },
-  COMMUNICATION: {
+  communication: {
     name: '주거/통신',
     icon: '🏠',
   },
-  BEAUTY: {
+  beauty: {
     name: '미용/패션',
     icon: '🧥',
   },
-  INSURANCE: {
+  insurance: {
     name: '보험/세금/기타금융',
     icon: '💰',
   },
-  EDUCATION: {
+  education: {
     name: '교육',
     icon: '📙',
   },
-  CAR: {
+  car: {
     name: '교육/자동차',
     icon: '🚖',
   },
-  GIFT: {
+  gift: {
     name: '경조사/회비',
     icon: '🎁',
   },
-  ETC: {
+  etc: {
     name: '기타',
     icon: '📋',
   },
-};
+} as const;
 
 export const INCOME_CATEGORY_MAP: Record<
   IncomeCategoryKey,
   { name: string; icon: string }
 > = {
-  SALARY: {
+  salary: {
     name: '월급',
     icon: '💰',
   },
-  ADDITIONAL_INCOME: {
+  additionalIncome: {
     name: '부수입',
     icon: '💵',
   },
-  ALLOWANCE: {
+  allowance: {
     name: '용돈',
     icon: '🤑',
   },
-  BONUS: {
+  bonus: {
     name: '상여',
     icon: '🏅',
   },
-  FINANCIAL_INCOME: {
+  financialIncome: {
     name: '금융소득',
     icon: '🏦',
   },
-  ETC: {
+  etc: {
     name: '기타',
     icon: '📋',
   },
-};
+} as const;
 
 export const PAYMENT_METHOD_MAP: Record<
   PaymentMethodKey,
   { name: string; icon: string }
 > = {
-  CREDIT_CARD: {
+  creditCard: {
     name: '신용카드',
     icon: '💳',
   },
-  DEBIT_CARD: {
+  debitCard: {
     name: '체크카드',
     icon: '🪪',
   },
-  CASH: {
+  cash: {
     name: '현금',
     icon: '💰',
   },
-  ETC: {
+  etc: {
     name: '기타',
     icon: '📋',
   },
-};
+} as const;

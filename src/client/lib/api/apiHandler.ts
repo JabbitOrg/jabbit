@@ -1,5 +1,5 @@
-import { useAuthStore } from '@/src/client/store/authStore';
 import { AI_API_URL } from '@/src/client/constants/API';
+import { useAuthStore } from '../../store/authStore';
 
 interface RequestOptions extends RequestInit {
   body?: any;
@@ -47,6 +47,46 @@ export const apiHandler = {
       method: 'POST',
       headers: getHeaders(accessToken),
       body: data ? JSON.stringify(data) : undefined,
+      ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  put: async <T>(
+    endpoint: string,
+    data?: any,
+    options: RequestOptions = {},
+  ): Promise<T> => {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await fetch(`${AI_API_URL}${endpoint}`, {
+      method: 'PUT',
+      headers: getHeaders(accessToken),
+      body: data ? JSON.stringify(data) : undefined,
+      ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  delete: async <T>(
+    endpoint: string,
+    options: RequestOptions = {},
+  ): Promise<T> => {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await fetch(`${AI_API_URL}${endpoint}`, {
+      method: 'DELETE',
+      headers: getHeaders(accessToken),
       ...options,
     });
 
