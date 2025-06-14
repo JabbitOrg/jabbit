@@ -1,23 +1,30 @@
-import { Box, Button, Text, Flex } from '@chakra-ui/react';
+import { Box, Button, Text, Flex, ButtonProps } from '@chakra-ui/react';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  title?: string;
   content: string;
+  title?: string;
   confirmText?: string;
   cancelText?: string;
+  hasCancelButton?: boolean;
+  customStyle?: {
+    confirmButton?: ButtonProps;
+    cancelButton?: ButtonProps;
+  };
 }
 
 function Modal({
   isOpen,
   onClose,
   onConfirm,
-  title = '',
   content,
+  title = '',
+  hasCancelButton = true,
   confirmText = '확인',
   cancelText = '취소',
+  customStyle,
 }: ModalProps) {
   if (!isOpen) return null;
 
@@ -58,28 +65,33 @@ function Modal({
           display="flex"
           alignItems="center"
           justifyContent="center"
+          whiteSpace="pre-wrap"
+          textAlign="center"
         >
           {content}
         </Text>
 
-        <Flex gap="2" justifyContent="flex-end" paddingTop="27px">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            backgroundColor="font.700"
-            color="white"
-            width="115px"
-            height="44px"
-            borderRadius="10px"
-          >
-            {cancelText}
-          </Button>
+        <Flex gap="2" justifyContent="flex-end" paddingTop="27px" w="100%">
+          {hasCancelButton && (
+            <Button
+              variant="outline"
+              onClick={onClose}
+              backgroundColor="font.700"
+              color="white"
+              flex={1}
+              height="44px"
+              borderRadius="10px"
+              {...customStyle?.cancelButton}
+            >
+              {cancelText}
+            </Button>
+          )}
           <Button
             colorScheme="blue"
             onClick={onConfirm}
             backgroundColor="brand.blue"
             color="white"
-            width="115px"
+            flex={1}
             height="44px"
             borderRadius="10px"
           >
