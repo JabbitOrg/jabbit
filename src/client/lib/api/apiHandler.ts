@@ -82,7 +82,7 @@ export const apiHandler = {
     endpoint: string,
     options: RequestOptions = {},
   ): Promise<T> => {
-    const accessToken = ACCESS_TOKEN;
+    const accessToken = useAuthStore.getState().accessToken;
 
     const response = await fetch(`${AI_API_URL}${endpoint}`, {
       method: 'PATCH',
