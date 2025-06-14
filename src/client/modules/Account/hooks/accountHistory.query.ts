@@ -10,6 +10,7 @@ import {
   deleteIncome,
   getBudget,
   getIncomeExpenseHistory,
+  postBudget,
   postExpense,
   postIncome,
   putExpense,
@@ -25,6 +26,7 @@ import {
   PutExpenseArgs,
   PutIncomeArgs,
 } from '../api/accountHistory.type';
+import { BudgetFormType } from '../AccountBudgetSetting/hooks/useBudgeSetForm';
 
 export const ACCOUNT_QUERY_KEY = {
   GET_BUDGET: ['money-tracker', 'budget'],
@@ -42,6 +44,15 @@ export const useGetBudget = (
   return useSuspenseQuery({
     queryKey: ACCOUNT_QUERY_KEY.GET_BUDGET,
     queryFn: getBudget,
+    ...props,
+  });
+};
+
+export const usePostBudget = (
+  props?: UseMutationOptions<any, Error, BudgetFormType>,
+): UseMutationResult<any, Error, BudgetFormType> => {
+  return useMutation({
+    mutationFn: postBudget,
     ...props,
   });
 };
