@@ -1,11 +1,13 @@
 import { AI_API_URL } from '@/src/client/constants/API';
-import { useAuthStore } from '../../store/authStore';
+import { getAccessToken } from '../../utils/token';
 
 interface RequestOptions extends RequestInit {
   body?: any;
 }
 
-const getHeaders = (accessToken: string | null) => {
+const getHeaders = async (): Promise<HeadersInit> => {
+  const accessToken = await getAccessToken();
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
@@ -22,13 +24,12 @@ export const apiHandler = {
     endpoint: string,
     options: RequestOptions = {},
   ): Promise<T> => {
-    const accessToken = useAuthStore.getState().accessToken;
-
     const response = await fetch(`${AI_API_URL}${endpoint}`, {
       method: 'GET',
-      headers: getHeaders(accessToken),
+      headers: await getHeaders(),
       ...options,
     });
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -41,11 +42,9 @@ export const apiHandler = {
     data?: any,
     options: RequestOptions = {},
   ): Promise<T> => {
-    const accessToken = useAuthStore.getState().accessToken;
-
     const response = await fetch(`${AI_API_URL}${endpoint}`, {
       method: 'POST',
-      headers: getHeaders(accessToken),
+      headers: await getHeaders(),
       body: data ? JSON.stringify(data) : undefined,
       ...options,
     });
@@ -62,11 +61,9 @@ export const apiHandler = {
     data?: any,
     options: RequestOptions = {},
   ): Promise<T> => {
-    const accessToken = useAuthStore.getState().accessToken;
-
     const response = await fetch(`${AI_API_URL}${endpoint}`, {
       method: 'PUT',
-      headers: getHeaders(accessToken),
+      headers: await getHeaders(),
       body: data ? JSON.stringify(data) : undefined,
       ...options,
     });
@@ -82,11 +79,9 @@ export const apiHandler = {
     endpoint: string,
     options: RequestOptions = {},
   ): Promise<T> => {
-    const accessToken = useAuthStore.getState().accessToken;
-
     const response = await fetch(`${AI_API_URL}${endpoint}`, {
       method: 'DELETE',
-      headers: getHeaders(accessToken),
+      headers: await getHeaders(),
       ...options,
     });
 
