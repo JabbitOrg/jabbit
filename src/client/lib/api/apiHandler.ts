@@ -1,5 +1,8 @@
 import { AI_API_URL } from '@/src/client/constants/API';
-import { getAccessToken } from '../../utils/token';
+import { getAccessToken } from '@/src/client/utils/token';
+import { useAuthStore } from '@/src/client/store/authStore';
+import { usePWAStore } from '@/src/client/store/pwaStore';
+import { deleteJwtToken } from '@/src/client/lib/api/deleteJwt';
 
 interface RequestOptions extends RequestInit {
   body?: any;
@@ -7,105 +10,70 @@ interface RequestOptions extends RequestInit {
 
 const getHeaders = async (): Promise<HeadersInit> => {
   const accessToken = await getAccessToken();
-
-  const headers: HeadersInit = {
+  return {
     'Content-Type': 'application/json',
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+  };
+};
+
+const handleUnauthorized = async () => {
+  const { logout } = useAuthStore.getState();
+  const isPwa = usePWAStore.getState().isPwa;
+  try {
+    await deleteJwtToken();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    logout();
+    window.location.href = isPwa ? '/ai/login' : '/login';
+  }
+};
+
+const handleResponse = async <T>(response: Response): Promise<T> => {
+  if (!response.ok) {
+    if (response.status === 401) {
+      handleUnauthorized();
+      throw new Error('Unauthorized access');
+    }
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+};
+
+const request = async <T>(
+  method: string,
+  endpoint: string,
+  data?: any,
+  options: RequestOptions = {},
+): Promise<T> => {
+  const headers = await getHeaders();
+  const fetchOptions: RequestInit = {
+    method,
+    headers,
+    ...options,
   };
 
-  if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
+  if (data) {
+    fetchOptions.body = JSON.stringify(data);
   }
 
-  return headers;
+  const response = await fetch(`${AI_API_URL}${endpoint}`, fetchOptions);
+  return handleResponse<T>(response);
 };
 
 export const apiHandler = {
-  get: async <T>(
-    endpoint: string,
-    options: RequestOptions = {},
-  ): Promise<T> => {
-    const response = await fetch(`${AI_API_URL}${endpoint}`, {
-      method: 'GET',
-      headers: await getHeaders(),
-      ...options,
-    });
+  get: <T>(endpoint: string, options?: RequestOptions) =>
+    request<T>('GET', endpoint, undefined, options),
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+  post: <T>(endpoint: string, data?: any, options?: RequestOptions) =>
+    request<T>('POST', endpoint, data, options),
 
-    return response.json();
-  },
+  put: <T>(endpoint: string, data?: any, options?: RequestOptions) =>
+    request<T>('PUT', endpoint, data, options),
 
-  post: async <T>(
-    endpoint: string,
-    data?: any,
-    options: RequestOptions = {},
-  ): Promise<T> => {
-    const response = await fetch(`${AI_API_URL}${endpoint}`, {
-      method: 'POST',
-      headers: await getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
-      ...options,
-    });
+  patch: <T>(endpoint: string, options?: RequestOptions) =>
+    request<T>('PATCH', endpoint, undefined, options),
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return response.json();
-  },
-
-  put: async <T>(
-    endpoint: string,
-    data?: any,
-    options: RequestOptions = {},
-  ): Promise<T> => {
-    const response = await fetch(`${AI_API_URL}${endpoint}`, {
-      method: 'PUT',
-      headers: await getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return response.json();
-  },
-
-  patch: async <T>(
-    endpoint: string,
-    options: RequestOptions = {},
-  ): Promise<T> => {
-    const response = await fetch(`${AI_API_URL}${endpoint}`, {
-      method: 'PATCH',
-      headers: await getHeaders(),
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return response.json();
-  },
-
-  delete: async <T>(
-    endpoint: string,
-    options: RequestOptions = {},
-  ): Promise<T> => {
-    const response = await fetch(`${AI_API_URL}${endpoint}`, {
-      method: 'DELETE',
-      headers: await getHeaders(),
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return response.json();
-  },
+  delete: <T>(endpoint: string, options?: RequestOptions) =>
+    request<T>('DELETE', endpoint, undefined, options),
 };
