@@ -8,7 +8,7 @@ import {
   GetIncomeExpenseHistoryResponse,
   PutExpenseArgs,
   PutIncomeArgs,
-} from './accountHistory.type';
+} from './account.type';
 import { BudgetFormType } from '../AccountBudgetSetting/hooks/useBudgeSetForm';
 
 // 예산

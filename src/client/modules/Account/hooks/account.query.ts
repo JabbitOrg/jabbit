@@ -15,7 +15,7 @@ import {
   postIncome,
   putExpense,
   putIncome,
-} from '../api/accountHistory.api';
+} from '../api/account.api';
 import {
   ExpenseFormRequestBody,
   IncomeFormRequestBody,
@@ -25,7 +25,7 @@ import {
   GetIncomeExpenseHistoryResponse,
   PutExpenseArgs,
   PutIncomeArgs,
-} from '../api/accountHistory.type';
+} from '../api/account.type';
 import { BudgetFormType } from '../AccountBudgetSetting/hooks/useBudgeSetForm';
 
 export const ACCOUNT_QUERY_KEY = {

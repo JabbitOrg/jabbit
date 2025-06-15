@@ -17,7 +17,7 @@ import {
   ACCOUNT_QUERY_KEY,
   useGetBudget,
   usePostBudget,
-} from '../hooks/accountHistory.query';
+} from '../hooks/account.query';
 import { EXPENSE_CATEGORY_MAP } from '../constants/category';
 import useBudgeSetForm, { BudgetFormType } from './hooks/useBudgeSetForm';
 

@@ -6,7 +6,7 @@ import { Flex, Stack, Text } from '@chakra-ui/react';
 import { COLORS } from '@/src/client/theme/colors';
 import ChevronRightSVG from '@/src/client/assets/chevron-right.svg';
 import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
-import { useGetBudget } from '../../hooks/accountHistory.query';
+import { useGetBudget } from '../../hooks/account.query';
 
 ChartJS.register(ArcElement);
 

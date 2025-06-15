@@ -7,7 +7,7 @@ import {
   ACCOUNT_QUERY_KEY,
   usePostExpense,
   usePostIncome,
-} from '../../hooks/accountHistory.query';
+} from '../../hooks/account.query';
 import { getCurrentLocalDateTimeString } from '../../utils/date';
 import { TransactionTabType } from '../../constants/tabMenus';
 import {

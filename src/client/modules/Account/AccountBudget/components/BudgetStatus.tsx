@@ -5,7 +5,7 @@ import { typedObjectEntries } from '@/src/client/utils/type';
 import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
 
 import { EXPENSE_CATEGORY_MAP } from '../../constants/category';
-import { useGetBudget } from '../../hooks/accountHistory.query';
+import { useGetBudget } from '../../hooks/account.query';
 import BudgetBalanceGraph from './BudgetBalanceGraph';
 
 function BudgetStatus() {

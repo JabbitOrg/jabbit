@@ -1,7 +1,7 @@
 'use client';
 
 import { Flex, Stack, Text } from '@chakra-ui/react';
-import { useGetIncomeExpenseHistory } from '../hooks/accountHistory.query';
+import { useGetIncomeExpenseHistory } from '../hooks/account.query';
 import HistoryAddFloatingButton from '../components/HistoryAddFloatingButton';
 import { formatDateKoreanWeekday } from '../utils/date';
 import TransactionItem from './components/TransactionItem';

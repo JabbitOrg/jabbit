@@ -5,8 +5,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { getIncomeExpenseHistory } from '@/src/client/modules/Account/api/accountHistory.api';
-import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/accountHistory.query';
+import { getIncomeExpenseHistory } from '@/src/client/modules/Account/api/account.api';
+import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/account.query';
 import AccountHistoryDetail from '@/src/client/modules/Account/AccountHistoryDetail';
 
 interface AccountHistoryDetailPageProps {

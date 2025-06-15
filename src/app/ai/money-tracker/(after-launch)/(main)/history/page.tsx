@@ -7,8 +7,8 @@ import {
 } from '@tanstack/react-query';
 
 import AccountHistory from '@/src/client/modules/Account/AccountHistory';
-import { getIncomeExpenseHistory } from '@/src/client/modules/Account/api/accountHistory.api';
-import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/accountHistory.query';
+import { getIncomeExpenseHistory } from '@/src/client/modules/Account/api/account.api';
+import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/account.query';
 
 export default async function AccountHistoryPage() {
   const queryClient = new QueryClient();

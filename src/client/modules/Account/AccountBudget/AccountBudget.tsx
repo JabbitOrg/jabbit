@@ -5,7 +5,7 @@ import { Stack } from '@chakra-ui/react';
 import GuideLinkButton from '@/src/app/ai/_components/GuideLinkButton';
 import { GUIDE_BUTTONS } from '@/src/app/ai/_constants/guide';
 
-import { useGetBudget } from '../hooks/accountHistory.query';
+import { useGetBudget } from '../hooks/account.query';
 import HistoryAddFloatingButton from '../components/HistoryAddFloatingButton';
 import { BudgetUnset, BudgetStatus } from './components';
 

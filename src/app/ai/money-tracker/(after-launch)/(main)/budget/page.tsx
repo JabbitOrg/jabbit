@@ -6,8 +6,8 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import AccountBudget from '@/src/client/modules/Account/AccountBudget';
-import { getBudget } from '@/src/client/modules/Account/api/accountHistory.api';
-import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/accountHistory.query';
+import { getBudget } from '@/src/client/modules/Account/api/account.api';
+import { ACCOUNT_QUERY_KEY } from '@/src/client/modules/Account/hooks/account.query';
 
 export default async function AccountBudgetPage() {
   const queryClient = new QueryClient();

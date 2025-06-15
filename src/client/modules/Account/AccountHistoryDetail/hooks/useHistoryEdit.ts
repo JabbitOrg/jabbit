@@ -8,7 +8,7 @@ import {
   useDeleteIncome,
   usePutExpense,
   usePutIncome,
-} from '../../hooks/accountHistory.query';
+} from '../../hooks/account.query';
 import {
   ExpenseForm,
   IncomeForm,
@@ -16,7 +16,7 @@ import {
   useTransactionHistoryForm,
 } from '../../hooks/useTransactionHistoryForm';
 import { getCurrentLocalDateTimeString } from '../../utils/date';
-import { getIncomeExpenseHistory } from '../../api/accountHistory.api';
+import { getIncomeExpenseHistory } from '../../api/account.api';
 
 function useHistoryEdit() {
   const router = useRouter();
