@@ -2,9 +2,9 @@ import { z } from 'zod';
 import { useForm, UseFormProps } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  ExpenseCategory,
-  IncomeCategory,
-  PaymentMethod,
+  EXPENSE_CATEGORY_LIST,
+  PAYMENT_METHOD_LIST,
+  INCOME_CATEGORY_LIST,
 } from '../constants/category';
 
 // 지출 폼
@@ -12,8 +12,8 @@ export const ExpenseFormSchema = z.object({
   type: z.literal('expense'),
   dateTime: z.string(),
   amount: z.number(),
-  category: z.nativeEnum(ExpenseCategory),
-  paymentMethod: z.nativeEnum(PaymentMethod),
+  category: z.enum(EXPENSE_CATEGORY_LIST),
+  paymentMethod: z.enum(PAYMENT_METHOD_LIST),
   memo: z.string(),
 });
 
@@ -40,7 +40,7 @@ export const IncomeFormSchema = z.object({
   type: z.literal('income'),
   dateTime: z.string(),
   amount: z.number(),
-  category: z.nativeEnum(IncomeCategory),
+  category: z.enum(INCOME_CATEGORY_LIST),
   memo: z.string().optional(),
 });
 

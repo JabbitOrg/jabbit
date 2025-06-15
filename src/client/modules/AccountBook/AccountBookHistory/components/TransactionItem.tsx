@@ -7,22 +7,20 @@ import {
   INCOME_CATEGORY_MAP,
   PAYMENT_METHOD_MAP,
 } from '../../constants/category';
-import { GroupedHistoryEntry } from '../utils/groupHistoryByDate';
+import { GroupedHistory } from '../utils/groupHistoryByDate';
 
 interface TransactionItemProps {
-  data: GroupedHistoryEntry;
+  data: GroupedHistory['entries'][number];
 }
 
 function TransactionItem({ data }: TransactionItemProps) {
-  const isIncome = data.type === 'INCOME';
+  const isIncome = data.type === 'income';
   const dataMap = isIncome
-    ? INCOME_CATEGORY_MAP[data.category as keyof typeof INCOME_CATEGORY_MAP]
-    : EXPENSE_CATEGORY_MAP[data.category as keyof typeof EXPENSE_CATEGORY_MAP];
+    ? INCOME_CATEGORY_MAP[data.category]
+    : EXPENSE_CATEGORY_MAP[data.category];
 
   const paymentMethodMap = !isIncome
-    ? PAYMENT_METHOD_MAP[
-        data.paymentCategory as keyof typeof PAYMENT_METHOD_MAP
-      ]
+    ? PAYMENT_METHOD_MAP[data.paymentMethod]
     : undefined;
 
   const link = `${IDENTIFIER_TO_PATH_MAP.ACCOUNT_BOOK_HISTORY}/${data.historyId}`;

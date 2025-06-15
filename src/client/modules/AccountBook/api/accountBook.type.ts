@@ -1,7 +1,7 @@
 import {
-  ExpenseCategoryKey,
-  PaymentMethodKey,
-  IncomeCategoryKey,
+  ExpenseCategory,
+  PaymentMethod,
+  IncomeCategory,
 } from '../constants/category';
 import {
   ExpenseFormRequestBody,
@@ -19,16 +19,16 @@ export interface GetBudgetResponse {
   body: {
     totalBudget: number;
     totalSpent: number;
-    categoryBudgets: Record<ExpenseCategoryKey, CategoryBudget>;
+    categoryBudgets: Record<ExpenseCategory, CategoryBudget>;
   };
 }
 
 export interface HistoryItem {
   historyId: string;
   dateTime: string;
-  incomeCategory: IncomeCategoryKey | null;
-  expenseCategory: ExpenseCategoryKey | null;
-  paymentCategory: PaymentMethodKey | null;
+  incomeCategory: IncomeCategory | null;
+  expenseCategory: ExpenseCategory | null;
+  paymentCategory: PaymentMethod | null;
   amount: number;
   memo: string;
 }

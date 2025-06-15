@@ -1,27 +1,46 @@
-type HistoryItem = {
+import { HistoryItem } from '../../api/accountBook.type';
+import { ExpenseForm, IncomeForm } from '../../hooks/useTransactionHistoryForm';
+import {
+  ExpenseCategory,
+  IncomeCategory,
+  PaymentMethod,
+} from '../../constants/category';
+
+type IncomeHistory = IncomeForm & {
+  type: 'income';
   historyId: string;
-  dateTime: string;
-  incomeCategory: string | null;
-  expenseCategory: string | null;
-  paymentCategory: string | null;
-  amount: number;
-  memo: string;
 };
 
-export type GroupedHistoryEntry = {
+type ExpenseHistory = ExpenseForm & {
+  type: 'expense';
   historyId: string;
-  dateTime: string;
-  type: 'INCOME' | 'EXPENSE';
-  category: string;
-  paymentCategory: string | null;
-  amount: number;
-  memo: string;
 };
 
-type GroupedHistory = {
+type GroupedHistoryEntry = IncomeHistory | ExpenseHistory;
+
+export type GroupedHistory = {
   date: string;
   entries: GroupedHistoryEntry[];
 };
+
+const createIncomeEntry = (item: HistoryItem): IncomeHistory => ({
+  type: 'income',
+  historyId: item.historyId,
+  dateTime: item.dateTime,
+  amount: item.amount,
+  category: item.incomeCategory as IncomeCategory,
+  memo: item.memo ?? '',
+});
+
+const createExpenseEntry = (item: HistoryItem): ExpenseHistory => ({
+  type: 'expense',
+  historyId: item.historyId,
+  dateTime: item.dateTime,
+  amount: item.amount,
+  category: item.expenseCategory as ExpenseCategory,
+  paymentMethod: item.paymentCategory as PaymentMethod,
+  memo: item.memo ?? '',
+});
 
 export const groupHistoryByDate = (
   historyList: HistoryItem[],
@@ -30,25 +49,11 @@ export const groupHistoryByDate = (
 
   for (const item of historyList) {
     const date = item.dateTime.slice(0, 10);
-    const type = item.incomeCategory
-      ? 'INCOME'
-      : ('EXPENSE' as GroupedHistory['entries'][number]['type']);
-    const category = item.incomeCategory ?? item.expenseCategory ?? 'UNKNOWN';
+    const entry = item.incomeCategory
+      ? createIncomeEntry(item)
+      : createExpenseEntry(item);
 
-    const entry = {
-      historyId: item.historyId,
-      dateTime: item.dateTime,
-      type,
-      category,
-      paymentCategory: item.paymentCategory,
-      amount: item.amount,
-      memo: item.memo,
-    };
-
-    if (!grouped[date]) {
-      grouped[date] = [];
-    }
-
+    grouped[date] ??= [];
     grouped[date].push(entry);
   }
 

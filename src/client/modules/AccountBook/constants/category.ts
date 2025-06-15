@@ -1,43 +1,43 @@
-export enum ExpenseCategory {
-  food = '식비',
-  cafe = '카페/간식',
-  convenienceStore = '편의점/마트/잡화',
-  alcohol = '술/유흥',
-  shopping = '쇼핑',
-  hobby = '취미/여가',
-  medical = '의료/건강/피트니스',
-  living = '생활용품',
-  communication = '주거/통신',
-  beauty = '미용/패션',
-  insurance = '보험/세금/기타금융',
-  education = '교육',
-  car = '교육/자동차',
-  gift = '경조사/회비',
-  etc = '기타',
-}
+export const EXPENSE_CATEGORY_LIST = [
+  'food',
+  'cafe',
+  'convenienceStore',
+  'alcohol',
+  'shopping',
+  'hobby',
+  'medical',
+  'living',
+  'communication',
+  'beauty',
+  'insurance',
+  'education',
+  'car',
+  'gift',
+  'etc',
+] as const;
 
-export enum IncomeCategory {
-  salary = '월급',
-  additionalIncome = '부수입',
-  allowance = '용돈',
-  bonus = '상여',
-  financialIncome = '금융소득',
-  etc = '기타',
-}
+export const INCOME_CATEGORY_LIST = [
+  'salary',
+  'additionalIncome',
+  'allowance',
+  'bonus',
+  'financialIncome',
+  'etc',
+] as const;
 
-export enum PaymentMethod {
-  creditCard = '신용카드',
-  debitCard = '체크카드',
-  cash = '현금',
-  etc = '기타',
-}
+export const PAYMENT_METHOD_LIST = [
+  'creditCard',
+  'debitCard',
+  'cash',
+  'etc',
+] as const;
 
-export type IncomeCategoryKey = keyof typeof IncomeCategory;
-export type ExpenseCategoryKey = keyof typeof ExpenseCategory;
-export type PaymentMethodKey = keyof typeof PaymentMethod;
+export type ExpenseCategory = (typeof EXPENSE_CATEGORY_LIST)[number];
+export type IncomeCategory = (typeof INCOME_CATEGORY_LIST)[number];
+export type PaymentMethod = (typeof PAYMENT_METHOD_LIST)[number];
 
 export const EXPENSE_CATEGORY_MAP: Record<
-  ExpenseCategoryKey,
+  ExpenseCategory,
   { name: string; icon: string }
 > = {
   food: {
@@ -103,7 +103,7 @@ export const EXPENSE_CATEGORY_MAP: Record<
 } as const;
 
 export const INCOME_CATEGORY_MAP: Record<
-  IncomeCategoryKey,
+  IncomeCategory,
   { name: string; icon: string }
 > = {
   salary: {
@@ -133,7 +133,7 @@ export const INCOME_CATEGORY_MAP: Record<
 } as const;
 
 export const PAYMENT_METHOD_MAP: Record<
-  PaymentMethodKey,
+  PaymentMethod,
   { name: string; icon: string }
 > = {
   creditCard: {
