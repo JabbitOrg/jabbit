@@ -17,10 +17,12 @@ export default async function AccountBookHistoryDetailPage({
   params,
 }: AccountBookHistoryDetailPageProps) {
   const { historyId } = await params;
+  console.log('historyId', historyId);
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY_DETAIL(historyId),
+    queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY,
     queryFn: getAccountBookHistory,
   });
 

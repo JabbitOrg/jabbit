@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation';
 import Tab from '@/src/app/components/Tab/Tab';
 import { TRANSACTION_TABS } from '@/src/client/modules/AccountBook/constants/tabMenus';
 
-function AccountBookSubLayout({ children }: { children: React.ReactNode }) {
+function AccountBookHistoryCreateLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
 
   return (
@@ -17,11 +21,11 @@ function AccountBookSubLayout({ children }: { children: React.ReactNode }) {
         top="0"
         left="0"
         zIndex="100"
-        bgColor="brand.blue"
+        bgColor="brand.white"
       />
       {children}
     </Fragment>
   );
 }
 
-export default AccountBookSubLayout;
+export default AccountBookHistoryCreateLayout;

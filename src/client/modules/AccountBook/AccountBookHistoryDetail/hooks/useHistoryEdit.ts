@@ -24,9 +24,7 @@ function useHistoryEdit() {
   const queryClient = useQueryClient();
 
   const { data: transactionData } = useSuspenseQuery({
-    queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY_DETAIL(
-      historyId as string,
-    ),
+    queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY,
     queryFn: getAccountBookHistory,
     select: (data) => {
       const transaction = data.body.historyList.find(
@@ -58,9 +56,7 @@ function useHistoryEdit() {
   const { mutate: deleteExpenseMutate } = useDeleteExpense({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY_DETAIL(
-          historyId as string,
-        ),
+        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY,
       });
       router.push(IDENTIFIER_TO_PATH_MAP['ACCOUNT_BOOK_HISTORY']);
     },
@@ -72,9 +68,7 @@ function useHistoryEdit() {
   const { mutate: putExpenseMutate } = usePutExpense({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY_DETAIL(
-          historyId as string,
-        ),
+        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY,
       });
       router.push(IDENTIFIER_TO_PATH_MAP['ACCOUNT_BOOK_HISTORY']);
     },
@@ -86,9 +80,7 @@ function useHistoryEdit() {
   const { mutate: deleteIncomeMutate } = useDeleteIncome({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY_DETAIL(
-          historyId as string,
-        ),
+        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY,
       });
       router.push(IDENTIFIER_TO_PATH_MAP['ACCOUNT_BOOK_HISTORY']);
     },
@@ -100,9 +92,7 @@ function useHistoryEdit() {
   const { mutate: putIncomeMutate } = usePutIncome({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY_DETAIL(
-          historyId as string,
-        ),
+        queryKey: ACCOUNT_QUERY_KEY.GET_ACCOUNT_BOOK_HISTORY,
       });
       router.push(IDENTIFIER_TO_PATH_MAP['ACCOUNT_BOOK_HISTORY']);
     },
