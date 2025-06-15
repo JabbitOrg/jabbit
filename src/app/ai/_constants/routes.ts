@@ -12,15 +12,15 @@ export const ROUTE_PATH_MAP = {
   '/ai/goal/guide': 'GOAL_GUIDE',
   '/ai/goal/launch': 'GOAL_LAUNCH',
 
-  '/ai/money-tracker': 'MONEY_TRACKER_MAIN',
-  '/ai/money-tracker/budget': 'MONEY_TRACKER_BUDGET',
-  '/ai/money-tracker/budget/setting': 'MONEY_TRACKER_BUDGET_SETTING',
-  '/ai/money-tracker/history': 'MONEY_TRACKER_HISTORY',
-  '/ai/money-tracker/history/create/income': 'MONEY_TRACKER_CREATE_INCOME',
-  '/ai/money-tracker/history/create/expense': 'MONEY_TRACKER_CREATE_EXPENSE',
-  '/ai/money-tracker/history/:historyId': 'MONEY_TRACKER_EDIT',
-  '/ai/money-tracker/guide': 'MONEY_TRACKER_GUIDE',
-  '/ai/money-tracker/launch': 'MONEY_TRACKER_LAUNCH',
+  '/ai/account-book': 'ACCOUNT_BOOK_MAIN',
+  '/ai/account-book/budget': 'ACCOUNT_BOOK_BUDGET',
+  '/ai/account-book/budget/setting': 'ACCOUNT_BOOK_BUDGET_SETTING',
+  '/ai/account-book/history': 'ACCOUNT_BOOK_HISTORY',
+  '/ai/account-book/history/create/income': 'ACCOUNT_BOOK_CREATE_INCOME',
+  '/ai/account-book/history/create/expense': 'ACCOUNT_BOOK_CREATE_EXPENSE',
+  '/ai/account-book/history/:historyId': 'ACCOUNT_BOOK_EDIT',
+  '/ai/account-book/guide': 'ACCOUNT_BOOK_GUIDE',
+  '/ai/account-book/launch': 'ACCOUNT_BOOK_LAUNCH',
 } as const;
 
 type RoutePathMap = typeof ROUTE_PATH_MAP;
@@ -126,28 +126,28 @@ export const ROUTES: Record<
   },
 
   // 가계부
-  MONEY_TRACKER_MAIN: {
-    path: '/ai/money-tracker',
+  ACCOUNT_BOOK_MAIN: {
+    path: '/ai/account-book',
     hasNav: true,
   },
 
-  MONEY_TRACKER_BUDGET: {
-    path: '/ai/money-tracker/budget',
+  ACCOUNT_BOOK_BUDGET: {
+    path: '/ai/account-book/budget',
     hasNav: true,
   },
 
-  MONEY_TRACKER_BUDGET_SETTING: {
-    path: '/ai/money-tracker/budget/setting',
+  ACCOUNT_BOOK_BUDGET_SETTING: {
+    path: '/ai/account-book/budget/setting',
     hasNav: false,
   },
 
-  MONEY_TRACKER_HISTORY: {
-    path: '/ai/money-tracker/history',
+  ACCOUNT_BOOK_HISTORY: {
+    path: '/ai/account-book/history',
     hasNav: true,
   },
 
-  MONEY_TRACKER_CREATE_INCOME: {
-    path: '/ai/money-tracker/history/create/income',
+  ACCOUNT_BOOK_CREATE_INCOME: {
+    path: '/ai/account-book/history/create/income',
     header: {
       title: '내역 추가',
       hasPrev: true,
@@ -155,8 +155,8 @@ export const ROUTES: Record<
     hasNav: false,
   },
 
-  MONEY_TRACKER_CREATE_EXPENSE: {
-    path: '/ai/money-tracker/history/create/expense',
+  ACCOUNT_BOOK_CREATE_EXPENSE: {
+    path: '/ai/account-book/history/create/expense',
     header: {
       title: '내역 추가',
       hasPrev: true,
@@ -164,21 +164,21 @@ export const ROUTES: Record<
     hasNav: false,
   },
 
-  MONEY_TRACKER_EDIT: {
-    path: '/ai/money-tracker/history/expense/:historyId',
+  ACCOUNT_BOOK_EDIT: {
+    path: '/ai/account-book/history/expense/:historyId',
     hasNav: false,
   },
 
-  MONEY_TRACKER_GUIDE: {
-    path: '/ai/money-tracker/guide',
+  ACCOUNT_BOOK_GUIDE: {
+    path: '/ai/account-book/guide',
     header: {
       hasPrev: true,
     },
     hasNav: false,
   },
 
-  MONEY_TRACKER_LAUNCH: {
-    path: '/ai/money-tracker/launch',
+  ACCOUNT_BOOK_LAUNCH: {
+    path: '/ai/account-book/launch',
     hasNav: true,
   },
 };
