@@ -1,8 +1,8 @@
 import { AI_API_URL } from '@/src/client/constants/API';
 import { getAccessToken } from '@/src/client/utils/token';
 import { useAuthStore } from '@/src/client/store/authStore';
-import { usePWAStore } from '@/src/client/store/pwaStore';
 import { deleteJwtToken } from '@/src/client/lib/api/deleteJwt';
+import { NextResponse } from 'next/server';
 
 interface RequestOptions extends RequestInit {
   body?: any;
@@ -16,18 +16,38 @@ const getHeaders = async (): Promise<HeadersInit> => {
   };
 };
 
-const handleUnauthorized = async () => {
+const handleClientUnauthorized = async () => {
+  const isAiUser = window.location.pathname.includes('/ai');
   const { logout } = useAuthStore.getState();
-  const isPwa = usePWAStore.getState().isPwa;
+
   try {
-    await deleteJwtToken();
+    await deleteJwtToken(); 
   } catch (error) {
-    console.error(error);
+    console.error('Failed to delete server cookie:', error);
   } finally {
-    logout();
-    window.location.href = isPwa ? '/ai/login' : '/login';
+    logout(); 
+    window.location.href = isAiUser ? '/ai/login' : '/login';
   }
 };
+
+const handleServerUnauthorized = () => {
+  const response = NextResponse.redirect('/login');
+  response.headers.set(
+    'Set-Cookie',
+    'token=; Path=/; HttpOnly; Max-Age=0; Secure; SameSite=Strict'
+  );
+  return response;
+};
+
+const handleUnauthorized = async () => {
+  const isClientSide = typeof window !== 'undefined';
+  if (isClientSide) {
+    await handleClientUnauthorized();
+  } else {
+    return handleServerUnauthorized();
+  }
+};
+
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
@@ -71,8 +91,8 @@ export const apiHandler = {
   put: <T>(endpoint: string, data?: any, options?: RequestOptions) =>
     request<T>('PUT', endpoint, data, options),
 
-  patch: <T>(endpoint: string, options?: RequestOptions) =>
-    request<T>('PATCH', endpoint, undefined, options),
+  patch: <T>(endpoint: string, data?: any, options?: RequestOptions) =>
+    request<T>('PATCH', endpoint, data, options),
 
   delete: <T>(endpoint: string, options?: RequestOptions) =>
     request<T>('DELETE', endpoint, undefined, options),
