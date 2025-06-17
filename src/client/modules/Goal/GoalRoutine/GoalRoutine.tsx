@@ -19,8 +19,6 @@ function GoalRoutine() {
   const { data } = useGetRoutine();
   const currentDate = new Date();
 
-  console.log('data', data);
-
   const isEmpty = !data.body;
 
   return (
