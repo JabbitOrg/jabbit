@@ -2,7 +2,7 @@ import { AI_API_URL } from '@/src/client/constants/API';
 import { getAccessToken } from '@/src/client/utils/token';
 import { useAuthStore } from '@/src/client/store/authStore';
 import { deleteJwtToken } from '@/src/client/lib/api/deleteJwt';
-import { NextResponse } from 'next/server';
+import { redirect } from 'next/navigation';
 
 interface RequestOptions extends RequestInit {
   body?: any;
@@ -17,26 +17,20 @@ const getHeaders = async (): Promise<HeadersInit> => {
 };
 
 const handleClientUnauthorized = async () => {
-  const isAiUser = window.location.pathname.includes('/ai');
   const { logout } = useAuthStore.getState();
 
   try {
-    await deleteJwtToken(); 
+    await deleteJwtToken();
   } catch (error) {
     console.error('Failed to delete server cookie:', error);
   } finally {
-    logout(); 
-    window.location.href = isAiUser ? '/ai/login' : '/login';
+    logout();
+    window.location.href = '/login';
   }
 };
 
 const handleServerUnauthorized = () => {
-  const response = NextResponse.redirect('/login');
-  response.headers.set(
-    'Set-Cookie',
-    'token=; Path=/; HttpOnly; Max-Age=0; Secure; SameSite=Strict'
-  );
-  return response;
+  redirect('/login');
 };
 
 const handleUnauthorized = async () => {
@@ -44,15 +38,14 @@ const handleUnauthorized = async () => {
   if (isClientSide) {
     await handleClientUnauthorized();
   } else {
-    return handleServerUnauthorized();
+    handleServerUnauthorized();
   }
 };
-
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
     if (response.status === 401) {
-      handleUnauthorized();
+      await handleUnauthorized();
       throw new Error('Unauthorized access');
     }
     throw new Error(`HTTP error! status: ${response.status}`);
