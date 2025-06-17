@@ -7,7 +7,7 @@ import { GUIDE_BUTTONS } from '@/src/app/ai/_constants/guide';
 
 import { formatDate } from '../utils/date';
 import { useGetRoutine } from '../hooks/routine.query';
-import EmptyView from '../components/EmtyView';
+import EmptyView from '../components/EmptyView';
 
 import RoutineItem from './components/RoutineItem';
 import {
