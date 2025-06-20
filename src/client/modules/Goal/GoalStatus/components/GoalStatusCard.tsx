@@ -1,5 +1,10 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
+
 import ProgressBar from '@/src/app/ai/coach/_components/form/ProgressBar';
+import { IDENTIFIER_TO_PATH_MAP } from '@/src/app/ai/_constants/routes';
 import { GoalStatus } from '../GoalStatus';
 
 interface GoalStatusCardProps {
@@ -7,6 +12,7 @@ interface GoalStatusCardProps {
 }
 
 function GoalStatusCard({ data }: GoalStatusCardProps) {
+  const router = useRouter();
   const { title, description, goal, current } = data;
 
   const isCurrentUnset = current === null;
@@ -56,6 +62,9 @@ function GoalStatusCard({ data }: GoalStatusCardProps) {
           borderRadius="8px"
           h="46px"
           mt="6px"
+          onClick={() => {
+            router.push(IDENTIFIER_TO_PATH_MAP.GOAL_STATUS_CONNECT);
+          }}
         >
           <Text>나의 자산 연동하기</Text>
         </Button>
