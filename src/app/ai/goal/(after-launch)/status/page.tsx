@@ -1,7 +1,7 @@
-import EmptyView from '@/src/client/modules/Goal/components/EmptyView';
+import GoalStatus from '@/src/client/modules/Goal/GoalStatus';
 
 function GoalStatusPage() {
-  return <EmptyView title="현재 서비스 준비 중이에요" />;
+  return <GoalStatus />;
 }
 
 export default GoalStatusPage;
