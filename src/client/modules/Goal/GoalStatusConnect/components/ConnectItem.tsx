@@ -1,41 +1,12 @@
 import { Flex, Checkbox, Stack, Text } from '@chakra-ui/react';
-import { ConnectableAsset } from '../GoalStatusConnect';
+import { GoalAsset } from '../../api/goal.type';
 
 interface ConnectItemProps extends Checkbox.RootProps {
-  data: ConnectableAsset;
+  data: GoalAsset;
 }
 
-const CHECKBOX_STYLE = {
-  completed: {
-    box: {
-      bgColor: 'blue_gray.100',
-      color: 'blue_gray.400',
-    },
-    checkbox: {
-      _checked: {
-        bgColor: 'blue_gray.400',
-        borderColor: 'blue_gray.400',
-      },
-    },
-  },
-  uncompleted: {
-    box: {
-      bgColor: 'app_background',
-    },
-    checkbox: {
-      _checked: {
-        bgColor: 'brand.blue',
-        borderColor: 'brand.blue',
-      },
-    },
-  },
-};
-
 function ConnectItem({ data, ...props }: ConnectItemProps) {
-  const { type, description, amount } = data;
-
-  const checkboxStyle =
-    CHECKBOX_STYLE[props.checked ? 'completed' : 'uncompleted'];
+  const { assetCategory, assetAmount, assetMemo } = data;
 
   return (
     <Flex
@@ -43,7 +14,7 @@ function ConnectItem({ data, ...props }: ConnectItemProps) {
       px="16px"
       py="12px"
       borderRadius="16px"
-      {...checkboxStyle.box}
+      bgColor="app_background"
     >
       <Checkbox.Root
         w="100%"
@@ -61,12 +32,14 @@ function ConnectItem({ data, ...props }: ConnectItemProps) {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Text>{type}</Text>
-              <Text>{amount.toLocaleString()}원</Text>
+              <Text>{assetCategory}</Text>
+              <Text>{assetAmount.toLocaleString()}원</Text>
             </Flex>
-            <Text textStyle="mobile_cap" color="font.700">
-              {description}
-            </Text>
+            {!!assetMemo.length && (
+              <Text textStyle="mobile_cap" color="font.700">
+                {assetMemo}
+              </Text>
+            )}
           </Stack>
         </Checkbox.Label>
         <Checkbox.HiddenInput />
@@ -75,7 +48,10 @@ function ConnectItem({ data, ...props }: ConnectItemProps) {
           bgColor="brand.white"
           border="1.5px solid"
           borderColor="#C9CBCE"
-          {...checkboxStyle.checkbox}
+          _checked={{
+            bgColor: 'brand.blue',
+            borderColor: 'brand.blue',
+          }}
         />
       </Checkbox.Root>
     </Flex>
