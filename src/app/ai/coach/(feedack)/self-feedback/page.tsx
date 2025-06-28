@@ -16,18 +16,70 @@ import {
   ACHIEVEMENT_MAP,
   FAILURE_MAP,
   NEXT_WEEK_ROUTINE_MAP,
-} from '../_constants/feedbackOptions';
+} from '@/src/client/modules/Coach/constants/feedbackOptions';
+import { useState } from 'react';
 
-function Item({ title }: Checkbox.RootProps) {
+interface ItemProps extends Checkbox.RootProps {
+  title: string;
+  isSelected: boolean;
+  onClickOption: (
+    questionId: string,
+    answer: string,
+    checked?: boolean,
+  ) => void;
+  questionId: string;
+}
+
+interface CheckboxItemProps extends Checkbox.RootProps {
+  title: string;
+  onClickOption: (
+    questionId: string,
+    answer: string,
+    checked?: boolean,
+  ) => void;
+  questionId: string;
+}
+
+function Item({ title, isSelected, ...props }: ItemProps) {
+  const { onClickOption, questionId } = props;
   return (
-    <Flex borderRadius="10px" bgColor="app_background" p="12px">
+    <Flex
+      borderRadius="10px"
+      bgColor="app_background"
+      p="12px"
+      _selected={{
+        backgroundColor: 'blue.300',
+        borderWidth: '1px',
+        borderColor: 'brand.blue',
+      }}
+      aria-selected={isSelected}
+      color="primary.900"
+      onClick={() => onClickOption(questionId, title)}
+    >
       <Text textStyle="mobile_b1_med">{title}</Text>
     </Flex>
   );
 }
-function CheckboxItem({ title, ...props }: Checkbox.RootProps) {
+
+function CheckboxItem({ title, ...props }: CheckboxItemProps) {
+  const { onClickOption, questionId, checked } = props;
+
+  const handleCheckboxClick = () => {
+    onClickOption(questionId, title, !checked);
+  };
   return (
-    <Flex borderRadius="10px" bgColor="app_background" p="12px">
+    <Flex
+      borderRadius="10px"
+      bgColor="app_background"
+      p="12px"
+      _selected={{
+        backgroundColor: 'blue.300',
+        borderWidth: '1px',
+        borderColor: 'brand.blue',
+      }}
+      aria-selected={checked === true}
+      onClick={() => handleCheckboxClick()}
+    >
       <Checkbox.Root
         w="100%"
         display="flex"
@@ -36,6 +88,7 @@ function CheckboxItem({ title, ...props }: Checkbox.RootProps) {
         gap="12px"
         variant="solid"
         {...props}
+        checked={checked}
       >
         <Checkbox.Label textStyle="mobile_b1_med">{title}</Checkbox.Label>
         <Checkbox.HiddenInput />
@@ -50,10 +103,53 @@ function CheckboxItem({ title, ...props }: Checkbox.RootProps) {
   );
 }
 
+interface Response {
+  q1: string;
+  q2: string[];
+  q3: string[];
+  q4: string[];
+  q5: string;
+}
+
 export default function SelfFeedbackPage() {
   const router = useRouter();
 
-  const handleButtonClick = async () => {};
+  const [response, setResponse] = useState<Response>({
+    q1: '',
+    q2: [],
+    q3: [],
+    q4: [],
+    q5: '',
+  });
+  console.log(response);
+
+  const handleOptionClick = (id: string, answer: string, checked?: boolean) => {
+    if (typeof checked !== 'boolean') {
+      setResponse((prev) => ({ ...prev, [id]: answer }));
+    }
+    if (id === 'q2' || id === 'q3' || id === 'q4') {
+      if (checked) {
+        setResponse((prev) => ({ ...prev, [id]: [...prev[id], answer] }));
+      } else {
+        setResponse((prev) => ({
+          ...prev,
+          [id]: prev[id].filter((item) => item !== answer),
+        }));
+      }
+    }
+  };
+
+  const onClickSubmit = () => {
+    console.log(response);
+    router.push('/ai/coach');
+    //api 호출
+  };
+
+  const isResponseInvalid =
+    response.q1 === '' ||
+    response.q2.length === 0 ||
+    response.q3.length === 0 ||
+    response.q4.length === 0;
 
   return (
     <Box>
@@ -65,7 +161,14 @@ export default function SelfFeedbackPage() {
           </HStack>
           <Stack gap="12px">
             {Object.values(WEEKLY_FEELING_MAP).map((item, idx) => (
-              <Item key={idx} title={item.icon + ' ' + item.name} />
+              <Item
+                key={idx}
+                title={item.icon + ' ' + item.name}
+                isSelected={response.q1 === item.icon + ' ' + item.name}
+                onClickOption={handleOptionClick}
+                checked={response.q1 === item.icon + ' ' + item.name}
+                questionId="q1"
+              />
             ))}
           </Stack>
         </Stack>
@@ -82,7 +185,13 @@ export default function SelfFeedbackPage() {
           </Text>
           <Stack gap="12px">
             {Object.values(ACHIEVEMENT_MAP).map((item, idx) => (
-              <CheckboxItem key={idx} title={item.icon + ' ' + item.name} />
+              <CheckboxItem
+                key={idx}
+                title={item.icon + ' ' + item.name}
+                onClickOption={handleOptionClick}
+                questionId="q2"
+                checked={response.q2.includes(item.icon + ' ' + item.name)}
+              />
             ))}
           </Stack>
         </Stack>
@@ -97,7 +206,13 @@ export default function SelfFeedbackPage() {
           </Text>
           <Stack gap="12px">
             {Object.values(FAILURE_MAP).map((item, idx) => (
-              <CheckboxItem key={idx} title={item.icon + ' ' + item.name} />
+              <CheckboxItem
+                key={idx}
+                title={item.icon + ' ' + item.name}
+                onClickOption={handleOptionClick}
+                questionId="q3"
+                checked={response.q3.includes(item.icon + ' ' + item.name)}
+              />
             ))}
           </Stack>
         </Stack>
@@ -114,7 +229,13 @@ export default function SelfFeedbackPage() {
           </Text>
           <Stack gap="12px">
             {Object.values(NEXT_WEEK_ROUTINE_MAP).map((item, idx) => (
-              <CheckboxItem key={idx} title={item.icon + ' ' + item.name} />
+              <CheckboxItem
+                key={idx}
+                title={item.icon + ' ' + item.name}
+                onClickOption={handleOptionClick}
+                questionId="q4"
+                checked={response.q4.includes(item.icon + ' ' + item.name)}
+              />
             ))}
           </Stack>
         </Stack>
@@ -130,6 +251,8 @@ export default function SelfFeedbackPage() {
               mb="147px"
               backgroundColor="app_background"
               border="none"
+              value={response.q5}
+              onChange={(e) => setResponse({ ...response, q5: e.target.value })}
             />
           </Stack>
         </Stack>
@@ -146,7 +269,8 @@ export default function SelfFeedbackPage() {
         borderWidth="2px"
         borderColor="gray.100"
         minWidth="335px"
-        onClick={handleButtonClick}
+        disabled={isResponseInvalid}
+        onClick={onClickSubmit}
       >
         <Text textStyle="mobile_b1_semi" color="white">
           제출하기

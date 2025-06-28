@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Text, Flex, Box } from '@chakra-ui/react';
-import { keyframes } from '@emotion/react';
-import Image from 'next/image';
+import { Button, Text, Box } from '@chakra-ui/react';
 import Feedback from '@/src/client/modules/Coach/components/Feedback';
 import Loading from '@/src/client/modules/Coach/components/Loading';
 import getAiScenario from '@/src/client/lib/api/getAiScenario';
