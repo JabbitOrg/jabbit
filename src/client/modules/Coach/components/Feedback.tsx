@@ -158,14 +158,14 @@ export default function Feedback({ data }: { data: FeedbackProps }) {
         <Text textStyle="mobile_h3" color="main.black_1">
           ✏️ 신규 루틴 추천
         </Text>
-        <Box
-          backgroundColor="app_background"
-          borderRadius="14px"
-          p="16px"
-          mt="16px"
-        >
+        <Box backgroundColor="blue.200" borderRadius="14px" p="16px" mt="16px">
           {data.routineRecoList?.map((item, idx) => (
-            <BulletText key={idx} text={item.name} textStyle="mobile_b1_med" />
+            <BulletText
+              key={idx}
+              text={item.name}
+              textStyle="mobile_b1_med"
+              textColor="brand.blue"
+            />
           ))}
         </Box>
       </Box>
