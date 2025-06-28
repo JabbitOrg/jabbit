@@ -5,53 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Button, Text, Flex, Box } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
 import Image from 'next/image';
-
-function Loading({ message }: { message: string }) {
-  const typing = keyframes`
-  from { width: 0 }
-  to { width: ${message.length}ch }
-`;
-
-  const blink = keyframes`
-  0%, 100% { border-color: transparent }
-  50% { border-color: black }
-`;
-
-  const blinkImage = keyframes`
-  0%, 100% { opacity: 1 }
-  50% { opacity: 0 }
-`;
-  return (
-    <Flex
-      align="center"
-      gap="8px"
-      padding="24px 30px"
-      justifyContent="flex-start"
-    >
-      <Box animation={`${blinkImage} 2s ease-in-out infinite`}>
-        <Image
-          src="/assets/ico_money.svg"
-          alt="돈 아이콘"
-          width={24}
-          height={24}
-          priority={false}
-          style={{ objectFit: 'contain' }}
-        />
-      </Box>
-
-      <Text
-        textStyle="mobile_b2"
-        color="font.800"
-        whiteSpace="nowrap"
-        overflow="hidden"
-        borderRight="1px solid"
-        animation={`${typing} 3s steps(${message.length}), ${blink} 1s step-end infinite`}
-      >
-        {message}
-      </Text>
-    </Flex>
-  );
-}
+import Feedback from '@/src/client/modules/Coach/components/Feedback';
+import Loading from '@/src/client/modules/Coach/components/Loading';
+import getAiScenario from '@/src/client/lib/api/getAiScenario';
 
 export default function WeeklyFeedbackPage() {
   const router = useRouter();
@@ -65,14 +21,15 @@ export default function WeeklyFeedbackPage() {
     const fetchData = async () => {
       try {
         const [response] = await Promise.all([
-          //todo api
-          new Promise((resolve) => setTimeout(resolve, 5000)),
+          getAiScenario('FEEDBACK').then((res) => res.body.response[0]),
+          new Promise((resolve) => setTimeout(resolve, 1000)),
         ]);
         // if (response.body.response !== null) {
-        //   setData(response.body.response);
+        //   setData(response.body);
         //   setTypingDone(true);
         // }
         setData(response);
+        console.log(response);
         setTypingDone(true);
       } catch (error) {
         console.error('Error fetching guide:', error);
@@ -84,7 +41,7 @@ export default function WeeklyFeedbackPage() {
   }, []);
 
   const handleButtonClick = async () => {
-    router.push('/ai/coach/self-feedback');
+    router.push('/ai/coach');
   };
 
   if (!typingDone) return <Loading message={loadingMessage} />;
@@ -92,10 +49,7 @@ export default function WeeklyFeedbackPage() {
   return (
     <Box>
       <Box px="20px" rounded="md" mt="16px" pb="80px">
-        <Text textStyle="mobile_b1_med" color="main.black_1">
-          주간 피드백
-          {data}
-        </Text>
+        <Feedback data={data} />
       </Box>
       <Button
         position="fixed"
@@ -112,7 +66,7 @@ export default function WeeklyFeedbackPage() {
         onClick={handleButtonClick}
       >
         <Text textStyle="mobile_b1_semi" color="white">
-          셀프 피드백 작성하기
+          루틴 추가하기
         </Text>
       </Button>
     </Box>
