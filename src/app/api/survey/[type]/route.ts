@@ -193,7 +193,7 @@ export async function GET(request: NextRequest) {
           '내 집 마련, 투자 시드금 등 목표 달성 현황을 확인하고, 진행률을 숫자로 표현해보세요.',
       },
     ];
-  } else if (type === 'FEEDBACK') {
+  } else if (type === 'WEEKLY-FEEDBACK') {
     base.body.response = [
       {
         statusCheckRoutine:
