@@ -1,16 +1,24 @@
-export interface GetAiFeedbackResponse {
+export interface RoutineRecommendation {
+  name: string;
+  category: string
+  frequency: string
+  description: string;
+}
+
+export interface GetAiFeedbackResponseBody {
   statusCheckRoutine?: string;
   statusCheckBudget?: string;
   emotionCarePositive?: string;
   emotionCareNegative?: string;
   forecastAssetChange?: string;
   forecastCashFlow?: string;
-  routineRecoList?: {
-    name: string;
-    category: string;
-    frequency: string;
-    description: string;
-  }[];
+  routineRecoList?: RoutineRecommendation[];
+}
+
+export interface GetAiFeedbackResponse {
+  code: 'success' | 'error'; 
+  message: string | null;
+  body: GetAiFeedbackResponseBody;
 }
 
 export interface PostAiFeedbackRequest {

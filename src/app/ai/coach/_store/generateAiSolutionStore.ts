@@ -2,7 +2,12 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getCurrentTimestamp } from '@/src/client/utils/parser';
 
-type SectionKey = 'scenario' | 'plan' | 'routine' | 'selfFeedback' | 'weeklyFeedback';
+type SectionKey =
+  | 'scenario'
+  | 'plan'
+  | 'routine'
+  | 'selfFeedback'
+  | 'weeklyFeedback';
 
 interface TimestampState {
   requestedAt: string | null; // 알림받기 메시지 시간
@@ -47,9 +52,11 @@ export const useGenerateAiSolutionStore = create<GenerateAiSolutionState>()(
     (set, get) => {
       const setIfNotExists = (
         section: SectionKey,
-        key: keyof TimestampState,
+        key: keyof TimestampState | keyof SelfFeedbackState | keyof WeeklyFeedbackState,
       ) => {
-        const current = get()[section][key];
+        // Type guard to ensure the key exists on the section
+        const sectionState = get()[section] as any;
+        const current = sectionState[key];
         if (!current) {
           set((state) => ({
             [section]: {
@@ -111,7 +118,12 @@ export const useGenerateAiSolutionStore = create<GenerateAiSolutionState>()(
         setRoutineNotification: (enabled) =>
           setNotification('routine', enabled),
         setSelfFeedbackIsSubmitted: (isSubmitted) =>
-          setNotification('selfFeedback', isSubmitted),
+          set((state) => ({
+            selfFeedback: {
+              ...state.selfFeedback,
+              isSubmitted: isSubmitted,
+            },
+          })),
       };
     },
     {

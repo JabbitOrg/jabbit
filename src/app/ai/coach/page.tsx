@@ -17,7 +17,10 @@ import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAi
 import postAiContentNotification from '@/src/client/lib/api/postAiContentNotification';
 import getAiContent from '@/src/client/lib/api/getAiContent';
 import { mixpanelTrackWithCallback } from '@/src/client/utils/mixpanelHelpers';
+import getAiScenario from '@/src/client/lib/api/getAiScenario';
 import { getAiFeedback } from '@/src/client/modules/Coach/api/coach.api';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 function CoachPage() {
   const { push } = useRouter();
@@ -51,9 +54,7 @@ function CoachPage() {
       requestedAt: dateSelfFeedbackRequested,
       isSubmitted: isSelfFeedbackSubmitted,
     },
-    weeklyFeedback: {
-      createdAt: dateWeeklyFeedbackCreated,
-    },
+    weeklyFeedback: { createdAt: dateWeeklyFeedbackCreated },
     setScenarioCreated,
     setPlanCreated,
     setRoutineCreated,
@@ -67,7 +68,7 @@ function CoachPage() {
     type: 'SCENARIO' | 'PLAN' | 'ROUTINE',
     onSuccess: () => void,
   ) => {
-    const response = await getAiContent(type);
+    const response = isDev? await getAiScenario(type):  await getAiContent(type)
 
     if (response.body.response !== null) {
       onSuccess();
@@ -75,11 +76,11 @@ function CoachPage() {
   };
 
   const fetchAiFeedbackAndSet = async (onSuccess: () => void) => {
-    const response = await getAiFeedback();
-    if (response.body.response !== null) {
+    const response = isDev? await getAiScenario('WEEKLY-FEEDBACK'): await getAiFeedback();
+    if (response.body !== null) {
       onSuccess();
     }
-  }
+  };
 
   useEffect(() => {
     if (!dateScenarioRequested) return;
@@ -102,14 +103,12 @@ function CoachPage() {
     }
   }, [dateRoutineRequested, dateRoutineCreated, setRoutineCreated]);
 
-
   useEffect(() => {
     if (!dateRoutineCreated) return;
     if (dateRoutineCreated && !dateWeeklyFeedbackCreated) {
       fetchAiFeedbackAndSet(setWeeklyFeedbackCreated);
     }
   }, [dateRoutineCreated, dateWeeklyFeedbackCreated]);
-
 
   const { user } = useAuthStore();
   const displayName =
@@ -183,7 +182,9 @@ function CoachPage() {
     );
   };
 
-  const handleReadAiContentClick = (type: 'scenario' | 'plan' | 'routine' | 'weekly-feedback') => {
+  const handleReadAiContentClick = (
+    type: 'scenario' | 'plan' | 'routine' | 'weekly-feedback',
+  ) => {
     const typeMap = {
       scenario: '시나리오',
       plan: '플랜',
@@ -343,19 +344,22 @@ function CoachPage() {
         </Flex>
       ),
     },
-    dateWeeklyFeedbackCreated && {
-      date: extractDateOnly(dateWeeklyFeedbackCreated),
-      component: (
-        <Flex align="flex-end" gap="8px" key="self-feedback">
-          <ChatbotMessage
-            message="이번 주 피드백이 도착했어요."
-            buttonText="읽어보기"
-            onButtonClick={() => handleReadAiContentClick('weekly-feedback')}
-            isDisabled={isSelfFeedbackSubmitted}
-          />
-        </Flex>
-      ),
-    },
+    dateRoutineCreated &&
+      dateWeeklyFeedbackCreated && {
+        date: extractDateOnly(dateWeeklyFeedbackCreated),
+        component: (
+          <Flex align="flex-end" gap="8px" key="weekly-feedback">
+            <ChatbotMessage
+              message="이번 주 피드백이 도착했어요."
+              buttonText="읽어보기"
+              onButtonClick={() => handleReadAiContentClick('weekly-feedback')}
+            />
+            <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
+              {parseTimeFromTimestamp(dateWeeklyFeedbackCreated)}
+            </Text>
+          </Flex>
+        ),
+      },
     dateSelfFeedbackRequested && {
       date: extractDateOnly(dateSelfFeedbackRequested),
       component: (
@@ -364,8 +368,11 @@ function CoachPage() {
             message="이번 주를 되돌아보며 나에게 주는 피드백을 적어보세요."
             buttonText="작성하기"
             onButtonClick={handleSelfFeedbackClick}
-                  isDisabled={isSelfFeedbackSubmitted}
+            isDisabled={isSelfFeedbackSubmitted}
           />
+          <Text textStyle="mobile_cap" color="blue.600" whiteSpace="nowrap">
+            {parseTimeFromTimestamp(dateSelfFeedbackRequested)}
+          </Text>
         </Flex>
       ),
     },

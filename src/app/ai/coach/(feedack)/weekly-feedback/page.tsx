@@ -7,6 +7,7 @@ import Feedback from '@/src/client/modules/Coach/components/Feedback';
 import Loading from '@/src/client/modules/Coach/components/Loading';
 import getAiScenario from '@/src/client/lib/api/getAiScenario';
 import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAiSolutionStore';
+import { getAiFeedback } from '@/src/client/modules/Coach/api/coach.api';
 
 export default function WeeklyFeedbackPage() {
   const router = useRouter();
@@ -14,21 +15,23 @@ export default function WeeklyFeedbackPage() {
   const loadingMessage = `피드백을 만들고 있어요...`;
   const [data, setData] = useState<any>(null);
   const [typingDone, setTypingDone] = useState(false);
+  const isDev = process.env.NODE_ENV === 'development';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [response] = await Promise.all([
-          getAiScenario('FEEDBACK').then((res) => res.body.response[0]),
-          new Promise((resolve) => setTimeout(resolve, 1000)),
+          isDev
+            ? getAiScenario('WEEKLY-FEEDBACK').then(
+                (res) => res.body.response[0],
+              )
+            : getAiFeedback().then((res) => res.body),
+          new Promise((resolve) => setTimeout(resolve, 3000)),
         ]);
-        // if (response.body.response !== null) {
-        //   setData(response.body);
-        //   setTypingDone(true);
-        // }
-        setData(response);
-        console.log(response);
-        setTypingDone(true);
+        if (response !== null) {
+          setData(response);
+          setTypingDone(true);
+        }
       } catch (error) {
         console.error('Error fetching guide:', error);
       } finally {
