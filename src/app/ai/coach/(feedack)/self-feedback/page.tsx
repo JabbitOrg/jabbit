@@ -18,6 +18,8 @@ import {
   NEXT_WEEK_ROUTINE_MAP,
 } from '@/src/client/modules/Coach/constants/feedbackOptions';
 import { useState } from 'react';
+import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAiSolutionStore';
+import { postAiFeedback } from '@/src/client/modules/Coach/api/coach.api';
 
 interface ItemProps extends Checkbox.RootProps {
   title: string;
@@ -113,7 +115,7 @@ interface Response {
 
 export default function SelfFeedbackPage() {
   const router = useRouter();
-
+  const { setSelfFeedbackIsSubmitted } = useGenerateAiSolutionStore();
   const [response, setResponse] = useState<Response>({
     q1: '',
     q2: [],
@@ -139,10 +141,16 @@ export default function SelfFeedbackPage() {
     }
   };
 
-  const onClickSubmit = () => {
-    console.log(response);
-    router.push('/ai/coach');
-    //api 호출
+  const onClickSubmit = async () => {
+    setSelfFeedbackIsSubmitted(true);
+    try {
+      await postAiFeedback(response);
+      router.push('/ai/coach');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      router.push('/ai/coach');
+    }
   };
 
   const isResponseInvalid =

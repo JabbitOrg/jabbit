@@ -6,13 +6,13 @@ import { Button, Text, Box } from '@chakra-ui/react';
 import Feedback from '@/src/client/modules/Coach/components/Feedback';
 import Loading from '@/src/client/modules/Coach/components/Loading';
 import getAiScenario from '@/src/client/lib/api/getAiScenario';
+import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAiSolutionStore';
 
 export default function WeeklyFeedbackPage() {
   const router = useRouter();
-
+  const { setSelfFeedbackRequested } = useGenerateAiSolutionStore();
   const loadingMessage = `피드백을 만들고 있어요...`;
   const [data, setData] = useState<any>(null);
-
   const [typingDone, setTypingDone] = useState(false);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ export default function WeeklyFeedbackPage() {
   }, []);
 
   const handleButtonClick = async () => {
+    setSelfFeedbackRequested();
     router.push('/ai/coach');
   };
 
