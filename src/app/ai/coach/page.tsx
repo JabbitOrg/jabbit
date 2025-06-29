@@ -68,7 +68,9 @@ function CoachPage() {
     type: 'SCENARIO' | 'PLAN' | 'ROUTINE',
     onSuccess: () => void,
   ) => {
-    const response = isDev? await getAiScenario(type):  await getAiContent(type)
+    const response = isDev
+      ? await getAiScenario(type)
+      : await getAiContent(type);
 
     if (response.body.response !== null) {
       onSuccess();
@@ -76,7 +78,9 @@ function CoachPage() {
   };
 
   const fetchAiFeedbackAndSet = async (onSuccess: () => void) => {
-    const response = isDev? await getAiScenario('WEEKLY-FEEDBACK'): await getAiFeedback();
+    const response = isDev
+      ? await getAiScenario('WEEKLY-FEEDBACK')
+      : await getAiFeedback();
     if (response.body !== null) {
       onSuccess();
     }
@@ -98,12 +102,17 @@ function CoachPage() {
 
   useEffect(() => {
     if (!dateRoutineRequested) return;
+
     if (dateRoutineRequested && !dateRoutineCreated) {
       fetchAiContentAndSet('ROUTINE', setRoutineCreated);
     }
   }, [dateRoutineRequested, dateRoutineCreated, setRoutineCreated]);
 
   useEffect(() => {
+    const setTime = new Date('2025-06-30T08:00:00+09:00');
+    const now = new Date();
+
+    if (now < setTime) return;
     if (!dateRoutineCreated) return;
     if (dateRoutineCreated && !dateWeeklyFeedbackCreated) {
       fetchAiFeedbackAndSet(setWeeklyFeedbackCreated);

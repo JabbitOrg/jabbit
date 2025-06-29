@@ -20,6 +20,8 @@ import {
 import { useState } from 'react';
 import { useGenerateAiSolutionStore } from '@/src/app/ai/coach/_store/generateAiSolutionStore';
 import { postAiFeedback } from '@/src/client/modules/Coach/api/coach.api';
+import { mixpanelTrack } from '@/src/client/utils/mixpanelHelpers';
+import { useAuthStore } from '@/src/client/store/authStore';
 
 interface ItemProps extends Checkbox.RootProps {
   title: string;
@@ -116,6 +118,7 @@ interface Response {
 export default function SelfFeedbackPage() {
   const router = useRouter();
   const { setSelfFeedbackIsSubmitted } = useGenerateAiSolutionStore();
+  const { user } = useAuthStore();
   const [response, setResponse] = useState<Response>({
     q1: '',
     q2: [],
@@ -142,17 +145,23 @@ export default function SelfFeedbackPage() {
   };
 
   const onClickSubmit = async () => {
-    setSelfFeedbackIsSubmitted(true);
     try {
+      setSelfFeedbackIsSubmitted(true);
+
+      mixpanelTrack(
+        '코치탭',
+        '셀프 피드백 제출하기 버튼 클릭',
+        '셀프 피드백 제출하기 버튼',
+        user,
+      );
+
       await postAiFeedback(response);
-      router.push('/ai/coach');
     } catch (error) {
-      console.error(error);
+      console.error('셀프 피드백 제출 실패:', error);
     } finally {
       router.push('/ai/coach');
     }
   };
-
   const isResponseInvalid =
     response.q1 === '' ||
     response.q2.length === 0 ||
